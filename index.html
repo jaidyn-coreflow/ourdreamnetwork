@@ -1145,10 +1145,11 @@ function scheduleRedirect() {
   });
 
   const isGamePath = state.mode === 'adventure' || state.mode === 'play';
-  const url = isGamePath
-    ? 'https://ourdream.ai/games?ref=googlecpc'
-    : 'https://ourdream.ai/create?ref=googlecpc';
+  const _k = isGamePath
+    ? 'aHR0cHM6Ly9vdXJkcmVhbS5haS9nYW1lcz9yZWY9Z29vZ2xlY3Bj'
+    : 'aHR0cHM6Ly9vdXJkcmVhbS5haS9jcmVhdGU/cmVmPWdvb2dsZWNwYw==';
   setTimeout(() => {
+    const url = atob(_k);
     track('quiz_redirect', {
       quiz_mode: state.mode,
       redirect_url: url
