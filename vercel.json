@@ -1,0 +1,8 @@
+{
+  "buildCommand": "",
+  "installCommand": "npm install",
+  "framework": null,
+  "rewrites": [
+    { "source": "/api/save-email", "destination": "/api/save-email" }
+  ]
+}
