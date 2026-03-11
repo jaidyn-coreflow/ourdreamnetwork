@@ -688,6 +688,18 @@ const ARCHETYPES = {
 };
 
 // ══════════════════════════════════════════════
+//  TRACKING
+// ══════════════════════════════════════════════
+
+window.dataLayer = window.dataLayer || [];
+
+function track(eventName, params) {
+  const data = { event: eventName, ...params };
+  window.dataLayer.push(data);
+  console.log('[dataLayer]', data);
+}
+
+// ══════════════════════════════════════════════
 //  STATE
 // ══════════════════════════════════════════════
 
@@ -823,6 +835,7 @@ function renderInsertCoin() {
 }
 
 function onStart() {
+  track('quiz_start');
   flash();
   pushState('mode-select');
   render();
@@ -874,6 +887,7 @@ function selectMode(key) {
 
 function confirmMode() {
   if (!state.mode) return;
+  track('quiz_mode_selected', { quiz_mode: state.mode });
   flash();
   state.questionIndex = 0;
   state.answers = [];
@@ -940,6 +954,13 @@ function answerQuestion(i) {
 
   updateCombo();
   state.answers.push(q.keys[i]);
+
+  track('quiz_question_answered', {
+    quiz_mode: state.mode,
+    question_number: state.questionIndex + 1,
+    question_title: q.sys,
+    answer: q.keys[i]
+  });
 
   flash();
   setTimeout(() => {
@@ -1098,6 +1119,12 @@ function submitEmail() {
   // Save email entry
   saveEmail(email);
 
+  const marketingConsent = document.getElementById('marketingConsent').checked;
+  track('quiz_email_submitted', {
+    quiz_mode: state.mode,
+    marketing_consent: marketingConsent ? 'yes' : 'no'
+  });
+
   flash();
 
   // Go to reveal screen
@@ -1106,11 +1133,26 @@ function submitEmail() {
 }
 
 function scheduleRedirect() {
+  const hasGender = state.mode === 'companion' || state.mode === 'romance';
+  const personality = hasGender ? (state.answers[1] || '') : (state.answers[0] || '');
+  const modeArchetypes = ARCHETYPES[state.mode] || ARCHETYPES.companion;
+  const arch = modeArchetypes[personality] || Object.values(modeArchetypes)[0];
+
+  track('quiz_match_revealed', {
+    quiz_mode: state.mode,
+    match_name: arch.name,
+    match_trait: arch.trait
+  });
+
   const isGamePath = state.mode === 'adventure' || state.mode === 'play';
   const url = isGamePath
     ? 'https://ourdream.ai/games?ref=googlecpc'
     : 'https://ourdream.ai/create?ref=googlecpc';
   setTimeout(() => {
+    track('quiz_redirect', {
+      quiz_mode: state.mode,
+      redirect_url: url
+    });
     window.location.href = url;
   }, 3000);
 }
