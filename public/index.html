@@ -1125,6 +1125,16 @@ function submitEmail() {
     marketing_consent: marketingConsent ? 'yes' : 'no'
   });
 
+  // Google Ads native conversion event
+  window.dataLayer.push({
+    event: 'generate_lead',
+    currency: 'USD',
+    value: 1.0,
+    user_data: {
+      email: email
+    }
+  });
+
   flash();
 
   // Go to reveal screen
