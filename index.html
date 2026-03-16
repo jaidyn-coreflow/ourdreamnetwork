@@ -701,24 +701,21 @@ function track(eventName, params) {
 
 function getDecoratedUrl(baseUrl) {
   return new Promise((resolve) => {
-    const timeout = setTimeout(() => resolve(baseUrl), 500);
-    try {
-      if (typeof gtag === 'function') {
-        gtag('get', 'G-HBBMBMS4PB', 'decorated_destination', {
-          url: baseUrl,
-          callback: function(decoratedUrl) {
-            clearTimeout(timeout);
-            resolve(decoratedUrl || baseUrl);
-          }
-        });
-      } else {
-        clearTimeout(timeout);
-        resolve(baseUrl);
-      }
-    } catch (e) {
-      clearTimeout(timeout);
-      resolve(baseUrl);
-    }
+    // Create a temporary anchor and let GTM's cross-domain linker decorate it
+    const a = document.createElement('a');
+    a.href = baseUrl;
+    a.style.cssText = 'position:fixed;left:-9999px;';
+    document.body.appendChild(a);
+
+    // GTM decorates links on mousedown — trigger it
+    a.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+
+    // Give GTM a tick to decorate, then read the href
+    setTimeout(() => {
+      const decoratedUrl = a.href;
+      document.body.removeChild(a);
+      resolve(decoratedUrl);
+    }, 100);
   });
 }
 
