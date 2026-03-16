@@ -699,6 +699,27 @@ function track(eventName, params) {
   console.log('[dataLayer]', data);
 }
 
+function getGlParam() {
+  // Try google_tag_data bridge first (most reliable)
+  if (window.google_tag_data && window.google_tag_data.glBridge) {
+    return window.google_tag_data.glBridge.generate() || '';
+  }
+  // Check for _gl in decorated links on the page
+  const decoratedLink = document.querySelector('a[href*="_gl="]');
+  if (decoratedLink) {
+    try {
+      return new URL(decoratedLink.href).searchParams.get('_gl') || '';
+    } catch (e) {}
+  }
+  // Check _gl cookie
+  const cookies = document.cookie.split(';');
+  for (const cookie of cookies) {
+    const [name, value] = cookie.trim().split('=');
+    if (name === '_gl') return value;
+  }
+  return '';
+}
+
 // ══════════════════════════════════════════════
 //  STATE
 // ══════════════════════════════════════════════
@@ -1160,11 +1181,14 @@ function scheduleRedirect() {
     : 'aHR0cHM6Ly9vdXJkcmVhbS5haS9jcmVhdGU/cmVmPWdvb2dsZWNwYw==';
   setTimeout(() => {
     const url = atob(_k);
+    const gl = getGlParam();
+    const separator = url.includes('?') ? '&' : '?';
+    const finalUrl = gl ? `${url}${separator}_gl=${gl}` : url;
     track('quiz_redirect', {
       quiz_mode: state.mode,
-      redirect_url: url
+      redirect_url: finalUrl
     });
-    window.location.href = url;
+    window.location.href = finalUrl;
   }, 3000);
 }
 
