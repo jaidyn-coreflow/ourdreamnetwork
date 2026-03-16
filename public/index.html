@@ -1176,8 +1176,8 @@ function scheduleRedirect() {
 
   const isGamePath = state.mode === 'adventure' || state.mode === 'play';
   const _k = isGamePath
-    ? 'aHR0cHM6Ly9vdXJkcmVhbS5haS9nYW1lcz9yZWY9Z29vZ2xlY3Bj'
-    : 'aHR0cHM6Ly9vdXJkcmVhbS5haS9jcmVhdGU/cmVmPWdvb2dsZWNwYw==';
+    ? 'aHR0cHM6Ly9vdXJkcmVhbS5haS9nYW1lcz9yZWY9Z29vZ2xlY3BjJm9kbmV0d29yaw=='
+    : 'aHR0cHM6Ly9vdXJkcmVhbS5haS9jcmVhdGU/cmVmPWdvb2dsZWNwYyZvZG5ldHdvcms=';
   setTimeout(() => {
     const url = atob(_k);
     track('quiz_redirect', {
