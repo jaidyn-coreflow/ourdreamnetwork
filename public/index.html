@@ -124,6 +124,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     opacity: 0; animation: fadeIn 0.4s 0.8s forwards;
   }
 
+  /* ── Legal Footer ── */
+  .legal-footer {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    text-align: center; padding: 10px 16px;
+    z-index: 100; pointer-events: none;
+  }
+  .legal-footer a {
+    font-family: 'Press Start 2P', monospace; font-size: 7px;
+    color: rgba(255,255,255,0.15); text-decoration: none;
+    letter-spacing: 2px; margin: 0 12px;
+    pointer-events: auto; transition: color 0.2s;
+  }
+  .legal-footer a:hover { color: var(--pink); }
+
   /* ── Logo container ── */
   .logo-wrap {
     opacity: 0; transform: translateY(20px) scale(0.9);
@@ -1215,5 +1229,9 @@ function saveEmail(email) {
 initParticles();
 render();
 </script>
+<div class="legal-footer">
+  <a href="/terms.html">TERMS</a>
+  <a href="/privacy.html">PRIVACY</a>
+</div>
 </body>
 </html>
