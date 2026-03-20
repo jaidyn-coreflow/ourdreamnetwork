@@ -10,6 +10,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-5VRS8QPJ');</script>
 <!-- End Google Tag Manager -->
+<!-- PostHog -->
+<script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group identify setPersonProperties setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags resetGroups onFeatureFlags addFeatureFlagsHandler onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_lnZf1TDyHu6DlEWkC6gEW18MYXvVy1zLomxBtjSlXqy', {
+        api_host: 'https://us.i.posthog.com',
+        defaults: '2026-01-30'
+    })
+</script>
+<!-- End PostHog -->
 <title>ourdream — Character Builder</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
@@ -761,6 +770,7 @@ function pushState(nextScreen) {
 
 function goBack() {
   if (state.history.length === 0) return;
+  posthog.capture('back_button_clicked', { from_screen: state.screen, mode: state.mode });
   const prev = state.history.pop();
   state.screen = prev.screen;
   state.mode = prev.mode;
@@ -870,6 +880,7 @@ function renderInsertCoin() {
 
 function onStart() {
   track('quiz_start');
+  posthog.capture('quiz_started');
   flash();
   pushState('mode-select');
   render();
@@ -922,6 +933,7 @@ function selectMode(key) {
 function confirmMode() {
   if (!state.mode) return;
   track('quiz_mode_selected', { quiz_mode: state.mode });
+  posthog.capture('mode_selected', { mode: state.mode });
   flash();
   state.questionIndex = 0;
   state.answers = [];
@@ -993,6 +1005,12 @@ function answerQuestion(i) {
     quiz_mode: state.mode,
     question_number: state.questionIndex + 1,
     question_title: q.sys,
+    answer: q.keys[i]
+  });
+
+  posthog.capture('question_answered', {
+    mode: state.mode,
+    question_number: state.questionIndex + 1,
     answer: q.keys[i]
   });
 
@@ -1138,12 +1156,14 @@ function isValidEmail(email) {
 function submitEmail() {
   const email = state.email.trim();
   if (!email) {
+    posthog.capture('email_validation_failed', { reason: 'empty', mode: state.mode });
     document.getElementById('emailError').textContent = 'EMAIL REQUIRED';
     document.getElementById('emailInput').style.animation = 'shakeSm 0.3s';
     setTimeout(() => { document.getElementById('emailInput').style.animation = ''; }, 300);
     return;
   }
   if (!isValidEmail(email)) {
+    posthog.capture('email_validation_failed', { reason: 'invalid_format', mode: state.mode });
     document.getElementById('emailError').textContent = 'INVALID EMAIL FORMAT';
     document.getElementById('emailInput').style.animation = 'shakeSm 0.3s';
     setTimeout(() => { document.getElementById('emailInput').style.animation = ''; }, 300);
@@ -1157,6 +1177,15 @@ function submitEmail() {
   track('quiz_email_submitted', {
     quiz_mode: state.mode,
     marketing_consent: marketingConsent ? 'yes' : 'no'
+  });
+
+  posthog.identify(email, {
+    quiz_mode: state.mode,
+    marketing_consent: marketingConsent
+  });
+  posthog.capture('email_submitted', {
+    mode: state.mode,
+    marketing_consent: marketingConsent
   });
 
   // Google Ads native conversion event
@@ -1188,6 +1217,15 @@ function scheduleRedirect() {
     match_trait: arch.trait
   });
 
+  posthog.capture('match_revealed', {
+    mode: state.mode,
+    match_name: arch.name
+  });
+  posthog.setPersonProperties({
+    archetype: arch.name,
+    quiz_mode: state.mode
+  });
+
   const isGamePath = state.mode === 'adventure' || state.mode === 'play';
   const _k = isGamePath
     ? 'aHR0cHM6Ly9vdXJkcmVhbS5haS9nYW1lcz9yZWY9Z29vZ2xlY3BjJm9kbmV0d29yaw=='
@@ -1197,6 +1235,10 @@ function scheduleRedirect() {
     track('quiz_redirect', {
       quiz_mode: state.mode,
       redirect_url: url
+    });
+    posthog.capture('redirected', {
+      mode: state.mode,
+      destination: url
     });
     getDecoratedUrl(url).then(function(finalUrl) {
       window.location.href = finalUrl;
