@@ -1251,6 +1251,7 @@ function scheduleRedirect() {
       var r = relationshipMap[state.answers[2]];
       if (r) params.set('Q15', r);
       params.set('Q18', 'true');
+      params.set('s', '6');
 
       var qStr = params.toString();
       if (qStr) url += '&' + qStr;
