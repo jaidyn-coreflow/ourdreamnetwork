@@ -1231,7 +1231,31 @@ function scheduleRedirect() {
     ? 'aHR0cHM6Ly9vdXJkcmVhbS5haS9nYW1lcz9yZWY9Z29vZ2xlY3BjJm9kbmV0d29yaw=='
     : 'aHR0cHM6Ly9vdXJkcmVhbS5haS9jcmVhdGU/cmVmPWdvb2dsZWNwYyZvZG5ldHdvcms=';
   setTimeout(() => {
-    const url = atob(_k);
+    let url = atob(_k);
+
+    // Append Q-codes for /create path (companion/romance modes)
+    if (!isGamePath) {
+      const genderMap = { male: 'Male', female: 'Female' };
+      const personalityMap = { playful: 'Playful', mysterious: 'Mysterious', caring: 'Caring', bold: 'Confident' };
+      const relationshipMap = state.mode === 'romance'
+        ? { intimate: 'Lover', dreamy: 'Crush', spontaneous: 'Stranger', comfort: 'Roommate' }
+        : { deep: 'Lover', adventure: 'Stranger', cozy: 'Roommate', romantic: 'Crush' };
+
+      const params = new URLSearchParams();
+      var g = genderMap[state.answers[0]];
+      if (g) params.set('Q1', g);
+      params.set('Q10', 'Athletic');
+      params.set('Q12', 'ASMR');
+      var p = personalityMap[state.answers[1]];
+      if (p) params.set('Q13', p);
+      var r = relationshipMap[state.answers[2]];
+      if (r) params.set('Q15', r);
+      params.set('Q18', 'true');
+
+      var qStr = params.toString();
+      if (qStr) url += '&' + qStr;
+    }
+
     track('quiz_redirect', {
       quiz_mode: state.mode,
       redirect_url: url
