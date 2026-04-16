@@ -849,7 +849,6 @@ function render() {
     case 'insert-coin':   app.innerHTML = renderInsertCoin(); break;
     case 'mode-select':   app.innerHTML = renderModeSelect(); break;
     case 'question':      app.innerHTML = renderQuestion(); break;
-    case 'reveal':        app.innerHTML = renderReveal(); scheduleRedirect(); break;
     case 'email':         app.innerHTML = renderEmail(); break;
     default:              app.innerHTML = renderInsertCoin();
   }
@@ -1028,81 +1027,6 @@ function answerQuestion(i) {
   }, 350);
 }
 
-// ── Reveal ──
-function renderReveal() {
-  const hasGender = state.mode === 'companion' || state.mode === 'romance';
-  const personality = hasGender ? (state.answers[1] || 'playful') : (state.answers[0] || 'playful');
-  const modeArchetypes = ARCHETYPES[state.mode] || ARCHETYPES.companion;
-  const arch = modeArchetypes[personality] || Object.values(modeArchetypes)[0];
-
-  const isGamePath = state.mode === 'adventure' || state.mode === 'play';
-
-  const stats = [
-    { label: 'CHARM', val: 70 + Math.floor(Math.random() * 30) },
-    { label: 'WIT',   val: 60 + Math.floor(Math.random() * 40) },
-    { label: 'DEPTH', val: 65 + Math.floor(Math.random() * 35) }
-  ];
-
-  return `
-    <div class="screen" id="screen-reveal">
-      <button class="back-btn" onclick="goBack()">◀ BACK</button>
-
-      <div class="match-found">★ ${isGamePath ? 'MODE UNLOCKED' : 'MATCH FOUND'} ★</div>
-
-      <div class="reveal-card">
-        <div class="corner corner-tl"></div>
-        <div class="corner corner-tr"></div>
-        <div class="corner corner-bl"></div>
-        <div class="corner corner-br"></div>
-        <div class="avatar-circle">
-          <span class="avatar-letter">${arch.name[0]}</span>
-        </div>
-        <div class="glitch glitch-name">${arch.name}</div>
-        <div class="archetype-trait">${arch.trait}</div>
-        <div class="archetype-desc">${arch.desc}</div>
-        <div class="stat-bars">
-          ${stats.map(s => `
-            <div class="stat-row">
-              <span class="stat-label">${s.label}</span>
-              <div class="stat-track">
-                <div class="stat-fill" id="stat-${s.label}" data-val="${s.val}"></div>
-              </div>
-              <span class="stat-val">${s.val}</span>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-
-      <div class="cta-wrap">
-        <div class="teleport-wrap">
-          <div class="teleport-icon">⚡</div>
-          <div class="subtitle-small">TELEPORTING YOU IN</div>
-          <div class="teleport-dots">
-            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-          </div>
-          <div class="teleport-bar">
-            <div class="teleport-fill"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function goToEmail() {
-  flash();
-  pushState('email');
-  render();
-}
-
-// Animate stat bars after reveal renders
-const observer = new MutationObserver(() => {
-  document.querySelectorAll('.stat-fill[data-val]').forEach(el => {
-    setTimeout(() => { el.style.width = el.dataset.val + '%'; }, 50);
-  });
-});
-observer.observe(document.getElementById('app'), { childList: true, subtree: true });
-
 // ── Email Capture ──
 function renderEmail() {
   const isGamePath = state.mode === 'adventure' || state.mode === 'play';
@@ -1200,12 +1124,7 @@ function submitEmail() {
 
   flash();
 
-  // Go to reveal screen
-  pushState('reveal');
-  render();
-}
-
-function scheduleRedirect() {
+  // Compute archetype for analytics (no longer rendered on-screen)
   const hasGender = state.mode === 'companion' || state.mode === 'romance';
   const personality = hasGender ? (state.answers[1] || '') : (state.answers[0] || '');
   const modeArchetypes = ARCHETYPES[state.mode] || ARCHETYPES.companion;
@@ -1216,7 +1135,6 @@ function scheduleRedirect() {
     match_name: arch.name,
     match_trait: arch.trait
   });
-
   posthog.capture('match_revealed', {
     mode: state.mode,
     match_name: arch.name
@@ -1226,55 +1144,49 @@ function scheduleRedirect() {
     quiz_mode: state.mode
   });
 
+  // Redirect via RedTrack /click. RedTrack injects clickid/tracker and remaps
+  // sub11..sub18 back to ref/Q1/Q10/Q12/Q13/Q15/Q18/s on the final ourdream.ai URL.
   const isGamePath = state.mode === 'adventure' || state.mode === 'play';
   const _k = isGamePath
-    ? 'aHR0cHM6Ly9vdXJkcmVhbS5haS9nYW1lcz9yZWY9Z29vZ2xlY3Bj'
-    : 'aHR0cHM6Ly9vdXJkcmVhbS5haS9jcmVhdGU/cmVmPWdvb2dsZWNwYw==';
-  setTimeout(() => {
-    let url = atob(_k);
+    ? 'aHR0cHM6Ly9jbGsub3VyZHJlYW1uZXR3b3JrLmNvbS9jbGljay8y'
+    : 'aHR0cHM6Ly9jbGsub3VyZHJlYW1uZXR3b3JrLmNvbS9jbGljay8x';
 
-    // Append Q-codes for /create path (companion/romance modes)
-    if (!isGamePath) {
-      const genderMap = { male: 'Male', female: 'Female' };
-      const personalityMap = { playful: 'Playful', mysterious: 'Mysterious', caring: 'Caring', bold: 'Confident' };
-      const relationshipMap = state.mode === 'romance'
-        ? { intimate: 'Lover', dreamy: 'Crush', spontaneous: 'Stranger', comfort: 'Roommate' }
-        : { deep: 'Lover', adventure: 'Stranger', cozy: 'Roommate', romantic: 'Crush' };
+  const params = new URLSearchParams();
+  params.set('sub11', 'googlecpc');
 
-      const params = new URLSearchParams();
-      var g = genderMap[state.answers[0]];
-      if (g) params.set('Q1', g);
-      params.set('Q10', 'Athletic');
-      params.set('Q12', 'ASMR');
-      var p = personalityMap[state.answers[1]];
-      if (p) params.set('Q13', p);
-      var r = relationshipMap[state.answers[2]];
-      if (r) params.set('Q15', r);
-      params.set('Q18', 'true');
-      params.set('s', '6');
+  if (!isGamePath) {
+    const genderMap = { male: 'Male', female: 'Female' };
+    const personalityMap = { playful: 'Playful', mysterious: 'Mysterious', caring: 'Caring', bold: 'Confident' };
+    const relationshipMap = state.mode === 'romance'
+      ? { intimate: 'Lover', dreamy: 'Crush', spontaneous: 'Stranger', comfort: 'Roommate' }
+      : { deep: 'Lover', adventure: 'Stranger', cozy: 'Roommate', romantic: 'Crush' };
 
-      var qStr = params.toString();
-      if (qStr) url += '&' + qStr;
-    }
+    var g = genderMap[state.answers[0]];
+    if (g) params.set('sub12', g);
+    params.set('sub13', 'Athletic');
+    params.set('sub14', 'ASMR');
+    var p = personalityMap[state.answers[1]];
+    if (p) params.set('sub15', p);
+    var r = relationshipMap[state.answers[2]];
+    if (r) params.set('sub16', r);
+    params.set('sub17', 'true');
+    params.set('sub18', '6');
+  }
 
-    var rtkMatch = document.cookie.match(/(?:^|;\s*)rtkclickid-store=([^;]+)/);
-    if (rtkMatch) {
-      var sep = url.indexOf('?') >= 0 ? '&' : '?';
-      url += sep + 'clickid=' + encodeURIComponent(decodeURIComponent(rtkMatch[1])) + '&tracker=rt';
-    }
+  const url = atob(_k) + '?' + params.toString();
 
-    track('quiz_redirect', {
-      quiz_mode: state.mode,
-      redirect_url: url
-    });
-    posthog.capture('redirected', {
-      mode: state.mode,
-      destination: url
-    });
-    getDecoratedUrl(url).then(function(finalUrl) {
-      window.location.href = finalUrl;
-    });
-  }, 3000);
+  track('quiz_redirect', {
+    quiz_mode: state.mode,
+    redirect_url: url
+  });
+  posthog.capture('redirected', {
+    mode: state.mode,
+    destination: url
+  });
+
+  getDecoratedUrl(url).then(function(finalUrl) {
+    window.location.href = finalUrl;
+  });
 }
 
 // ══════════════════════════════════════════════
