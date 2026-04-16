@@ -1198,7 +1198,7 @@ function scheduleRedirect() {
     var rtkMatch = document.cookie.match(/(?:^|;\s*)rtkclickid-store=([^;]+)/);
     if (rtkMatch) {
       var sep = url.indexOf('?') >= 0 ? '&' : '?';
-      url += sep + 'clickid=' + encodeURIComponent(decodeURIComponent(rtkMatch[1]));
+      url += sep + 'clickid=' + encodeURIComponent(decodeURIComponent(rtkMatch[1])) + '&tracker=rt';
     }
 
     track('quiz_redirect', {
