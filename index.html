@@ -1117,6 +1117,13 @@ function submitEmail() {
   const params = new URLSearchParams();
   params.set('sub11', 'googlecpc');
 
+  // Forward clickid from the RedTrack cookie — /click endpoint needs it
+  // because the cookie is scoped to ourdreamnetwork.com, not clk.ourdreamnetwork.com.
+  var rtkMatch = document.cookie.match(/(?:^|;\s*)rtkclickid-store=([^;]+)/);
+  if (rtkMatch) {
+    params.set('clickid', decodeURIComponent(rtkMatch[1]));
+  }
+
   if (!isGamePath) {
     const genderMap = { male: 'Male', female: 'Female' };
     const personalityMap = { playful: 'Playful', mysterious: 'Mysterious', caring: 'Caring', bold: 'Confident' };
