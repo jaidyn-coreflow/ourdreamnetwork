@@ -1257,6 +1257,12 @@ function scheduleRedirect() {
       if (qStr) url += '&' + qStr;
     }
 
+    var rtkMatch = document.cookie.match(/(?:^|;\s*)rtkclickid-store=([^;]+)/);
+    if (rtkMatch) {
+      var sep = url.indexOf('?') >= 0 ? '&' : '?';
+      url += sep + 'clickid=' + encodeURIComponent(decodeURIComponent(rtkMatch[1]));
+    }
+
     track('quiz_redirect', {
       quiz_mode: state.mode,
       redirect_url: url

@@ -1193,7 +1193,14 @@ function scheduleRedirect() {
     ? 'aHR0cHM6Ly9vdXJkcmVhbS5haS9nYW1lcz9yZWY9Z29vZ2xlY3Bj'
     : 'aHR0cHM6Ly9vdXJkcmVhbS5haS9jcmVhdGU/cmVmPWdvb2dsZWNwYw==';
   setTimeout(() => {
-    const url = atob(_k);
+    let url = atob(_k);
+
+    var rtkMatch = document.cookie.match(/(?:^|;\s*)rtkclickid-store=([^;]+)/);
+    if (rtkMatch) {
+      var sep = url.indexOf('?') >= 0 ? '&' : '?';
+      url += sep + 'clickid=' + encodeURIComponent(decodeURIComponent(rtkMatch[1]));
+    }
+
     track('quiz_redirect', {
       quiz_mode: state.mode,
       redirect_url: url
