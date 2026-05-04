@@ -19,8 +19,124 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
 
 <style>
-/* CSS goes here in Task 3 */
-body { margin: 0; background: #0a0a0a; color: #fff; font-family: system-ui, -apple-system, sans-serif; min-height: 100dvh; }
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #0a0a0a;
+  color: #fff;
+  font-family: system-ui, -apple-system, sans-serif;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ambient background (ported from PAGE_CSS) */
+.c3s-ambient { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.c3s-ambient::before {
+  content: ''; position: absolute; top: -20%; left: -10%; width: 60%; height: 60%;
+  background: radial-gradient(ellipse, rgba(219,39,119,0.08) 0%, transparent 70%);
+  animation: c3s-drift 20s ease-in-out infinite;
+}
+.c3s-ambient::after {
+  content: ''; position: absolute; bottom: -20%; right: -10%; width: 50%; height: 50%;
+  background: radial-gradient(ellipse, rgba(219,39,119,0.06) 0%, transparent 70%);
+  animation: c3s-drift 25s ease-in-out infinite reverse;
+}
+@keyframes c3s-drift {
+  0%, 100% { transform: translate(0,0); }
+  33% { transform: translate(5%,-3%); }
+  66% { transform: translate(-3%,5%); }
+}
+@keyframes c3s-stepIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes c3s-stepOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-8px); } }
+@keyframes c3s-fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes c3s-spin { to { transform: rotate(360deg); } }
+.c3s-step-enter { animation: c3s-stepIn 0.4s ease forwards; }
+.c3s-step-exit  { animation: c3s-stepOut 0.2s ease forwards; }
+
+/* Layout */
+#root { position: relative; z-index: 1; min-height: 100dvh; display: flex; flex-direction: column; }
+.c3s-container { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 20px 16px 16px; max-width: 520px; margin: 0 auto; width: 100%; }
+@media (min-width: 768px) { .c3s-container { padding: 32px 24px 24px; max-width: 700px; } }
+
+/* Logo */
+.c3s-logo { display: block; width: 75%; margin: 0 auto 20px; opacity: 0.85; transition: opacity 0.2s; text-decoration: none; }
+.c3s-logo:hover { opacity: 1; }
+.c3s-logo svg { width: 100%; height: auto; }
+@media (min-width: 768px) { .c3s-logo { margin-bottom: 24px; } }
+
+/* Step progress bar */
+.c3s-progress { display: flex; gap: 8px; width: 100%; margin-bottom: 24px; }
+.c3s-progress-seg { flex: 1; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; cursor: default; position: relative; overflow: hidden; }
+.c3s-progress-seg.is-clickable { cursor: pointer; }
+.c3s-progress-fill { position: absolute; inset: 0; width: 0; background: linear-gradient(90deg, #ec4899, #db2777); transition: width 0.4s ease; }
+.c3s-progress-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); margin-top: 6px; text-align: center; }
+.c3s-progress-label.is-active { color: #ec4899; }
+
+/* Headings */
+.c3s-h1 { font-size: 28px; line-height: 1.2; font-weight: 700; text-align: center; margin: 0 0 8px; }
+.c3s-h2 { font-size: 16px; font-weight: 500; text-align: center; color: rgba(255,255,255,0.7); margin: 0 0 24px; }
+@media (min-width: 768px) { .c3s-h1 { font-size: 36px; } .c3s-h2 { font-size: 18px; } }
+
+/* Style picker (Step 1) */
+.c3s-style-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; }
+.c3s-style-card { position: relative; aspect-ratio: 3/4; border-radius: 16px; overflow: hidden; cursor: pointer; border: 2px solid rgba(255,255,255,0.1); transition: border-color 0.2s, transform 0.15s; background: #1a1a1a; }
+.c3s-style-card:hover, .c3s-style-card:focus-visible { border-color: rgba(236,72,153,0.5); transform: translateY(-2px); }
+.c3s-style-card video, .c3s-style-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.c3s-style-card-label { position: absolute; bottom: 12px; left: 12px; right: 12px; font-size: 18px; font-weight: 600; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
+
+/* Pick grid (Step 2 sub-component) */
+.c3s-pick-section { width: 100%; margin-bottom: 20px; }
+.c3s-pick-title { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.8); margin: 0 0 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+.c3s-pick-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.c3s-pick-card { position: relative; aspect-ratio: 1; border-radius: 12px; overflow: hidden; cursor: pointer; border: 2px solid rgba(255,255,255,0.08); transition: border-color 0.15s, transform 0.1s; background: #1a1a1a; }
+.c3s-pick-card:hover { border-color: rgba(236,72,153,0.4); }
+.c3s-pick-card.is-selected { border-color: #ec4899; box-shadow: 0 0 0 3px rgba(236,72,153,0.25); }
+.c3s-pick-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.c3s-pick-card-label { position: absolute; bottom: 6px; left: 0; right: 0; text-align: center; font-size: 12px; font-weight: 600; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
+
+/* Personality (Step 3) */
+.c3s-persona-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-bottom: 16px; }
+.c3s-persona-card { position: relative; aspect-ratio: 3/4; border-radius: 16px; overflow: hidden; border: 2px solid rgba(255,255,255,0.1); background: #1a1a1a; cursor: pointer; transition: border-color 0.2s; }
+.c3s-persona-card:hover { border-color: rgba(236,72,153,0.4); }
+.c3s-persona-card.is-selected { border-color: #ec4899; box-shadow: 0 0 0 3px rgba(236,72,153,0.25); }
+.c3s-persona-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.c3s-persona-meta { position: absolute; left: 12px; right: 12px; bottom: 10px; }
+.c3s-persona-name { font-size: 16px; font-weight: 700; text-shadow: 0 2px 8px rgba(0,0,0,0.7); }
+.c3s-persona-vibe { font-size: 12px; color: rgba(255,255,255,0.85); text-shadow: 0 1px 4px rgba(0,0,0,0.7); }
+
+/* Primary CTA */
+.c3s-cta {
+  display: block; width: 100%; padding: 16px 24px; border: none; border-radius: 12px;
+  background: linear-gradient(90deg, #ec4899, #db2777); color: #fff;
+  font-size: 18px; font-weight: 700; cursor: pointer; transition: transform 0.1s, box-shadow 0.2s;
+  margin-top: 8px;
+}
+.c3s-cta:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(236,72,153,0.35); }
+.c3s-cta:disabled { opacity: 0.6; cursor: not-allowed; }
+.c3s-cta-spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: c3s-spin 0.7s linear infinite; vertical-align: middle; margin-left: 8px; }
+
+/* Email gate (overlay) */
+.c3s-gate { position: fixed; inset: 0; z-index: 100; background: rgba(10,10,10,0.92); backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: center; padding: 20px; animation: c3s-fadeIn 0.25s ease; }
+.c3s-gate-card { width: 100%; max-width: 420px; background: rgba(20,20,20,0.85); border: 1px solid rgba(236,72,153,0.25); border-radius: 16px; padding: 28px 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); }
+.c3s-gate-h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; text-align: center; }
+.c3s-gate-sub { font-size: 14px; color: rgba(255,255,255,0.6); text-align: center; margin: 0 0 20px; }
+.c3s-gate-input { width: 100%; padding: 14px 16px; background: rgba(255,255,255,0.05); border: 1.5px solid rgba(255,255,255,0.1); border-radius: 10px; color: #fff; font-size: 16px; outline: none; transition: border-color 0.15s; }
+.c3s-gate-input:focus { border-color: #ec4899; }
+.c3s-gate-error { display: none; color: #ef4444; font-size: 13px; margin-top: 8px; }
+.c3s-gate-error.is-shown { display: block; }
+.c3s-gate-back { display: inline-block; margin-top: 14px; font-size: 13px; color: rgba(255,255,255,0.5); cursor: pointer; background: none; border: none; padding: 0; }
+.c3s-gate-back:hover { color: rgba(255,255,255,0.8); }
+.c3s-gate-legal { font-size: 11px; color: rgba(255,255,255,0.4); text-align: center; margin-top: 16px; }
+.c3s-gate-legal a { color: rgba(255,255,255,0.6); text-decoration: underline; }
+
+/* Legal footer */
+.legal-footer { padding: 16px; text-align: center; position: relative; z-index: 1; }
+.legal-footer a { color: rgba(255,255,255,0.4); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin: 0 12px; text-decoration: none; }
+.legal-footer a:hover { color: rgba(255,255,255,0.8); }
+
+/* Visibility helper for steps */
+.c3s-step { display: none; width: 100%; }
+.c3s-step.is-active { display: block; }
 </style>
 </head>
 <body>
@@ -31,7 +147,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <div class="c3s-ambient"></div>
 
-<div id="root" class="relative z-1 min-h-dvh flex flex-col"></div>
+<div id="root"></div>
 
 <div class="legal-footer">
   <a href="/terms.html">TERMS</a>
