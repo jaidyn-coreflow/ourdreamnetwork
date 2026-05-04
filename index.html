@@ -344,6 +344,38 @@ function renderStep3() { /* Task 10 */ }
 function renderEmailGate(_visible) { /* Task 11 */ }
 
 // ══════════════════════════════════════════════
+//  TRACKING (verbatim port from quiz-old.html lines 610-636)
+// ══════════════════════════════════════════════
+
+window.dataLayer = window.dataLayer || [];
+
+function track(eventName, params) {
+  const data = { event: eventName, ...params };
+  window.dataLayer.push(data);
+  console.log('[dataLayer]', data);
+}
+
+function getDecoratedUrl(baseUrl) {
+  return new Promise((resolve) => {
+    // Create a temporary anchor and let GTM's cross-domain linker decorate it
+    const a = document.createElement('a');
+    a.href = baseUrl;
+    a.style.cssText = 'position:fixed;left:-9999px;';
+    document.body.appendChild(a);
+
+    // GTM decorates links on mousedown — trigger it
+    a.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+
+    // Give GTM a tick to decorate, then read the href
+    setTimeout(() => {
+      const decoratedUrl = a.href;
+      document.body.removeChild(a);
+      resolve(decoratedUrl);
+    }, 100);
+  });
+}
+
+// ══════════════════════════════════════════════
 //  INIT
 // ══════════════════════════════════════════════
 
