@@ -576,7 +576,99 @@ function buildQParams() {
 
   return params;
 }
-function renderEmailGate(_visible) { /* Task 11 */ }
+function renderEmailGate(visible) {
+  const mount = document.getElementById('c3s-gate-mount');
+  if (!mount) return;
+
+  if (!visible) {
+    mount.innerHTML = '';
+    return;
+  }
+
+  if (mount.dataset.rendered === '1') return;
+  mount.dataset.rendered = '1';
+
+  mount.innerHTML = `
+    <div class="c3s-gate" role="dialog" aria-modal="true" aria-labelledby="c3s-gate-title">
+      <div class="c3s-gate-card">
+        <h1 id="c3s-gate-title" class="c3s-gate-h1">Almost there - enter to reveal your creation</h1>
+        <p class="c3s-gate-sub">We'll send your match details to this email.</p>
+        <form id="c3s-gate-form" novalidate>
+          <input type="email" name="email" id="c3s-gate-email" class="c3s-gate-input"
+                 placeholder="you@example.com" autocomplete="email" autofocus required>
+          <div id="c3s-gate-err" class="c3s-gate-error">Please enter a valid email.</div>
+          <button type="submit" id="c3s-gate-submit" class="c3s-cta" style="margin-top: 14px;">
+            Continue
+          </button>
+        </form>
+        <div style="text-align:center;">
+          <button type="button" id="c3s-gate-back" class="c3s-gate-back">← back</button>
+        </div>
+        <div class="c3s-gate-legal">
+          By continuing you agree to our <a href="/terms.html">Terms</a> and <a href="/privacy.html">Privacy Policy</a>.
+        </div>
+      </div>
+    </div>
+  `;
+
+  const form   = document.getElementById('c3s-gate-form');
+  const input  = document.getElementById('c3s-gate-email');
+  const err    = document.getElementById('c3s-gate-err');
+  const submit = document.getElementById('c3s-gate-submit');
+  const back   = document.getElementById('c3s-gate-back');
+
+  back.addEventListener('click', () => {
+    mount.dataset.rendered = '';
+    setState({ currentStep: 3 });
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (state.submitting) return;
+
+    const email = input.value.trim();
+    if (!isValidEmail(email)) {
+      err.classList.add('is-shown');
+      input.focus();
+      return;
+    }
+    err.classList.remove('is-shown');
+
+    state.submitting = true;
+    submit.disabled = true;
+    submit.innerHTML = 'Continue<span class="c3s-cta-spinner" aria-hidden="true"></span>';
+
+    track('quiz_email_captured', { email_provided: true });
+
+    // Fire-and-forget save-email; we proceed regardless of outcome.
+    saveEmail(email).catch(err => console.warn('[save-email] failed:', err));
+
+    // Wired in Task 12.
+    redirectToRedtrack();
+  });
+}
+
+function isValidEmail(s) {
+  return /.+@.+\..+/.test(s);
+}
+
+function saveEmail(email) {
+  return fetch('/api/save-email', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email,
+      mode: 'companion',
+      answers: ['Female', state.style, state.ethnicity, state.hairStyle],
+      marketingConsent: false,
+    }),
+  });
+}
+
+// Stub — implemented in Task 12
+function redirectToRedtrack() {
+  console.log('[redirect] would redirect now (stub)');
+}
 
 // ══════════════════════════════════════════════
 //  TRACKING (verbatim port from quiz-old.html lines 610-636)
