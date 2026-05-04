@@ -155,9 +155,114 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 
 <script>
-// Data tables, state, render dispatcher, components, event handlers
-// All filled in by Tasks 4-12.
-console.log('[init] shell loaded');
+'use strict';
+
+// ══════════════════════════════════════════════
+//  ASSETS / CONSTANTS
+// ══════════════════════════════════════════════
+
+const LP = 'https://ouraidream.com/create-3step-assets';
+const REDTRACK_BASE_B64 = 'aHR0cHM6Ly9jbGsub3VyZHJlYW1uZXR3b3JrLmNvbS9jbGljay8x'; // clk.ourdreamnetwork.com/click/1
+const STEP_LABELS = ['Style', 'Look', 'Personality'];
+
+// ══════════════════════════════════════════════
+//  DATA TABLES (SFW-only — NSFW dropped per spec)
+//  Source of truth: create_v2/create-3step-flow.tsx
+// ══════════════════════════════════════════════
+
+const STYLE_VIDEOS = {
+  Realistic: {
+    poster: 'https://static.ourdream.ai/create-videos/sfw-realistic-female-poster.webp',
+    video:  'https://static.ourdream.ai/create-videos/w600/234b7ea4-be67-4b50-871e-8f65fe7a26f0.mp4',
+  },
+  Anime: {
+    poster: 'https://static.ourdream.ai/create-videos/sfw-anime-female-poster.webp',
+    video:  'https://static.ourdream.ai/create-videos/w600/514c0c25-05ec-452e-b56f-7e8841175aca.mp4',
+  },
+};
+
+const ETHNICITY = {
+  Realistic: [
+    { value: 'White',   label: 'White',  img: 'https://static.ourdream.ai/create-videos/sfw-realistic-white.webp' },
+    { value: 'Asian',   label: 'Asian',  img: 'https://static.ourdream.ai/create-videos/sfw-realistic-asian.webp' },
+    { value: 'Latina',  label: 'Latina', img: 'https://static.ourdream.ai/create-videos/sfw-realistic-latina.webp' },
+    { value: 'African', label: 'Black',  img: 'https://static.ourdream.ai/create-videos/sfw-realistic-african.webp' },
+    { value: 'Elf',     label: 'Elf',    img: 'https://static.ourdream.ai/create-videos/sfw-realistic-elf.webp' },
+    { value: 'Demon',   label: 'Demon',  img: 'https://static.ourdream.ai/create-videos/sfw-realistic-demon.webp' },
+  ],
+  Anime: [
+    { value: 'White',   label: 'White',  img: 'https://static.ourdream.ai/create-videos/sfw-anime-white.webp' },
+    { value: 'Asian',   label: 'Asian',  img: 'https://static.ourdream.ai/create-videos/sfw-anime-asian.webp' },
+    { value: 'Latina',  label: 'Latina', img: 'https://static.ourdream.ai/create-videos/sfw-anime-latina.webp' },
+    { value: 'African', label: 'Black',  img: 'https://static.ourdream.ai/create-videos/sfw-anime-african.webp' },
+    { value: 'Elf',     label: 'Elf',    img: 'https://static.ourdream.ai/create-videos/sfw-anime-elf.webp' },
+    { value: 'Demon',   label: 'Demon',  img: 'https://static.ourdream.ai/create-videos/sfw-anime-demon.webp' },
+  ],
+};
+
+const ETHNICITY_APPEARANCE = {
+  White:   { skinTone: 'Fair',   hairColor: 'Blonde',   eyeColor: 'Blue' },
+  Asian:   { skinTone: 'Light',  hairColor: 'Black',    eyeColor: 'Brown' },
+  Latina:  { skinTone: 'Olive',  hairColor: 'Brunette', eyeColor: 'Brown' },
+  African: { skinTone: 'Dark',   hairColor: 'Black',    eyeColor: 'Brown' },
+  Elf:     { skinTone: 'Fair',   hairColor: 'Silver',   eyeColor: 'Green' },
+  Demon:   { skinTone: 'Darker', hairColor: 'Red',      eyeColor: 'Red' },
+};
+
+const HAIR = {
+  Realistic: [
+    { value: 'Wavy',          label: 'Wavy',     img: 'https://static.ourdream.ai/create-videos/sfw-realistic-wavy.webp' },
+    { value: 'Long Straight', label: 'Long',     img: 'https://static.ourdream.ai/create-videos/sfw-realistic-long.webp' },
+    { value: 'Ponytail',      label: 'Ponytail', img: 'https://static.ourdream.ai/create-videos/sfw-realistic-ponytail.webp' },
+  ],
+  Anime: [
+    { value: 'Wavy',          label: 'Wavy',     img: 'https://static.ourdream.ai/create-videos/sfw-anime-wavy.webp' },
+    { value: 'Long Straight', label: 'Long',     img: 'https://static.ourdream.ai/create-videos/sfw-anime-long.webp' },
+    { value: 'Ponytail',      label: 'Ponytail', img: 'https://static.ourdream.ai/create-videos/sfw-anime-ponytail.webp' },
+  ],
+};
+
+const PHYSIQUE = {
+  Realistic: [
+    { value: 'slim',     label: 'Slim',     img: 'https://static.ourdream.ai/create-videos/sfw-realistic-slim.webp',     bodyType: 'Slim',        breastSize: 'Small',  buttSize: 'Skinny' },
+    { value: 'athletic', label: 'Athletic', img: 'https://static.ourdream.ai/create-videos/sfw-realistic-athletic.webp', bodyType: 'Athletic',    breastSize: 'Medium', buttSize: 'Athletic' },
+    { value: 'curvy',    label: 'Curvy',    img: 'https://static.ourdream.ai/create-videos/sfw-realistic-curvy.webp',    bodyType: 'Voluptuous',  breastSize: 'Large',  buttSize: 'Large' },
+  ],
+  Anime: [
+    { value: 'slim',     label: 'Slim',     img: 'https://static.ourdream.ai/create-videos/sfw-anime-slim.webp',     bodyType: 'Slim',        breastSize: 'Small',  buttSize: 'Skinny' },
+    { value: 'athletic', label: 'Athletic', img: 'https://static.ourdream.ai/create-videos/sfw-anime-athletic.webp', bodyType: 'Athletic',    breastSize: 'Medium', buttSize: 'Athletic' },
+    { value: 'curvy',    label: 'Curvy',    img: 'https://static.ourdream.ai/create-videos/sfw-anime-curvy.webp',    bodyType: 'Voluptuous',  breastSize: 'Large',  buttSize: 'Large' },
+  ],
+};
+
+const PERSONALITIES = {
+  Realistic: [
+    { id: 'sweet',     img: `${LP}/sfw-sweet.webp`,     personality: ['Sweet', 'Caring'],       relationship: ['Crush', 'Friend'],            occupation: ['Nurse', 'Librarian'],   hobby: ['Cooking', 'Gardening'],   fetish: ['Vanilla', 'Roleplay'] },
+    { id: 'flirty',    img: `${LP}/sfw-flirty.webp`,    personality: ['Flirty', 'Charming'],    relationship: ['Fling', 'Roommate'],          occupation: ['Bartender', 'Dancer'],  hobby: ['Dancing', 'Yoga'],        fetish: ['Lingerie', 'High Heels'] },
+    { id: 'shy',       img: `${LP}/sfw-shy.webp`,       personality: ['Shy', 'Mysterious'],     relationship: ['Stranger', 'Secret Admirer'], occupation: ['Artist', 'Photographer'], hobby: ['Reading', 'Painting'],  fetish: ['Blindfolds', 'Stockings'] },
+    { id: 'confident', img: `${LP}/sfw-confident.webp`, personality: ['Confident', 'Sassy'],    relationship: ['Lover', 'Colleague'],         occupation: ['Entrepreneur', 'Lawyer'], hobby: ['Running', 'Cycling'],   fetish: ['Uniforms', 'Corsets'] },
+  ],
+  Anime: [
+    { id: 'sweet',     img: `${LP}/sfw-anime-sweet.webp`,     personality: ['Sweet', 'Caring'],    relationship: ['Crush', 'Friend'],            occupation: ['Nurse', 'Librarian'],   hobby: ['Cooking', 'Gardening'],   fetish: ['Vanilla', 'Roleplay'] },
+    { id: 'flirty',    img: `${LP}/sfw-anime-flirty.webp`,    personality: ['Flirty', 'Charming'], relationship: ['Fling', 'Roommate'],          occupation: ['Bartender', 'Dancer'],  hobby: ['Dancing', 'Yoga'],        fetish: ['Lingerie', 'High Heels'] },
+    { id: 'shy',       img: `${LP}/sfw-anime-shy.webp`,       personality: ['Shy', 'Mysterious'],  relationship: ['Stranger', 'Secret Admirer'], occupation: ['Artist', 'Photographer'], hobby: ['Reading', 'Painting'],  fetish: ['Blindfolds', 'Stockings'] },
+    { id: 'confident', img: `${LP}/sfw-anime-confident.webp`, personality: ['Confident', 'Sassy'], relationship: ['Lover', 'Colleague'],         occupation: ['Entrepreneur', 'Lawyer'], hobby: ['Running', 'Cycling'],   fetish: ['Uniforms', 'Corsets'] },
+  ],
+};
+
+const PERSONALITY_DISPLAY = {
+  sweet:     { name: 'Sweet & Caring',     vibe: 'Warm, affectionate, always there for you' },
+  flirty:    { name: 'Flirty & Playful',   vibe: 'Teasing, fun, keeps you on your toes' },
+  shy:       { name: 'Shy & Mysterious',   vibe: 'Quiet charm, meaningful conversations' },
+  confident: { name: 'Confident & Bold',   vibe: 'Knows what they want, takes the lead' },
+};
+
+function pickRandom(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+console.log('[init] data tables loaded',
+  { styles: Object.keys(STYLE_VIDEOS), personalities: PERSONALITIES.Realistic.length });
 </script>
 </body>
 </html>
