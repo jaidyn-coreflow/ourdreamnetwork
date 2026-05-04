@@ -165,7 +165,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </svg>
     </a>
 
-    <div id="c3s-progress" class="c3s-progress" aria-label="Progress"></div>
+    <div id="c3s-progress" class="c3s-progress" role="group" aria-label="Step progress"></div>
 
     <section id="step-1" class="c3s-step"></section>
     <section id="step-2" class="c3s-step"></section>
@@ -337,7 +337,51 @@ function toggleStep(id, isActive) {
 }
 
 // Stubs filled in by later tasks
-function renderProgressBar() { /* Task 7 */ }
+function renderProgressBar() {
+  const container = document.getElementById('c3s-progress');
+  if (!container) return;
+
+  const stepNum = typeof state.currentStep === 'number' ? state.currentStep : 3; // gate counts as on step 3
+  container.innerHTML = '';
+
+  STEP_LABELS.forEach((label, i) => {
+    const idx = i + 1;
+    const completed = idx < stepNum;
+    const active = idx === stepNum;
+    const clickable = completed && state.currentStep !== 'email';
+
+    const seg = document.createElement('div');
+    seg.className = 'c3s-progress-seg' + (clickable ? ' is-clickable' : '');
+
+    const fill = document.createElement('div');
+    fill.className = 'c3s-progress-fill';
+    fill.style.width = (idx <= stepNum) ? '100%' : '0%';
+    seg.appendChild(fill);
+
+    if (clickable) {
+      seg.addEventListener('click', () => goToStep(idx));
+    }
+
+    const wrap = document.createElement('div');
+    wrap.style.flex = '1';
+    wrap.appendChild(seg);
+
+    const labelEl = document.createElement('div');
+    labelEl.className = 'c3s-progress-label' + (active ? ' is-active' : '');
+    labelEl.textContent = label;
+    wrap.appendChild(labelEl);
+
+    container.appendChild(wrap);
+  });
+}
+
+function goToStep(n) {
+  if (state.autoAdvanceTimer) {
+    clearTimeout(state.autoAdvanceTimer);
+    state.autoAdvanceTimer = null;
+  }
+  setState({ currentStep: n });
+}
 function renderStep1() { /* Task 8 */ }
 function renderStep2() { /* Task 9 */ }
 function renderStep3() { /* Task 10 */ }
