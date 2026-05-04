@@ -493,7 +493,89 @@ function maybeAutoAdvance() {
     }
   }, 350);
 }
-function renderStep3() { /* Task 10 */ }
+function renderStep3() {
+  const root = document.getElementById('step-3');
+  root.classList.add('c3s-step-enter');
+  const styleKey = state.style || 'Realistic';
+
+  const cards = PERSONALITIES[styleKey].map(p => {
+    const display = PERSONALITY_DISPLAY[p.id];
+    const isSelected = state.personality === p.id;
+    return `
+      <button type="button" class="c3s-persona-card${isSelected ? ' is-selected' : ''}"
+              data-personality="${p.id}" aria-label="Choose ${display.name}">
+        <img src="${p.img}" alt="${display.name}" loading="lazy">
+        <div class="c3s-persona-meta">
+          <div class="c3s-persona-name">${display.name}</div>
+          <div class="c3s-persona-vibe">${display.vibe}</div>
+        </div>
+      </button>
+    `;
+  }).join('');
+
+  root.innerHTML = `
+    <h1 class="c3s-h1">Pick her personality</h1>
+    <p class="c3s-h2">This shapes how she talks and acts.</p>
+    <div class="c3s-persona-grid">${cards}</div>
+    <button type="button" id="c3s-final-cta" class="c3s-cta" ${state.personality ? '' : 'disabled'}>
+      Meet your match
+    </button>
+  `;
+
+  root.querySelectorAll('.c3s-persona-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const id = card.dataset.personality;
+      track('quiz_pick', { step: 3, key: 'personality', value: id });
+      setState({ personality: id });
+    });
+  });
+
+  const cta = root.querySelector('#c3s-final-cta');
+  cta.addEventListener('click', () => {
+    if (!state.personality) return;
+    state.qParams = buildQParams();
+    track('quiz_step_complete', { step: 3, personality: state.personality });
+    setState({ currentStep: 'email' });
+  });
+}
+
+function buildQParams() {
+  const styleKey = state.style;
+  const eth = state.ethnicity;
+  const phys = state.physique;
+  const hair = state.hairStyle || 'Wavy';
+  const appearance = ETHNICITY_APPEARANCE[eth] || ETHNICITY_APPEARANCE.White;
+  const persona = PERSONALITIES[styleKey].find(p => p.id === state.personality)
+              || PERSONALITIES[styleKey][0];
+
+  const params = new URLSearchParams();
+
+  // Carry over inbound URL params, except the Q-keys we'll be setting
+  const skip = new Set(['Q1','Q2','Q3','Q4','Q5','Q6','Q7','Q8','Q9','Q10','Q13','Q14','Q15','Q16','Q17','Q18','s']);
+  state.inboundParams.forEach((v, k) => { if (!skip.has(k)) params.set(k, v); });
+
+  if (!params.has('ref')) params.set('ref', 'create-3step');
+
+  params.set('Q1', 'Female');
+  params.set('Q2', styleKey);
+  params.set('Q3', eth);
+  params.set('Q4', phys.breastSize);
+  params.set('Q5', phys.buttSize);
+  params.set('Q6', appearance.skinTone);
+  params.set('Q7', appearance.hairColor);
+  params.set('Q8', hair);
+  params.set('Q9', appearance.eyeColor);
+  params.set('Q10', phys.bodyType);
+  params.set('Q13', pickRandom(persona.personality));
+  params.set('Q14', pickRandom(persona.occupation));
+  params.set('Q15', pickRandom(persona.relationship));
+  params.set('Q16', pickRandom(persona.hobby));
+  params.set('Q17', pickRandom(persona.fetish));
+  params.set('Q18', 'true');
+  params.set('s', '6');
+
+  return params;
+}
 function renderEmailGate(_visible) { /* Task 11 */ }
 
 // ══════════════════════════════════════════════
