@@ -82,7 +82,7 @@ body {
 .c3s-style-card { position: relative; aspect-ratio: 3/4; border-radius: 16px; overflow: hidden; cursor: pointer; border: 2px solid rgba(255,255,255,0.1); transition: border-color 0.2s, transform 0.15s; background: #1a1a1a; }
 .c3s-style-card:hover, .c3s-style-card:focus-visible { border-color: rgba(236,72,153,0.5); transform: translateY(-2px); }
 .c3s-style-card video, .c3s-style-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.c3s-style-card-label { position: absolute; bottom: 12px; left: 12px; right: 12px; font-size: 18px; font-weight: 600; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
+.c3s-style-card-label { position: absolute; bottom: 12px; left: 12px; right: 12px; font-size: 18px; font-weight: 600; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
 
 /* Pick grid (Step 2 sub-component) */
 .c3s-pick-section { width: 100%; margin-bottom: 20px; }
@@ -92,7 +92,7 @@ body {
 .c3s-pick-card:hover { border-color: rgba(236,72,153,0.4); }
 .c3s-pick-card.is-selected { border-color: #ec4899; box-shadow: 0 0 0 3px rgba(236,72,153,0.25); }
 .c3s-pick-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.c3s-pick-card-label { position: absolute; bottom: 6px; left: 0; right: 0; text-align: center; font-size: 12px; font-weight: 600; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
+.c3s-pick-card-label { position: absolute; bottom: 6px; left: 0; right: 0; text-align: center; font-size: 12px; font-weight: 600; color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
 
 /* Personality (Step 3) */
 .c3s-persona-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-bottom: 16px; }
@@ -101,8 +101,8 @@ body {
 .c3s-persona-card.is-selected { border-color: #ec4899; box-shadow: 0 0 0 3px rgba(236,72,153,0.25); }
 .c3s-persona-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .c3s-persona-meta { position: absolute; left: 12px; right: 12px; bottom: 10px; }
-.c3s-persona-name { font-size: 16px; font-weight: 700; text-shadow: 0 2px 8px rgba(0,0,0,0.7); }
-.c3s-persona-vibe { font-size: 12px; color: rgba(255,255,255,0.85); text-shadow: 0 1px 4px rgba(0,0,0,0.7); }
+.c3s-persona-name { font-size: 16px; font-weight: 700; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.7); }
+.c3s-persona-vibe { font-size: 12px; color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,0.7); }
 
 /* Primary CTA */
 .c3s-cta {
