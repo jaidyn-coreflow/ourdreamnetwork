@@ -1,8 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Create AI Girlfriend | Design Your Perfect Companion | ourdream.ai</title>
+<meta name="description" content="Create your AI girlfriend on Ourdream in 30 seconds. Choose her look, personality, and style. 100% private, always available.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://static.ourdream.ai" crossorigin>
+<link rel="preconnect" href="https://ouraidream.com" crossorigin>
+
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -10,559 +17,126 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-5VRS8QPJ');</script>
 <!-- End Google Tag Manager -->
-<!-- PostHog -->
-<script>
-    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group identify setPersonProperties setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags resetGroups onFeatureFlags addFeatureFlagsHandler onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
-    posthog.init('phc_lnZf1TDyHu6DlEWkC6gEW18MYXvVy1zLomxBtjSlXqy', {
-        api_host: 'https://us.i.posthog.com',
-        defaults: '2026-01-30'
-    })
-</script>
-<!-- End PostHog -->
-<title>ourdream — Character Builder</title>
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
 <style>
-  :root {
-    --pink: #ec4899;
-    --pink-glow: rgba(236, 72, 153, 0.6);
-    --pink-dim: rgba(236, 72, 153, 0.15);
-    --dark: #0a0a0f;
-    --darker: #06060a;
-    --cyan: #06b6d4;
-  }
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #0a0a0a;
+  color: #fff;
+  font-family: system-ui, -apple-system, sans-serif;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  ::selection { background: var(--pink); color: #000; }
+/* Ambient background (ported from PAGE_CSS) */
+.c3s-ambient { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.c3s-ambient::before {
+  content: ''; position: absolute; top: -20%; left: -10%; width: 60%; height: 60%;
+  background: radial-gradient(ellipse, rgba(219,39,119,0.08) 0%, transparent 70%);
+  animation: c3s-drift 20s ease-in-out infinite;
+}
+.c3s-ambient::after {
+  content: ''; position: absolute; bottom: -20%; right: -10%; width: 50%; height: 50%;
+  background: radial-gradient(ellipse, rgba(219,39,119,0.06) 0%, transparent 70%);
+  animation: c3s-drift 25s ease-in-out infinite reverse;
+}
+@keyframes c3s-drift {
+  0%, 100% { transform: translate(0,0); }
+  33% { transform: translate(5%,-3%); }
+  66% { transform: translate(-3%,5%); }
+}
+@keyframes c3s-stepIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes c3s-stepOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-8px); } }
+@keyframes c3s-fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes c3s-spin { to { transform: rotate(360deg); } }
+.c3s-step-enter { animation: c3s-stepIn 0.4s ease forwards; }
+.c3s-step-exit  { animation: c3s-stepOut 0.2s ease forwards; }
 
-  body {
-    background: var(--darker);
-    min-height: 100dvh;
-    overflow-x: hidden;
-    font-family: 'Rajdhani', sans-serif;
-  }
+/* Layout */
+#root { position: relative; z-index: 1; min-height: 100dvh; display: flex; flex-direction: column; }
+.c3s-container { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 20px 16px 16px; max-width: 520px; margin: 0 auto; width: 100%; }
+@media (min-width: 768px) { .c3s-container { padding: 32px 24px 24px; max-width: 700px; } }
 
-  #app {
-    min-height: 100dvh;
-    background: radial-gradient(ellipse at 50% 0%, rgba(236,72,153,0.06) 0%, var(--dark) 50%, var(--darker) 100%);
-    position: relative;
-  }
+/* Logo */
+.c3s-logo { display: block; width: 75%; margin: 0 auto 20px; opacity: 0.85; transition: opacity 0.2s; text-decoration: none; }
+.c3s-logo:hover { opacity: 1; }
+.c3s-logo svg { width: 100%; height: auto; }
+@media (min-width: 768px) { .c3s-logo { margin-bottom: 24px; } }
 
-  /* ── CRT Overlay ── */
-  .crt-overlay {
-    position: fixed; inset: 0; pointer-events: none; z-index: 9999;
-    background: repeating-linear-gradient(0deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 1px, transparent 1px, transparent 3px);
-    mix-blend-mode: multiply;
-  }
-  .crt-overlay::after {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.4) 100%);
-  }
+/* Step progress bar */
+.c3s-progress { display: flex; gap: 8px; width: 100%; margin-bottom: 24px; }
+.c3s-progress-seg { flex: 1; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; cursor: default; position: relative; overflow: hidden; }
+.c3s-progress-seg.is-clickable { cursor: pointer; }
+.c3s-progress-fill { position: absolute; inset: 0; width: 0; background: linear-gradient(90deg, #ec4899, #db2777); transition: width 0.4s ease; }
+.c3s-progress-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); margin-top: 6px; text-align: center; }
+.c3s-progress-label.is-active { color: #ec4899; }
 
-  /* ── Screen Flash ── */
-  .screen-flash {
-    position: fixed; inset: 0; z-index: 9998; pointer-events: none;
-    background: var(--pink); opacity: 0; transition: opacity 0.08s ease-out;
-  }
-  .screen-flash.active { opacity: 0.3; }
+/* Headings */
+.c3s-h1 { font-size: 28px; line-height: 1.2; font-weight: 700; text-align: center; margin: 0 0 8px; }
+.c3s-h2 { font-size: 16px; font-weight: 500; text-align: center; color: rgba(255,255,255,0.7); margin: 0 0 24px; }
+@media (min-width: 768px) { .c3s-h1 { font-size: 36px; } .c3s-h2 { font-size: 18px; } }
 
-  /* ── Particles ── */
-  .particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-  .particle {
-    position: absolute; bottom: -10px; border-radius: 50%;
-    background: var(--pink);
-    animation: floatUp var(--dur) var(--delay) infinite linear;
-  }
+/* Style picker (Step 1) */
+.c3s-style-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; }
+.c3s-style-card { position: relative; aspect-ratio: 3/4; border-radius: 16px; overflow: hidden; cursor: pointer; border: 2px solid rgba(255,255,255,0.1); transition: border-color 0.2s, transform 0.15s; background: #1a1a1a; }
+.c3s-style-card:hover, .c3s-style-card:focus-visible { border-color: rgba(236,72,153,0.5); transform: translateY(-2px); }
+.c3s-style-card video, .c3s-style-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.c3s-style-card-label { position: absolute; bottom: 12px; left: 12px; right: 12px; font-size: 18px; font-weight: 600; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
 
-  /* ── Screens ── */
-  .screen {
-    min-height: 100dvh; display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 40px 20px; gap: 36px;
-    position: relative; z-index: 1;
-    opacity: 0; transform: translateY(30px);
-    animation: screenIn 0.5s 0.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  }
-  .screen.exit {
-    animation: screenOut 0.25s ease-in forwards;
-  }
+/* Pick grid (Step 2 sub-component) */
+.c3s-pick-section { width: 100%; margin-bottom: 20px; }
+.c3s-pick-title { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.8); margin: 0 0 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+.c3s-pick-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.c3s-pick-card { position: relative; aspect-ratio: 1; border-radius: 12px; overflow: hidden; cursor: pointer; border: 2px solid rgba(255,255,255,0.08); transition: border-color 0.15s, transform 0.1s; background: #1a1a1a; }
+.c3s-pick-card:hover { border-color: rgba(236,72,153,0.4); }
+.c3s-pick-card.is-selected { border-color: #ec4899; box-shadow: 0 0 0 3px rgba(236,72,153,0.25); }
+.c3s-pick-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.c3s-pick-card-label { position: absolute; bottom: 6px; left: 0; right: 0; text-align: center; font-size: 12px; font-weight: 600; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
 
-  /* ── Glitch Text ── */
-  .glitch {
-    font-family: 'Press Start 2P', monospace;
-    color: #fff;
-    text-shadow: 2px 0 var(--pink), -2px 0 var(--cyan), 0 0 20px var(--pink-glow);
-    text-align: center;
-  }
-  .glitch-title { font-size: clamp(28px, 6vw, 48px); line-height: 1.3; }
-  .glitch-heading { font-size: clamp(16px, 4vw, 24px); }
-  .glitch-question { font-size: clamp(13px, 3.5vw, 18px); line-height: 1.5; }
-  .glitch-reveal { font-size: clamp(18px, 5vw, 28px); }
-  .glitch-name { font-size: 22px; margin-bottom: 8px; }
+/* Personality (Step 3) */
+.c3s-persona-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-bottom: 16px; }
+.c3s-persona-card { position: relative; aspect-ratio: 3/4; border-radius: 16px; overflow: hidden; border: 2px solid rgba(255,255,255,0.1); background: #1a1a1a; cursor: pointer; transition: border-color 0.2s; }
+.c3s-persona-card:hover { border-color: rgba(236,72,153,0.4); }
+.c3s-persona-card.is-selected { border-color: #ec4899; box-shadow: 0 0 0 3px rgba(236,72,153,0.25); }
+.c3s-persona-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.c3s-persona-meta { position: absolute; left: 12px; right: 12px; bottom: 10px; }
+.c3s-persona-name { font-size: 16px; font-weight: 700; text-shadow: 0 2px 8px rgba(0,0,0,0.7); }
+.c3s-persona-vibe { font-size: 12px; color: rgba(255,255,255,0.85); text-shadow: 0 1px 4px rgba(0,0,0,0.7); }
 
-  /* ── Subtitle ── */
-  .subtitle {
-    font-family: 'Rajdhani', sans-serif; font-weight: 400;
-    font-size: 13px; color: rgba(255,255,255,0.25);
-    text-align: center; letter-spacing: 6px; text-transform: uppercase;
-  }
-  .subtitle-small {
-    font-family: 'Rajdhani', sans-serif; font-size: 12px;
-    color: rgba(255,255,255,0.2); text-align: center;
-    letter-spacing: 4px;
-  }
+/* Primary CTA */
+.c3s-cta {
+  display: block; width: 100%; padding: 16px 24px; border: none; border-radius: 12px;
+  background: linear-gradient(90deg, #ec4899, #db2777); color: #fff;
+  font-size: 18px; font-weight: 700; cursor: pointer; transition: transform 0.1s, box-shadow 0.2s;
+  margin-top: 8px;
+}
+.c3s-cta:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(236,72,153,0.35); }
+.c3s-cta:disabled { opacity: 0.6; cursor: not-allowed; }
+.c3s-cta-spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: c3s-spin 0.7s linear infinite; vertical-align: middle; margin-left: 8px; }
 
-  /* ── System Label ── */
-  .sys-label {
-    font-family: 'Press Start 2P', monospace; font-size: 7px;
-    color: var(--pink); letter-spacing: 3px; text-align: center;
-    text-shadow: 0 0 10px var(--pink-glow); margin-bottom: 12px;
-  }
+/* Email gate (overlay) */
+.c3s-gate { position: fixed; inset: 0; z-index: 100; background: rgba(10,10,10,0.92); backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: center; padding: 20px; animation: c3s-fadeIn 0.25s ease; }
+.c3s-gate-card { width: 100%; max-width: 420px; background: rgba(20,20,20,0.85); border: 1px solid rgba(236,72,153,0.25); border-radius: 16px; padding: 28px 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); }
+.c3s-gate-h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; text-align: center; }
+.c3s-gate-sub { font-size: 14px; color: rgba(255,255,255,0.6); text-align: center; margin: 0 0 20px; }
+.c3s-gate-input { width: 100%; padding: 14px 16px; background: rgba(255,255,255,0.05); border: 1.5px solid rgba(255,255,255,0.1); border-radius: 10px; color: #fff; font-size: 16px; outline: none; transition: border-color 0.15s; }
+.c3s-gate-input:focus { border-color: #ec4899; }
+.c3s-gate-error { display: none; color: #ef4444; font-size: 13px; margin-top: 8px; }
+.c3s-gate-error.is-shown { display: block; }
+.c3s-gate-back { display: inline-block; margin-top: 14px; font-size: 13px; color: rgba(255,255,255,0.5); cursor: pointer; background: none; border: none; padding: 0; }
+.c3s-gate-back:hover { color: rgba(255,255,255,0.8); }
+.c3s-gate-legal { font-size: 11px; color: rgba(255,255,255,0.4); text-align: center; margin-top: 16px; }
+.c3s-gate-legal a { color: rgba(255,255,255,0.6); text-decoration: underline; }
 
-  /* ── Boot Text ── */
-  .boot-text {
-    font-family: 'Press Start 2P', monospace; font-size: 8px;
-    color: rgba(255,255,255,0.15); text-align: center; line-height: 2.2;
-    opacity: 0; animation: fadeIn 0.5s 0.6s forwards;
-  }
+/* Legal footer */
+.legal-footer { padding: 16px; text-align: center; position: relative; z-index: 1; }
+.legal-footer a { color: rgba(255,255,255,0.4); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin: 0 12px; text-decoration: none; }
+.legal-footer a:hover { color: rgba(255,255,255,0.8); }
 
-  /* ── Credits ── */
-  .credits {
-    font-family: 'Press Start 2P', monospace; font-size: 7px;
-    color: rgba(255,255,255,0.12); text-align: center;
-    opacity: 0; animation: fadeIn 0.4s 0.8s forwards;
-  }
-
-  /* ── Legal Footer ── */
-  .legal-footer {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    text-align: center; padding: 10px 16px;
-    z-index: 100; pointer-events: none;
-  }
-  .legal-footer a {
-    font-family: 'Press Start 2P', monospace; font-size: 7px;
-    color: rgba(255,255,255,0.15); text-decoration: none;
-    letter-spacing: 2px; margin: 0 12px;
-    pointer-events: auto; transition: color 0.2s;
-  }
-  .legal-footer a:hover { color: var(--pink); }
-
-  /* ── Logo container ── */
-  .logo-wrap {
-    opacity: 0; transform: translateY(20px) scale(0.9);
-    animation: logoIn 0.6s 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  }
-
-  /* ── Arcade Button ── */
-  .arcade-btn {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 11px; padding: 14px 32px;
-    background: transparent; color: #fff;
-    border: 2px solid var(--pink); cursor: pointer;
-    text-transform: uppercase; letter-spacing: 2px;
-    box-shadow: 0 0 10px rgba(236,72,153,0.2);
-    transition: all 0.1s; position: relative; outline: none;
-  }
-  .arcade-btn:hover {
-    background: rgba(236,72,153,0.15);
-    box-shadow: 0 0 30px var(--pink-glow), inset 0 0 30px rgba(236,72,153,0.1);
-    transform: scale(1.03);
-  }
-  .arcade-btn:active { background: var(--pink); color: #000; transform: scale(0.96); }
-  .arcade-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-  .arcade-btn.large { font-size: 16px; padding: 20px 48px; }
-
-  .blink { animation: blink 1.2s infinite; }
-
-  /* ── Back Button ── */
-  .back-btn {
-    position: absolute; top: 20px; left: 20px; z-index: 50;
-    font-family: 'Press Start 2P', monospace; font-size: 9px;
-    color: rgba(255,255,255,0.3); background: none; border: 1px solid rgba(255,255,255,0.08);
-    padding: 8px 14px; cursor: pointer; transition: all 0.15s; outline: none;
-  }
-  .back-btn:hover { color: var(--pink); border-color: var(--pink); }
-
-  /* ── Mode Cards ── */
-  .mode-list { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 380px; }
-  .mode-card {
-    width: 100%; padding: 24px 20px; background: rgba(255,255,255,0.02);
-    border: 2px solid rgba(255,255,255,0.08); cursor: pointer;
-    display: flex; align-items: center; gap: 16px;
-    transition: all 0.15s; position: relative; overflow: hidden; outline: none;
-    opacity: 0; transform: translateX(-30px);
-    animation: slideInLeft 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  }
-  .mode-card:nth-child(1) { animation-delay: 0.2s; }
-  .mode-card:nth-child(2) { animation-delay: 0.28s; }
-  .mode-card:nth-child(3) { animation-delay: 0.36s; }
-  .mode-card:nth-child(4) { animation-delay: 0.44s; }
-
-  .mode-card:hover {
-    background: rgba(236,72,153,0.08); border-color: var(--pink);
-    transform: translateX(8px);
-    box-shadow: 0 0 25px var(--pink-glow), inset 0 0 25px rgba(236,72,153,0.05);
-  }
-  .mode-card.selected {
-    background: linear-gradient(135deg, rgba(236,72,153,0.2) 0%, rgba(236,72,153,0.05) 100%);
-    border-color: var(--pink); transform: translateX(8px);
-    box-shadow: 0 0 25px var(--pink-glow), inset 0 0 25px rgba(236,72,153,0.05);
-  }
-  .mode-card.selected::before {
-    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
-    background: var(--pink); box-shadow: 0 0 15px var(--pink);
-  }
-  .mode-icon { font-size: 28px; transition: filter 0.15s; filter: grayscale(0.5); }
-  .mode-card:hover .mode-icon, .mode-card.selected .mode-icon { filter: none; }
-  .mode-title {
-    font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 15px;
-    color: rgba(255,255,255,0.7); letter-spacing: 1px; transition: color 0.15s;
-  }
-  .mode-card:hover .mode-title, .mode-card.selected .mode-title { color: var(--pink); }
-  .mode-subtitle {
-    font-family: 'Rajdhani', sans-serif; font-size: 13px;
-    color: rgba(255,255,255,0.35); margin-top: 4px; letter-spacing: 0.5px;
-  }
-  .mode-arrow {
-    margin-left: auto; font-family: 'Press Start 2P', monospace;
-    font-size: 8px; color: var(--pink); text-shadow: 0 0 10px var(--pink-glow);
-    display: none;
-  }
-  .mode-card.selected .mode-arrow { display: block; }
-
-  /* ── Gender Cards ── */
-  .gender-grid {
-    display: flex; gap: 16px; width: 100%; max-width: 460px; justify-content: center;
-  }
-  .gender-card {
-    flex: 1; max-width: 210px; background: rgba(255,255,255,0.02);
-    border: 2px solid rgba(255,255,255,0.08); cursor: pointer;
-    display: flex; flex-direction: column; align-items: center;
-    padding: 0; overflow: hidden; transition: all 0.2s; outline: none;
-    opacity: 0; transform: translateY(20px);
-    animation: slideInLeft 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  }
-  .gender-card:nth-child(1) { animation-delay: 0.2s; }
-  .gender-card:nth-child(2) { animation-delay: 0.35s; }
-  .gender-img {
-    width: 100%; aspect-ratio: 3/4; object-fit: cover;
-    filter: grayscale(0.3) brightness(0.8);
-    transition: all 0.3s;
-    pointer-events: none;
-  }
-  .gender-card:hover .gender-img {
-    filter: grayscale(0) brightness(1);
-  }
-  .gender-card:hover {
-    border-color: var(--pink);
-    box-shadow: 0 0 30px var(--pink-glow);
-    transform: translateY(-4px);
-  }
-  .gender-card.selected {
-    border-color: var(--pink);
-    box-shadow: 0 0 30px var(--pink-glow), inset 0 0 30px rgba(236,72,153,0.05);
-  }
-  .gender-card.selected .gender-img {
-    filter: grayscale(0) brightness(1);
-  }
-  .gender-label {
-    font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 14px;
-    color: rgba(255,255,255,0.6); letter-spacing: 3px; padding: 14px 0;
-    transition: color 0.2s; pointer-events: none;
-  }
-  .gender-card:hover .gender-label,
-  .gender-card.selected .gender-label { color: var(--pink); }
-
-  /* ── Choice Cards ── */
-  .choice-list { display: flex; flex-direction: column; gap: 6px; width: 100%; max-width: 400px; }
-  .choice-card {
-    width: 100%; padding: 18px 20px; background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.06); cursor: pointer;
-    display: flex; align-items: center; gap: 14px;
-    transition: all 0.12s; outline: none;
-    opacity: 0; transform: translateX(-20px);
-    animation: slideInLeft 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  }
-  .choice-card:nth-child(1) { animation-delay: 0.2s; }
-  .choice-card:nth-child(2) { animation-delay: 0.26s; }
-  .choice-card:nth-child(3) { animation-delay: 0.32s; }
-  .choice-card:nth-child(4) { animation-delay: 0.38s; }
-
-  .choice-card:hover {
-    transform: translateX(6px); border-color: var(--pink);
-  }
-  .choice-card.selected {
-    background: linear-gradient(90deg, rgba(236,72,153,0.15) 0%, transparent 100%);
-    border-color: var(--pink); transform: translateX(6px);
-    box-shadow: 0 0 20px rgba(236,72,153,0.15);
-  }
-  .choice-key {
-    font-family: 'Press Start 2P', monospace; font-size: 9px;
-    color: rgba(255,255,255,0.2); width: 24px; transition: all 0.12s; text-align: center;
-  }
-  .choice-card:hover .choice-key, .choice-card.selected .choice-key {
-    color: var(--pink); text-shadow: 0 0 8px var(--pink-glow);
-  }
-  .choice-label {
-    font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 16px;
-    color: rgba(255,255,255,0.55); letter-spacing: 0.5px; transition: color 0.12s;
-  }
-  .choice-card:hover .choice-label, .choice-card.selected .choice-label { color: #fff; }
-  .choice-star {
-    margin-left: auto; font-family: 'Press Start 2P', monospace;
-    font-size: 7px; color: var(--pink); display: none;
-  }
-  .choice-card.selected .choice-star { display: block; }
-
-  /* ── XP Bar ── */
-  .xp-bar-wrap {
-    width: 100%; max-width: 400px; margin: 0 auto;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .xp-label {
-    font-family: 'Press Start 2P', monospace; font-size: 7px;
-    color: var(--pink); white-space: nowrap;
-  }
-  .xp-track {
-    flex: 1; height: 6px; background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.08); overflow: hidden;
-  }
-  .xp-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--pink), #f472b6);
-    box-shadow: 0 0 10px var(--pink-glow);
-    transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .xp-count {
-    font-family: 'Press Start 2P', monospace; font-size: 7px;
-    color: rgba(255,255,255,0.3);
-  }
-
-  /* ── Combo Counter ── */
-  .combo {
-    position: fixed; top: 20px; right: 20px; z-index: 100;
-    font-family: 'Press Start 2P', monospace; text-align: right;
-    opacity: 0; transition: opacity 0.2s; pointer-events: none;
-  }
-  .combo.active { opacity: 1; }
-  .combo-label { font-size: 7px; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
-  .combo-count { font-size: 18px; color: var(--pink); text-shadow: 0 0 15px var(--pink-glow); }
-  .combo.pop .combo-count { animation: comboPulse 0.3s ease-out; }
-
-  /* ── Reveal Card ── */
-  .reveal-card {
-    width: 100%; max-width: 340px;
-    background: rgba(255,255,255,0.02);
-    border: 2px solid var(--pink);
-    box-shadow: 0 0 40px rgba(236,72,153,0.15), inset 0 0 40px rgba(236,72,153,0.03);
-    padding: 36px 28px; text-align: center; position: relative; overflow: hidden;
-    opacity: 0; transform: translateY(30px) scale(0.9);
-    animation: cardReveal 0.6s 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  }
-  .corner {
-    position: absolute; width: 12px; height: 12px; opacity: 0.5;
-  }
-  .corner-tl { top: 8px; left: 8px; border-top: 1px solid var(--pink); border-left: 1px solid var(--pink); }
-  .corner-tr { top: 8px; right: 8px; border-top: 1px solid var(--pink); border-right: 1px solid var(--pink); }
-  .corner-bl { bottom: 8px; left: 8px; border-bottom: 1px solid var(--pink); border-left: 1px solid var(--pink); }
-  .corner-br { bottom: 8px; right: 8px; border-bottom: 1px solid var(--pink); border-right: 1px solid var(--pink); }
-
-  .avatar-circle {
-    width: 80px; height: 80px; margin: 0 auto 20px;
-    border: 2px solid var(--pink); border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    background: radial-gradient(circle, rgba(236,72,153,0.1) 0%, transparent 70%);
-    box-shadow: 0 0 20px var(--pink-glow);
-  }
-  .avatar-letter {
-    font-family: 'Press Start 2P', monospace; font-size: 20px;
-    color: var(--pink); text-shadow: 0 0 10px var(--pink-glow);
-  }
-  .archetype-trait {
-    font-family: 'Orbitron', sans-serif; font-size: 11px;
-    color: var(--pink); letter-spacing: 2px; margin-bottom: 16px; font-weight: 700;
-  }
-  .archetype-desc {
-    font-family: 'Rajdhani', sans-serif; font-size: 14px;
-    color: rgba(255,255,255,0.45); line-height: 1.6;
-  }
-
-  /* ── Stat Bars ── */
-  .stat-bars { margin-top: 24px; display: flex; flex-direction: column; gap: 8px; }
-  .stat-row { display: flex; align-items: center; gap: 8px; }
-  .stat-label {
-    font-family: 'Press Start 2P', monospace; font-size: 6px;
-    color: rgba(255,255,255,0.3); width: 40px; text-align: right;
-  }
-  .stat-track { flex: 1; height: 4px; background: rgba(255,255,255,0.05); }
-  .stat-fill {
-    height: 100%; background: linear-gradient(90deg, var(--pink), #f9a8d4);
-    box-shadow: 0 0 6px var(--pink-glow);
-    width: 0; transition: width 0.8s 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .stat-val {
-    font-family: 'Press Start 2P', monospace; font-size: 6px;
-    color: var(--pink); width: 24px;
-  }
-
-  /* ── Match Found ── */
-  .match-found {
-    font-family: 'Press Start 2P', monospace; font-size: 8px;
-    color: var(--pink); letter-spacing: 4px; text-align: center;
-    text-shadow: 0 0 15px var(--pink-glow);
-    opacity: 0; transform: scale(1.5);
-    animation: matchIn 0.5s 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  }
-
-  /* ── Email Screen ── */
-  .email-wrap {
-    width: 100%; max-width: 380px; text-align: center;
-  }
-  .email-input {
-    width: 100%; padding: 16px 20px;
-    font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 16px;
-    background: rgba(255,255,255,0.03); color: #fff;
-    border: 2px solid rgba(255,255,255,0.1);
-    outline: none; letter-spacing: 0.5px;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-  .email-input::placeholder { color: rgba(255,255,255,0.2); }
-  .email-input:focus {
-    border-color: var(--pink);
-    box-shadow: 0 0 20px rgba(236,72,153,0.15);
-  }
-  .email-hint {
-    font-family: 'Press Start 2P', monospace; font-size: 6px;
-    color: rgba(255,255,255,0.15); margin-top: 12px;
-  }
-  .email-error {
-    font-family: 'Press Start 2P', monospace; font-size: 7px;
-    color: #f87171; margin-top: 8px; min-height: 16px;
-  }
-  .consent-label {
-    display: flex; align-items: flex-start; gap: 10px;
-    margin-top: 16px; cursor: pointer; text-align: left;
-  }
-  .consent-checkbox {
-    appearance: none; -webkit-appearance: none;
-    width: 18px; height: 18px; min-width: 18px;
-    border: 2px solid rgba(255,255,255,0.2); background: transparent;
-    cursor: pointer; margin-top: 1px; position: relative;
-    transition: all 0.15s;
-  }
-  .consent-checkbox:checked {
-    border-color: var(--pink); background: var(--pink);
-  }
-  .consent-checkbox:checked::after {
-    content: '✓'; position: absolute; top: -1px; left: 2px;
-    font-size: 12px; color: #000; font-weight: bold;
-  }
-  .consent-text {
-    font-family: 'Rajdhani', sans-serif; font-size: 13px;
-    color: rgba(255,255,255,0.45); line-height: 1.4;
-  }
-  .email-disclosure {
-    font-family: 'Rajdhani', sans-serif; font-size: 12px;
-    color: rgba(255,255,255,0.3); margin-top: 12px; line-height: 1.5;
-  }
-
-  /* ── CTA wrap ── */
-  .cta-wrap {
-    text-align: center;
-    opacity: 0; animation: fadeIn 0.4s 1.4s forwards;
-  }
-  .cta-hint {
-    font-family: 'Press Start 2P', monospace; font-size: 6px;
-    color: rgba(255,255,255,0.15); margin-top: 16px;
-  }
-
-  /* ── REVEAL for adventure/play ── */
-  .alt-reveal-desc {
-    font-family: 'Rajdhani', sans-serif; font-size: 15px;
-    color: rgba(255,255,255,0.4); text-align: center;
-    max-width: 320px; line-height: 1.6;
-  }
-
-  /* ── Teleport Screen ── */
-  .teleport-wrap {
-    display: flex; flex-direction: column; align-items: center; gap: 8px;
-  }
-  .teleport-icon {
-    font-size: 48px;
-    animation: teleportPulse 0.6s ease-in-out infinite alternate;
-  }
-  .teleport-dots { display: flex; gap: 8px; }
-  .teleport-dots .dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--pink); opacity: 0.2;
-    animation: dotBlink 1s infinite;
-  }
-  .teleport-dots .dot:nth-child(2) { animation-delay: 0.2s; }
-  .teleport-dots .dot:nth-child(3) { animation-delay: 0.4s; }
-  .teleport-bar {
-    width: 200px; height: 4px; background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.08); margin-top: 16px; overflow: hidden;
-  }
-  .teleport-fill {
-    height: 100%; width: 0%;
-    background: linear-gradient(90deg, var(--pink), #f472b6);
-    box-shadow: 0 0 10px var(--pink-glow);
-    animation: teleportLoad 3s ease-in-out forwards;
-  }
-
-  /* ── KEYFRAMES ── */
-  @keyframes screenIn {
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes screenOut {
-    to { opacity: 0; transform: translateY(-20px); }
-  }
-  @keyframes fadeIn {
-    to { opacity: 1; }
-  }
-  @keyframes logoIn {
-    to { opacity: 1; transform: translateY(0) scale(1); }
-  }
-  @keyframes slideInLeft {
-    to { opacity: 1; transform: translateX(0); }
-  }
-  @keyframes cardReveal {
-    to { opacity: 1; transform: translateY(0) scale(1); }
-  }
-  @keyframes matchIn {
-    to { opacity: 1; transform: scale(1); }
-  }
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-  @keyframes comboPulse {
-    0% { transform: scale(1.4); }
-    100% { transform: scale(1); }
-  }
-  @keyframes floatUp {
-    0% { transform: translateY(0) translateX(0); opacity: 0; }
-    10% { opacity: 0.3; }
-    90% { opacity: 0.1; }
-    100% { transform: translateY(-100vh) translateX(30px); opacity: 0; }
-  }
-  @keyframes teleportPulse {
-    0% { transform: scale(1); filter: brightness(1); }
-    100% { transform: scale(1.2); filter: brightness(1.5); }
-  }
-  @keyframes dotBlink {
-    0%, 100% { opacity: 0.2; }
-    50% { opacity: 1; box-shadow: 0 0 8px var(--pink-glow); }
-  }
-  @keyframes teleportLoad {
-    0% { width: 0%; }
-    100% { width: 100%; }
-  }
-  @keyframes shakeSm {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-3px); }
-    75% { transform: translateX(3px); }
-  }
+/* Visibility helper for steps */
+.c3s-step { display: none; width: 100%; }
+.c3s-step.is-active { display: block; }
 </style>
 </head>
 <body>
@@ -571,147 +145,558 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-<div class="crt-overlay"></div>
-<div class="screen-flash" id="flash"></div>
+<div class="c3s-ambient"></div>
 
-<div class="particles" id="particles"></div>
+<div id="root">
+  <div class="c3s-container">
+    <a href="/" class="c3s-logo" aria-label="ourdream.ai">
+      <svg viewBox="0 0 151 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M144.024 2.7L144.604 0H150.164L149.584 2.7H144.024ZM141.444 14.78L143.844 3.48H149.404L147.004 14.78H141.444Z" fill="white"/>
+        <path d="M130.981 15.0399C128.821 15.0399 126.921 14.0999 126.921 12.0999C126.921 9.41991 129.681 8.67991 133.241 8.25991C135.701 7.99991 136.381 7.61991 136.381 6.93991C136.381 6.43991 135.761 6.19991 135.061 6.19991C134.141 6.19991 133.401 6.63991 133.041 7.59991H128.081C129.041 4.65991 132.021 3.15991 135.441 3.15991C139.641 3.15991 142.281 4.93991 141.501 8.57991L140.181 14.7799H134.741L134.961 13.7199C133.881 14.5799 132.481 15.0399 130.981 15.0399ZM132.241 11.5799C132.241 12.0799 132.701 12.3599 133.441 12.3599C134.161 12.3599 134.901 12.0799 135.401 11.6799L135.701 10.2799L135.821 9.73991C135.381 9.93991 134.841 10.0799 134.161 10.1799C132.861 10.4199 132.241 10.7999 132.241 11.5799Z" fill="white"/>
+        <path d="M120.483 14.78L121.343 10.72H126.343L125.503 14.78H120.483Z" fill="white"/>
+        <path d="M97.6161 14.78L100.016 3.47997H105.556L105.276 4.85997C106.316 3.77997 107.596 3.21997 109.056 3.21997C110.816 3.21997 112.056 3.99997 112.576 5.23997C113.776 3.91997 115.256 3.21997 116.996 3.21997C119.876 3.21997 121.496 5.07997 120.916 7.77997L119.436 14.78H113.896L115.296 8.11997C115.516 7.21997 115.016 6.63997 114.156 6.63997C113.636 6.63997 113.196 6.83997 112.816 7.17997C112.796 7.35997 112.776 7.55997 112.736 7.73997L111.236 14.78H105.816L107.236 8.11997C107.416 7.21997 106.976 6.65997 106.116 6.65997C105.616 6.65997 105.136 6.87997 104.776 7.19997L103.176 14.78H97.6161Z" fill="#EC4899"/>
+        <path d="M87.1525 15.0399C84.9925 15.0399 83.0925 14.0999 83.0925 12.0999C83.0925 9.41991 85.8525 8.67991 89.4125 8.25991C91.8725 7.99991 92.5525 7.61991 92.5525 6.93991C92.5525 6.43991 91.9325 6.19991 91.2325 6.19991C90.3125 6.19991 89.5725 6.63991 89.2125 7.59991H84.2525C85.2125 4.65991 88.1925 3.15991 91.6125 3.15991C95.8125 3.15991 98.4525 4.93991 97.6725 8.57991L96.3525 14.7799H90.9125L91.1325 13.7199C90.0525 14.5799 88.6525 15.0399 87.1525 15.0399ZM88.4125 11.5799C88.4125 12.0799 88.8725 12.3599 89.6125 12.3599C90.3325 12.3599 91.0725 12.0799 91.5725 11.6799L91.8725 10.2799L91.9925 9.73991C91.5525 9.93991 91.0125 10.0799 90.3325 10.1799C89.0325 10.4199 88.4125 10.7999 88.4125 11.5799Z" fill="#EC4899"/>
+        <path d="M75.1542 15.14C71.1742 15.14 68.5742 13.1 68.5742 9.94001C68.5742 9.58001 68.6142 9.20001 68.6742 8.82001C69.2942 5.34001 72.4742 3.14001 76.5142 3.14001C80.5142 3.14001 83.1342 5.12001 83.1342 8.16001C83.1342 8.64001 83.0742 9.14002 82.9742 9.66002H73.7542C73.7342 9.80002 73.7342 9.94001 73.7342 10.06C73.7342 11.38 74.3742 12.04 75.4942 12.04C76.3942 12.04 77.1342 11.54 77.6142 10.46H82.7142C81.6142 13.46 78.7142 15.14 75.1542 15.14ZM76.3742 6.10001C75.4342 6.10001 74.6342 6.66001 74.1542 7.90001H78.1742V7.70002C78.1742 6.70001 77.3942 6.10001 76.3742 6.10001Z" fill="#EC4899"/>
+        <path d="M56.8153 14.78L59.2153 3.48003H64.7953L64.3953 5.40003C65.5153 4.02003 66.9353 3.28003 68.8153 3.28003C68.9953 3.28003 69.1753 3.28003 69.3553 3.30003L68.4953 7.42003C67.9553 7.22003 67.2953 7.12003 66.6553 7.12003C65.5753 7.12003 64.4953 7.42003 63.8353 8.02003L62.3953 14.78H56.8153Z" fill="#EC4899"/>
+        <path d="M46.3001 15.06C43.4201 15.06 41.6001 13.22 41.6001 10.34C41.6001 9.84003 41.6601 9.28003 41.7801 8.72003C42.5201 5.20003 44.9801 3.22003 47.9601 3.22003C49.8601 3.22003 51.2801 4.04003 51.9801 5.46003L52.9801 0.780029H58.5601L55.5801 14.78H50.0001L50.2801 13.44C49.2001 14.5 47.8201 15.06 46.3001 15.06ZM48.7601 11.76C49.9401 11.76 50.9001 10.96 51.2601 9.26003C51.3201 8.94003 51.3601 8.64003 51.3601 8.38003C51.3601 7.16003 50.6801 6.52003 49.5401 6.52003C48.3601 6.52003 47.4201 7.30003 47.0601 9.04003C47.0001 9.36003 46.9601 9.66003 46.9601 9.92003C46.9601 11.12 47.6401 11.76 48.7601 11.76Z" fill="#EC4899"/>
+        <path d="M29.9012 14.78L32.3012 3.48003H37.8812L37.4812 5.40003C38.6012 4.02003 40.0212 3.28003 41.9012 3.28003C42.0812 3.28003 42.2612 3.28003 42.4412 3.30003L41.5812 7.42003C41.0412 7.22003 40.3812 7.12003 39.7412 7.12003C38.6612 7.12003 37.5812 7.42003 36.9212 8.02003L35.4812 14.78H29.9012Z" fill="#EC4899"/>
+        <path d="M19.4664 15.04C16.9664 15.04 15.4264 13.6 15.4264 11.46C15.4264 11.12 15.4664 10.76 15.5464 10.4L17.0264 3.47998H22.6064L21.1864 10.1C21.1664 10.24 21.1464 10.36 21.1464 10.48C21.1464 11.18 21.6064 11.62 22.4264 11.62C22.9864 11.62 23.5064 11.38 23.8864 11.02L25.4864 3.47998H31.0664L28.6664 14.78H23.0864L23.4064 13.3C22.3264 14.42 21.0064 15.04 19.4664 15.04Z" fill="#EC4899"/>
+        <path d="M6.88 15.14C2.8 15.14 0 13.22 0 9.96C0 9.58 0.04 9.19999 0.12 8.77999C0.76 5.19999 4.02 3.12 8.08 3.12C12.16 3.12 14.96 5.04 14.96 8.3C14.96 8.68 14.92 9.05999 14.84 9.47999C14.2 13.08 10.94 15.14 6.88 15.14ZM7.08 11.78C8.22 11.78 9.22 11.04 9.58 9.24C9.64 8.93999 9.68 8.65999 9.68 8.39999C9.68 7.15999 8.98 6.51999 7.88 6.51999C6.74 6.51999 5.72 7.25999 5.36 9.05999C5.3 9.35999 5.28 9.62 5.28 9.88C5.28 11.12 5.96 11.78 7.08 11.78Z" fill="#EC4899"/>
+      </svg>
+    </a>
 
-<div class="combo" id="combo">
-  <div class="combo-label">COMBO</div>
-  <div class="combo-count" id="comboCount">×2</div>
+    <div id="c3s-progress" class="c3s-progress" role="group" aria-label="Step progress"></div>
+
+    <section id="step-1" class="c3s-step"></section>
+    <section id="step-2" class="c3s-step"></section>
+    <section id="step-3" class="c3s-step"></section>
+  </div>
 </div>
 
-<div id="app"></div>
+<div id="c3s-gate-mount"></div>
+
+<div class="legal-footer">
+  <a href="/terms.html">TERMS</a>
+  <a href="/privacy.html">PRIVACY</a>
+</div>
 
 <script>
+'use strict';
+
 // ══════════════════════════════════════════════
-//  DATA
+//  ASSETS / CONSTANTS
 // ══════════════════════════════════════════════
 
-const QUESTIONS = {
-  companion: [
-    {
-      title: "WHO ARE YOU LOOKING FOR?",
-      sys: "GENDER.SYS",
-      options: ["Male", "Female"],
-      keys: ["male", "female"]
-    },
-    {
-      title: "WHAT ENERGY DO YOU VIBE WITH?",
-      sys: "PERSONALITY.SYS",
-      options: ["Playful & chaotic", "Mysterious & deep", "Warm & caring", "Bold & direct"],
-      keys: ["playful", "mysterious", "caring", "bold"]
-    },
-    {
-      title: "PICK A SCENARIO",
-      sys: "SIMULATION.EXE",
-      options: ["Late night deep talks", "Spontaneous adventure", "Cozy movie marathon", "Rooftop at sunset"],
-      keys: ["deep", "adventure", "cozy", "romantic"]
-    },
-    {
-      title: "WHAT MATTERS MOST?",
-      sys: "PRIORITY.CFG",
-      options: ["Makes me laugh", "Actually listens", "Challenges me", "Never judges me"],
-      keys: ["humor", "listener", "challenge", "acceptance"]
-    }
-  ],
-  romance: [
-    {
-      title: "WHO ARE YOU LOOKING FOR?",
-      sys: "GENDER.SYS",
-      options: ["Male", "Female"],
-      keys: ["male", "female"]
-    },
-    {
-      title: "WHAT ENERGY DRAWS YOU IN?",
-      sys: "ATTRACTION.SYS",
-      options: ["Playful & teasing", "Dark & mysterious", "Gentle & devoted", "Intense & passionate"],
-      keys: ["playful", "mysterious", "caring", "bold"]
-    },
-    {
-      title: "YOUR IDEAL NIGHT TOGETHER?",
-      sys: "SCENARIO.EXE",
-      options: ["Candlelit dinner, just us", "Stargazing on a rooftop", "Dancing in the rain", "Staying in bed all day"],
-      keys: ["intimate", "dreamy", "spontaneous", "comfort"]
-    },
-    {
-      title: "WHAT MAKES YOU MELT?",
-      sys: "DESIRE.CFG",
-      options: ["Eye contact that lingers", "Words whispered just for you", "Someone who truly sees you", "Unpredictable intensity"],
-      keys: ["gaze", "words", "depth", "fire"]
-    }
-  ],
-  adventure: [
-    {
-      title: "PICK YOUR WORLD",
-      sys: "REALM.DAT",
-      options: ["Fantasy kingdom", "Cyberpunk city", "Post-apocalyptic wasteland", "Deep space station"],
-      keys: ["fantasy", "cyberpunk", "apocalypse", "space"]
-    },
-    {
-      title: "YOUR ROLE?",
-      sys: "CLASS.SYS",
-      options: ["The hero everyone needs", "The cunning trickster", "The cold strategist", "The unpredictable wildcard"],
-      keys: ["hero", "trickster", "strategist", "wildcard"]
-    },
-    {
-      title: "WHAT DRIVES YOU?",
-      sys: "MOTIVE.EXE",
-      options: ["Glory & power", "Mystery & secrets", "Justice & honor", "Chaos & fun"],
-      keys: ["glory", "mystery", "justice", "chaos"]
-    }
-  ],
-  play: [
-    {
-      title: "PICK A GENRE",
-      sys: "GENRE.DAT",
-      options: ["Strategy & tactics", "Trivia & knowledge", "Creative & open-ended", "Social & party"],
-      keys: ["strategy", "trivia", "creative", "social"]
-    },
-    {
-      title: "YOUR PLAY STYLE?",
-      sys: "STYLE.SYS",
-      options: ["Competitive — I play to win", "Casual — just vibing", "Story-driven — immerse me", "Chaotic — break all the rules"],
-      keys: ["competitive", "casual", "story", "chaotic"]
-    },
-    {
-      title: "WHAT'S THE VIBE?",
-      sys: "MOOD.EXE",
-      options: ["Intense focus", "Laid-back fun", "Brain-melting puzzles", "Wild card energy"],
-      keys: ["intense", "chill", "puzzle", "wild"]
-    }
-  ]
+const LP = 'https://ouraidream.com/create-3step-assets';
+const REDTRACK_BASE_B64 = 'aHR0cHM6Ly9jbGsub3VyZHJlYW1uZXR3b3JrLmNvbS9jbGljay8x'; // clk.ourdreamnetwork.com/click/1
+const STEP_LABELS = ['Style', 'Look', 'Personality'];
+
+// ══════════════════════════════════════════════
+//  DATA TABLES (SFW-only — NSFW dropped per spec)
+//  Source of truth: create_v2/create-3step-flow.tsx
+// ══════════════════════════════════════════════
+
+const STYLE_VIDEOS = {
+  Realistic: {
+    poster: 'https://static.ourdream.ai/create-videos/sfw-realistic-female-poster.webp',
+    video:  'https://static.ourdream.ai/create-videos/w600/234b7ea4-be67-4b50-871e-8f65fe7a26f0.mp4',
+  },
+  Anime: {
+    poster: 'https://static.ourdream.ai/create-videos/sfw-anime-female-poster.webp',
+    video:  'https://static.ourdream.ai/create-videos/w600/514c0c25-05ec-452e-b56f-7e8841175aca.mp4',
+  },
 };
 
-const ARCHETYPES = {
-  companion: {
-    playful:    { name: "SUNNY",  trait: "The Playful Best Friend",  desc: "Always up for something fun, quick-witted, your personal hype machine." },
-    mysterious: { name: "RAVEN",  trait: "The Enigmatic Soul",       desc: "Thoughtful and deep, with layers you'll slowly unravel over time." },
-    caring:     { name: "HAVEN",  trait: "The Gentle Anchor",        desc: "Warm, empathetic, and steady — always knows the right thing to say." },
-    bold:       { name: "BLAZE",  trait: "The Fearless Spirit",      desc: "Direct, confident, and unapologetically themselves. Never boring." }
-  },
-  romance: {
-    playful:    { name: "LUNA",   trait: "The Flirty Tease",         desc: "Knows exactly how to make you smile with that hint of mischief." },
-    mysterious: { name: "NOIR",   trait: "The Dark Romance",         desc: "Intense, magnetic, and speaks a language only you two understand." },
-    caring:     { name: "EDEN",   trait: "The Devoted One",          desc: "Makes you feel like the only person in the world. Every. Single. Time." },
-    bold:       { name: "STORM",  trait: "The Passionate Lover",     desc: "All fire, no filter. An intoxicating whirlwind you can't get enough of." }
-  },
-  adventure: {
-    fantasy:    { name: "AETHER", trait: "Realm of Swords & Sorcery", desc: "Epic quests, ancient magic, and a world where legends are born." },
-    cyberpunk:  { name: "NEON",   trait: "Chrome & Circuitry",        desc: "Neon-soaked streets, corpo conspiracies, and hacking the system." },
-    apocalypse: { name: "EMBER",  trait: "Survival of the Fiercest",  desc: "Scavenge, fight, and build in a world that tried to end you." },
-    space:      { name: "NOVA",   trait: "Among the Stars",           desc: "Infinite cosmos, alien encounters, and the frontier of the unknown." }
-  },
-  play: {
-    strategy:  { name: "CIPHER", trait: "The Mastermind's Arena",  desc: "Outsmart, outplay, outmanoeuvre. Every move counts." },
-    trivia:    { name: "CORTEX", trait: "The Knowledge Gauntlet",  desc: "Test what you know — or learn something wild trying." },
-    creative:  { name: "PRISM",  trait: "The Sandbox",              desc: "No rules, no limits. Build, imagine, and make it yours." },
-    social:    { name: "RIOT",   trait: "The Party Room",           desc: "Bring friends or make new ones. It's better when it's loud." }
+const ETHNICITY = {
+  Realistic: [
+    { value: 'White',   label: 'White',  img: 'https://static.ourdream.ai/create-videos/sfw-realistic-white.webp' },
+    { value: 'Asian',   label: 'Asian',  img: 'https://static.ourdream.ai/create-videos/sfw-realistic-asian.webp' },
+    { value: 'Latina',  label: 'Latina', img: 'https://static.ourdream.ai/create-videos/sfw-realistic-latina.webp' },
+    { value: 'African', label: 'Black',  img: 'https://static.ourdream.ai/create-videos/sfw-realistic-african.webp' },
+    { value: 'Elf',     label: 'Elf',    img: 'https://static.ourdream.ai/create-videos/sfw-realistic-elf.webp' },
+    { value: 'Demon',   label: 'Demon',  img: 'https://static.ourdream.ai/create-videos/sfw-realistic-demon.webp' },
+  ],
+  Anime: [
+    { value: 'White',   label: 'White',  img: 'https://static.ourdream.ai/create-videos/sfw-anime-white.webp' },
+    { value: 'Asian',   label: 'Asian',  img: 'https://static.ourdream.ai/create-videos/sfw-anime-asian.webp' },
+    { value: 'Latina',  label: 'Latina', img: 'https://static.ourdream.ai/create-videos/sfw-anime-latina.webp' },
+    { value: 'African', label: 'Black',  img: 'https://static.ourdream.ai/create-videos/sfw-anime-african.webp' },
+    { value: 'Elf',     label: 'Elf',    img: 'https://static.ourdream.ai/create-videos/sfw-anime-elf.webp' },
+    { value: 'Demon',   label: 'Demon',  img: 'https://static.ourdream.ai/create-videos/sfw-anime-demon.webp' },
+  ],
+};
+
+const ETHNICITY_APPEARANCE = {
+  White:   { skinTone: 'Fair',   hairColor: 'Blonde',   eyeColor: 'Blue' },
+  Asian:   { skinTone: 'Light',  hairColor: 'Black',    eyeColor: 'Brown' },
+  Latina:  { skinTone: 'Olive',  hairColor: 'Brunette', eyeColor: 'Brown' },
+  African: { skinTone: 'Dark',   hairColor: 'Black',    eyeColor: 'Brown' },
+  Elf:     { skinTone: 'Fair',   hairColor: 'Silver',   eyeColor: 'Green' },
+  Demon:   { skinTone: 'Darker', hairColor: 'Red',      eyeColor: 'Red' },
+};
+
+const HAIR = {
+  Realistic: [
+    { value: 'Wavy',          label: 'Wavy',     img: 'https://static.ourdream.ai/create-videos/sfw-realistic-wavy.webp' },
+    { value: 'Long Straight', label: 'Long',     img: 'https://static.ourdream.ai/create-videos/sfw-realistic-long.webp' },
+    { value: 'Ponytail',      label: 'Ponytail', img: 'https://static.ourdream.ai/create-videos/sfw-realistic-ponytail.webp' },
+  ],
+  Anime: [
+    { value: 'Wavy',          label: 'Wavy',     img: 'https://static.ourdream.ai/create-videos/sfw-anime-wavy.webp' },
+    { value: 'Long Straight', label: 'Long',     img: 'https://static.ourdream.ai/create-videos/sfw-anime-long.webp' },
+    { value: 'Ponytail',      label: 'Ponytail', img: 'https://static.ourdream.ai/create-videos/sfw-anime-ponytail.webp' },
+  ],
+};
+
+const PHYSIQUE = {
+  Realistic: [
+    { value: 'slim',     label: 'Slim',     img: 'https://static.ourdream.ai/create-videos/sfw-realistic-slim.webp',     bodyType: 'Slim',        breastSize: 'Small',  buttSize: 'Skinny' },
+    { value: 'athletic', label: 'Athletic', img: 'https://static.ourdream.ai/create-videos/sfw-realistic-athletic.webp', bodyType: 'Athletic',    breastSize: 'Medium', buttSize: 'Athletic' },
+    { value: 'curvy',    label: 'Curvy',    img: 'https://static.ourdream.ai/create-videos/sfw-realistic-curvy.webp',    bodyType: 'Voluptuous',  breastSize: 'Large',  buttSize: 'Large' },
+  ],
+  Anime: [
+    { value: 'slim',     label: 'Slim',     img: 'https://static.ourdream.ai/create-videos/sfw-anime-slim.webp',     bodyType: 'Slim',        breastSize: 'Small',  buttSize: 'Skinny' },
+    { value: 'athletic', label: 'Athletic', img: 'https://static.ourdream.ai/create-videos/sfw-anime-athletic.webp', bodyType: 'Athletic',    breastSize: 'Medium', buttSize: 'Athletic' },
+    { value: 'curvy',    label: 'Curvy',    img: 'https://static.ourdream.ai/create-videos/sfw-anime-curvy.webp',    bodyType: 'Voluptuous',  breastSize: 'Large',  buttSize: 'Large' },
+  ],
+};
+
+const PERSONALITIES = {
+  Realistic: [
+    { id: 'sweet',     img: `${LP}/sfw-sweet.webp`,     personality: ['Sweet', 'Caring'],       relationship: ['Crush', 'Friend'],            occupation: ['Nurse', 'Librarian'],   hobby: ['Cooking', 'Gardening'],   fetish: ['Vanilla', 'Roleplay'] },
+    { id: 'flirty',    img: `${LP}/sfw-flirty.webp`,    personality: ['Flirty', 'Charming'],    relationship: ['Fling', 'Roommate'],          occupation: ['Bartender', 'Dancer'],  hobby: ['Dancing', 'Yoga'],        fetish: ['Lingerie', 'High Heels'] },
+    { id: 'shy',       img: `${LP}/sfw-shy.webp`,       personality: ['Shy', 'Mysterious'],     relationship: ['Stranger', 'Secret Admirer'], occupation: ['Artist', 'Photographer'], hobby: ['Reading', 'Painting'],  fetish: ['Blindfolds', 'Stockings'] },
+    { id: 'confident', img: `${LP}/sfw-confident.webp`, personality: ['Confident', 'Sassy'],    relationship: ['Lover', 'Colleague'],         occupation: ['Entrepreneur', 'Lawyer'], hobby: ['Running', 'Cycling'],   fetish: ['Uniforms', 'Corsets'] },
+  ],
+  Anime: [
+    { id: 'sweet',     img: `${LP}/sfw-anime-sweet.webp`,     personality: ['Sweet', 'Caring'],    relationship: ['Crush', 'Friend'],            occupation: ['Nurse', 'Librarian'],   hobby: ['Cooking', 'Gardening'],   fetish: ['Vanilla', 'Roleplay'] },
+    { id: 'flirty',    img: `${LP}/sfw-anime-flirty.webp`,    personality: ['Flirty', 'Charming'], relationship: ['Fling', 'Roommate'],          occupation: ['Bartender', 'Dancer'],  hobby: ['Dancing', 'Yoga'],        fetish: ['Lingerie', 'High Heels'] },
+    { id: 'shy',       img: `${LP}/sfw-anime-shy.webp`,       personality: ['Shy', 'Mysterious'],  relationship: ['Stranger', 'Secret Admirer'], occupation: ['Artist', 'Photographer'], hobby: ['Reading', 'Painting'],  fetish: ['Blindfolds', 'Stockings'] },
+    { id: 'confident', img: `${LP}/sfw-anime-confident.webp`, personality: ['Confident', 'Sassy'], relationship: ['Lover', 'Colleague'],         occupation: ['Entrepreneur', 'Lawyer'], hobby: ['Running', 'Cycling'],   fetish: ['Uniforms', 'Corsets'] },
+  ],
+};
+
+const PERSONALITY_DISPLAY = {
+  sweet:     { name: 'Sweet & Caring',     vibe: 'Warm, affectionate, always there for you' },
+  flirty:    { name: 'Flirty & Playful',   vibe: 'Teasing, fun, keeps you on your toes' },
+  shy:       { name: 'Shy & Mysterious',   vibe: 'Quiet charm, meaningful conversations' },
+  confident: { name: 'Confident & Bold',   vibe: 'Knows what they want, takes the lead' },
+};
+
+function pickRandom(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+console.log('[init] data tables loaded',
+  { styles: Object.keys(STYLE_VIDEOS), personalities: PERSONALITIES.Realistic.length });
+
+// ══════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════
+
+const state = {
+  currentStep: 1,                                          // 1 | 2 | 3 | 'email'
+  style: null,                                             // 'Realistic' | 'Anime'
+  ethnicity: null,                                         // string
+  hairStyle: null,                                         // string
+  physique: null,                                          // PhysiqueOption
+  personality: null,                                       // 'sweet' | 'flirty' | 'shy' | 'confident'
+  email: null,
+  inboundParams: new URLSearchParams(window.location.search),
+  qParams: null,                                           // built at end of step 3
+  submitting: false,
+  autoAdvanceTimer: null,
+};
+
+function setState(patch) {
+  Object.assign(state, patch);
+  render();
+}
+
+// ══════════════════════════════════════════════
+//  RENDER DISPATCHER
+// ══════════════════════════════════════════════
+
+function render() {
+  renderProgressBar();
+  toggleStep('step-1', state.currentStep === 1);
+  toggleStep('step-2', state.currentStep === 2);
+  toggleStep('step-3', state.currentStep === 3);
+
+  if (state.currentStep === 1) renderStep1();
+  if (state.currentStep === 2) renderStep2();
+  if (state.currentStep === 3) renderStep3();
+
+  renderEmailGate(state.currentStep === 'email');
+}
+
+function toggleStep(id, isActive) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('is-active', isActive);
+}
+
+// Stubs filled in by later tasks
+function renderProgressBar() {
+  const container = document.getElementById('c3s-progress');
+  if (!container) return;
+
+  const stepNum = typeof state.currentStep === 'number' ? state.currentStep : 3; // gate counts as on step 3
+  container.innerHTML = '';
+
+  STEP_LABELS.forEach((label, i) => {
+    const idx = i + 1;
+    const completed = idx < stepNum;
+    const active = idx === stepNum;
+    const clickable = completed && state.currentStep !== 'email';
+
+    const seg = document.createElement('div');
+    seg.className = 'c3s-progress-seg' + (clickable ? ' is-clickable' : '');
+
+    const fill = document.createElement('div');
+    fill.className = 'c3s-progress-fill';
+    fill.style.width = (idx <= stepNum) ? '100%' : '0%';
+    seg.appendChild(fill);
+
+    if (clickable) {
+      seg.addEventListener('click', () => goToStep(idx));
+    }
+
+    const wrap = document.createElement('div');
+    wrap.style.flex = '1';
+    wrap.appendChild(seg);
+
+    const labelEl = document.createElement('div');
+    labelEl.className = 'c3s-progress-label' + (active ? ' is-active' : '');
+    labelEl.textContent = label;
+    wrap.appendChild(labelEl);
+
+    container.appendChild(wrap);
+  });
+}
+
+function goToStep(n) {
+  if (state.autoAdvanceTimer) {
+    clearTimeout(state.autoAdvanceTimer);
+    state.autoAdvanceTimer = null;
   }
-};
+  setState({ currentStep: n });
+}
+function renderStep1() {
+  const root = document.getElementById('step-1');
+  if (root.dataset.rendered === '1') return; // render once
+  root.dataset.rendered = '1';
+  root.classList.add('c3s-step-enter');
+
+  root.innerHTML = `
+    <h1 class="c3s-h1">Choose her style</h1>
+    <p class="c3s-h2">This sets the visual direction for your companion.</p>
+    <div class="c3s-style-grid"></div>
+  `;
+
+  const grid = root.querySelector('.c3s-style-grid');
+  ['Realistic', 'Anime'].forEach(styleKey => {
+    const data = STYLE_VIDEOS[styleKey];
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'c3s-style-card';
+    card.setAttribute('aria-label', `Choose ${styleKey} style`);
+    card.innerHTML = `
+      <video muted loop playsinline preload="none" poster="${data.poster}">
+        <source src="${data.video}" type="video/mp4">
+      </video>
+      <div class="c3s-style-card-label">${styleKey}</div>
+    `;
+
+    const video = card.querySelector('video');
+    card.addEventListener('mouseenter', () => { video.play().catch(() => {}); });
+    card.addEventListener('mouseleave', () => { video.pause(); video.currentTime = 0; });
+    card.addEventListener('click', () => {
+      track('quiz_step_complete', { step: 1, style: styleKey });
+      setState({ style: styleKey, currentStep: 2 });
+    });
+
+    grid.appendChild(card);
+  });
+}
+function renderStep2() {
+  const root = document.getElementById('step-2');
+  root.classList.add('c3s-step-enter');
+  const styleKey = state.style || 'Realistic';
+
+  root.innerHTML = `
+    <h1 class="c3s-h1">Design her look</h1>
+    <p class="c3s-h2">Pick one from each row.</p>
+    ${renderPickSection('Ethnicity', ETHNICITY[styleKey],  state.ethnicity, 'ethnicity')}
+    ${renderPickSection('Hair Style', HAIR[styleKey],      state.hairStyle, 'hairStyle')}
+    ${renderPickSection('Physique',   PHYSIQUE[styleKey],  state.physique && state.physique.value, 'physique')}
+  `;
+
+  attachPickHandlers(root);
+  maybeAutoAdvance();
+}
+
+function renderPickSection(title, options, selectedValue, stateKey) {
+  const grid = options.map(opt => {
+    const isSelected = opt.value === selectedValue;
+    return `
+      <button type="button" class="c3s-pick-card${isSelected ? ' is-selected' : ''}"
+              data-state-key="${stateKey}" data-value="${opt.value}"
+              aria-label="Choose ${opt.label}">
+        <img src="${opt.img}" alt="${opt.label}" loading="lazy">
+        <div class="c3s-pick-card-label">${opt.label}</div>
+      </button>
+    `;
+  }).join('');
+
+  return `
+    <div class="c3s-pick-section">
+      <h3 class="c3s-pick-title">${title}</h3>
+      <div class="c3s-pick-grid">${grid}</div>
+    </div>
+  `;
+}
+
+function attachPickHandlers(root) {
+  root.querySelectorAll('.c3s-pick-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const key = card.dataset.stateKey;
+      const value = card.dataset.value;
+      const styleKey = state.style || 'Realistic';
+
+      let patch;
+      if (key === 'physique') {
+        const opt = PHYSIQUE[styleKey].find(p => p.value === value);
+        patch = { physique: opt };
+      } else {
+        patch = { [key]: value };
+      }
+
+      track('quiz_pick', { step: 2, key, value });
+      setState(patch);
+    });
+  });
+}
+
+function maybeAutoAdvance() {
+  const allPicked = state.ethnicity && state.hairStyle && state.physique;
+  if (!allPicked) return;
+
+  // Guard against double-fire if user re-picks after timer started
+  if (state.autoAdvanceTimer) {
+    clearTimeout(state.autoAdvanceTimer);
+  }
+  state.autoAdvanceTimer = setTimeout(() => {
+    state.autoAdvanceTimer = null;
+    if (state.currentStep === 2) {
+      setState({ currentStep: 3 });
+    }
+  }, 350);
+}
+function renderStep3() {
+  const root = document.getElementById('step-3');
+  root.classList.add('c3s-step-enter');
+  const styleKey = state.style || 'Realistic';
+
+  const cards = PERSONALITIES[styleKey].map(p => {
+    const display = PERSONALITY_DISPLAY[p.id];
+    const isSelected = state.personality === p.id;
+    return `
+      <button type="button" class="c3s-persona-card${isSelected ? ' is-selected' : ''}"
+              data-personality="${p.id}" aria-label="Choose ${display.name}">
+        <img src="${p.img}" alt="${display.name}" loading="lazy">
+        <div class="c3s-persona-meta">
+          <div class="c3s-persona-name">${display.name}</div>
+          <div class="c3s-persona-vibe">${display.vibe}</div>
+        </div>
+      </button>
+    `;
+  }).join('');
+
+  root.innerHTML = `
+    <h1 class="c3s-h1">Pick her personality</h1>
+    <p class="c3s-h2">This shapes how she talks and acts.</p>
+    <div class="c3s-persona-grid">${cards}</div>
+    <button type="button" id="c3s-final-cta" class="c3s-cta" ${state.personality ? '' : 'disabled'}>
+      Meet your match
+    </button>
+  `;
+
+  root.querySelectorAll('.c3s-persona-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const id = card.dataset.personality;
+      track('quiz_pick', { step: 3, key: 'personality', value: id });
+      setState({ personality: id });
+    });
+  });
+
+  const cta = root.querySelector('#c3s-final-cta');
+  cta.addEventListener('click', () => {
+    if (!state.personality) return;
+    state.qParams = buildQParams();
+    track('quiz_step_complete', { step: 3, personality: state.personality });
+    setState({ currentStep: 'email' });
+  });
+}
+
+function buildQParams() {
+  const styleKey = state.style;
+  const eth = state.ethnicity;
+  const phys = state.physique;
+  const hair = state.hairStyle || 'Wavy';
+  const appearance = ETHNICITY_APPEARANCE[eth] || ETHNICITY_APPEARANCE.White;
+  const persona = PERSONALITIES[styleKey].find(p => p.id === state.personality)
+              || PERSONALITIES[styleKey][0];
+
+  const params = new URLSearchParams();
+
+  // Carry over inbound URL params, except the Q-keys we'll be setting
+  const skip = new Set(['Q1','Q2','Q3','Q4','Q5','Q6','Q7','Q8','Q9','Q10','Q13','Q14','Q15','Q16','Q17','Q18','s']);
+  state.inboundParams.forEach((v, k) => { if (!skip.has(k)) params.set(k, v); });
+
+  if (!params.has('ref')) params.set('ref', 'create-3step');
+
+  params.set('Q1', 'Female');
+  params.set('Q2', styleKey);
+  params.set('Q3', eth);
+  params.set('Q4', phys.breastSize);
+  params.set('Q5', phys.buttSize);
+  params.set('Q6', appearance.skinTone);
+  params.set('Q7', appearance.hairColor);
+  params.set('Q8', hair);
+  params.set('Q9', appearance.eyeColor);
+  params.set('Q10', phys.bodyType);
+  params.set('Q13', pickRandom(persona.personality));
+  params.set('Q14', pickRandom(persona.occupation));
+  params.set('Q15', pickRandom(persona.relationship));
+  params.set('Q16', pickRandom(persona.hobby));
+  params.set('Q17', pickRandom(persona.fetish));
+  params.set('Q18', 'true');
+  params.set('s', '6');
+
+  return params;
+}
+function renderEmailGate(visible) {
+  const mount = document.getElementById('c3s-gate-mount');
+  if (!mount) return;
+
+  if (!visible) {
+    mount.innerHTML = '';
+    return;
+  }
+
+  if (mount.dataset.rendered === '1') return;
+  mount.dataset.rendered = '1';
+
+  mount.innerHTML = `
+    <div class="c3s-gate" role="dialog" aria-modal="true" aria-labelledby="c3s-gate-title">
+      <div class="c3s-gate-card">
+        <h1 id="c3s-gate-title" class="c3s-gate-h1">Almost there - enter to reveal your creation</h1>
+        <p class="c3s-gate-sub">We'll send your match details to this email.</p>
+        <form id="c3s-gate-form" novalidate>
+          <input type="email" name="email" id="c3s-gate-email" class="c3s-gate-input"
+                 placeholder="you@example.com" autocomplete="email" autofocus required>
+          <div id="c3s-gate-err" class="c3s-gate-error">Please enter a valid email.</div>
+          <button type="submit" id="c3s-gate-submit" class="c3s-cta" style="margin-top: 14px;">
+            Continue
+          </button>
+        </form>
+        <div style="text-align:center;">
+          <button type="button" id="c3s-gate-back" class="c3s-gate-back">← back</button>
+        </div>
+        <div class="c3s-gate-legal">
+          By continuing you agree to our <a href="/terms.html">Terms</a> and <a href="/privacy.html">Privacy Policy</a>.
+        </div>
+      </div>
+    </div>
+  `;
+
+  const form   = document.getElementById('c3s-gate-form');
+  const input  = document.getElementById('c3s-gate-email');
+  const err    = document.getElementById('c3s-gate-err');
+  const submit = document.getElementById('c3s-gate-submit');
+  const back   = document.getElementById('c3s-gate-back');
+
+  back.addEventListener('click', () => {
+    mount.dataset.rendered = '';
+    setState({ currentStep: 3 });
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (state.submitting) return;
+
+    const email = input.value.trim();
+    if (!isValidEmail(email)) {
+      err.classList.add('is-shown');
+      input.focus();
+      return;
+    }
+    err.classList.remove('is-shown');
+
+    state.submitting = true;
+    submit.disabled = true;
+    submit.innerHTML = 'Continue<span class="c3s-cta-spinner" aria-hidden="true"></span>';
+
+    track('quiz_email_captured', { email_provided: true });
+
+    // Fire-and-forget save-email; we proceed regardless of outcome.
+    saveEmail(email).catch(err => console.warn('[save-email] failed:', err));
+
+    // Wired in Task 12.
+    redirectToRedtrack();
+  });
+}
+
+function isValidEmail(s) {
+  return /.+@.+\..+/.test(s);
+}
+
+function saveEmail(email) {
+  return fetch('/api/save-email', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email,
+      mode: 'companion',
+      answers: ['Female', state.style, state.ethnicity, state.hairStyle],
+      marketingConsent: false,
+    }),
+  });
+}
+
+function redirectToRedtrack() {
+  // Build RedTrack URL: clk.ourdreamnetwork.com/click/1?sub11=googlecpc&clickid=<cookie>&<inbound>
+  const base = atob(REDTRACK_BASE_B64); // https://clk.ourdreamnetwork.com/click/1
+  const params = new URLSearchParams();
+
+  // Fixed traffic source (RedTrack remaps → ref=googlecpc on ourdream.ai)
+  params.set('sub11', 'googlecpc');
+
+  // Forward clickid from the rtkclickid-store cookie. The cookie is scoped to
+  // ourdreamnetwork.com (NOT clk.ourdreamnetwork.com), so we must pass it as a query.
+  const cookieMatch = document.cookie.match(/(?:^|;\s*)rtkclickid-store=([^;]+)/);
+  if (cookieMatch) {
+    params.set('clickid', decodeURIComponent(cookieMatch[1]));
+  }
+
+  // Pass through inbound URL params (utm_*, gclid, fbclid, etc.). RedTrack ignores
+  // unknown params; ourdream.ai may use them for campaign attribution.
+  state.inboundParams.forEach((v, k) => {
+    if (!params.has(k)) params.set(k, v);
+  });
+
+  const url = base + '?' + params.toString();
+
+  track('quiz_redirect', { redirect_url: url });
+
+  getDecoratedUrl(url).then(finalUrl => {
+    window.location.href = finalUrl;
+  });
+}
 
 // ══════════════════════════════════════════════
-//  TRACKING
+//  TRACKING (verbatim port from quiz-old.html lines 610-636)
 // ══════════════════════════════════════════════
 
 window.dataLayer = window.dataLayer || [];
@@ -743,487 +728,13 @@ function getDecoratedUrl(baseUrl) {
 }
 
 // ══════════════════════════════════════════════
-//  STATE
-// ══════════════════════════════════════════════
-
-let state = {
-  screen: 'insert-coin',
-  history: [],           // for back navigation
-  mode: null,
-  questionIndex: 0,
-  answers: [],
-  email: '',
-  combo: 0,
-  lastAnswerTime: 0
-};
-
-function pushState(nextScreen) {
-  state.history.push({
-    screen: state.screen,
-    mode: state.mode,
-    questionIndex: state.questionIndex,
-    answers: [...state.answers],
-    email: state.email
-  });
-  state.screen = nextScreen;
-}
-
-function goBack() {
-  if (state.history.length === 0) return;
-  posthog.capture('back_button_clicked', { from_screen: state.screen, mode: state.mode });
-  const prev = state.history.pop();
-  state.screen = prev.screen;
-  state.mode = prev.mode;
-  state.questionIndex = prev.questionIndex;
-  state.answers = prev.answers;
-  state.email = prev.email;
-  flash();
-  render();
-}
-
-// ══════════════════════════════════════════════
-//  EFFECTS
-// ══════════════════════════════════════════════
-
-function flash() {
-  const el = document.getElementById('flash');
-  el.classList.add('active');
-  setTimeout(() => el.classList.remove('active'), 100);
-}
-
-function updateCombo() {
-  const now = Date.now();
-  if (now - state.lastAnswerTime < 3000) {
-    state.combo++;
-  } else {
-    state.combo = 1;
-  }
-  state.lastAnswerTime = now;
-
-  const comboEl = document.getElementById('combo');
-  const countEl = document.getElementById('comboCount');
-  if (state.combo >= 2) {
-    comboEl.classList.add('active');
-    countEl.textContent = '×' + state.combo;
-    comboEl.classList.remove('pop');
-    void comboEl.offsetWidth;
-    comboEl.classList.add('pop');
-  } else {
-    comboEl.classList.remove('active');
-  }
-}
-
-function hideCombo() {
-  document.getElementById('combo').classList.remove('active');
-}
-
-// ══════════════════════════════════════════════
-//  PARTICLES (once)
-// ══════════════════════════════════════════════
-
-function initParticles() {
-  const container = document.getElementById('particles');
-  for (let i = 0; i < 15; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    const size = 1 + Math.random() * 2;
-    p.style.cssText = `
-      left: ${Math.random() * 100}%;
-      width: ${size}px; height: ${size}px;
-      opacity: ${0.1 + Math.random() * 0.2};
-      box-shadow: 0 0 6px var(--pink-glow);
-      --dur: ${6 + Math.random() * 8}s;
-      --delay: ${Math.random() * 8}s;
-    `;
-    container.appendChild(p);
-  }
-}
-
-// ══════════════════════════════════════════════
-//  RENDER
-// ══════════════════════════════════════════════
-
-function render() {
-  const app = document.getElementById('app');
-  switch (state.screen) {
-    case 'insert-coin':   app.innerHTML = renderInsertCoin(); break;
-    case 'mode-select':   app.innerHTML = renderModeSelect(); break;
-    case 'question':      app.innerHTML = renderQuestion(); break;
-    case 'email':         app.innerHTML = renderEmail(); break;
-    default:              app.innerHTML = renderInsertCoin();
-  }
-}
-
-// ── Insert Coin ──
-function renderInsertCoin() {
-  return `
-    <div class="screen" id="screen-coin">
-      <div class="boot-text">
-        SYSTEM CHECK...OK<br>
-        LOADING PERSONALITY.SYS<br>
-        NEURAL LINK READY
-      </div>
-      <div class="logo-wrap">
-        <div class="glitch glitch-title">ourdream</div>
-        <div class="subtitle">character builder</div>
-      </div>
-      <div style="opacity:0;animation:fadeIn 0.4s 1.6s forwards">
-        <button class="arcade-btn large" onclick="onStart()">
-          <span class="blink">PRESS START</span>
-        </button>
-      </div>
-      <div class="credits"></div>
-    </div>
-  `;
-}
-
-function onStart() {
-  track('quiz_start');
-  posthog.capture('quiz_started');
-  flash();
-  pushState('mode-select');
-  render();
-}
-
-// ── Mode Select ──
-function renderModeSelect() {
-  const modes = [
-    { icon: '💬', title: 'COMPANION', sub: 'Find your person', key: 'companion' },
-    { icon: '💘', title: 'ROMANCE', sub: 'Someone who gets you', key: 'romance' },
-    { icon: '⚔️', title: 'ADVENTURE', sub: 'Roleplay & stories', key: 'adventure' },
-    { icon: '🎮', title: 'PLAY', sub: 'Games & challenges', key: 'play' }
-  ];
-  return `
-    <div class="screen" id="screen-mode">
-      <button class="back-btn" onclick="goBack()">◀ BACK</button>
-      <div>
-        <div class="glitch glitch-heading">SELECT MODE</div>
-        <div class="subtitle-small">CHOOSE YOUR EXPERIENCE</div>
-      </div>
-      <div class="mode-list">
-        ${modes.map(m => `
-          <button class="mode-card ${state.mode === m.key ? 'selected' : ''}"
-                  onclick="selectMode('${m.key}')">
-            <span class="mode-icon">${m.icon}</span>
-            <div>
-              <div class="mode-title">${m.title}</div>
-              <div class="mode-subtitle">${m.sub}</div>
-            </div>
-            <span class="mode-arrow">▶</span>
-          </button>
-        `).join('')}
-      </div>
-      <button class="arcade-btn" id="confirmMode" onclick="confirmMode()" ${!state.mode ? 'disabled' : ''}>
-        CONFIRM ▶
-      </button>
-    </div>
-  `;
-}
-
-function selectMode(key) {
-  state.mode = key;
-  // Re-render just the cards to show selected state
-  document.querySelectorAll('.mode-card').forEach(el => {
-    el.classList.toggle('selected', el.getAttribute('onclick').includes(`'${key}'`));
-  });
-  document.getElementById('confirmMode').disabled = false;
-}
-
-function confirmMode() {
-  if (!state.mode) return;
-  track('quiz_mode_selected', { quiz_mode: state.mode });
-  posthog.capture('mode_selected', { mode: state.mode });
-  flash();
-  state.questionIndex = 0;
-  state.answers = [];
-  pushState('question');
-  render();
-}
-
-// ── Questions ──
-function renderQuestion() {
-  const questions = QUESTIONS[state.mode];
-  const q = questions[state.questionIndex];
-  const total = questions.length;
-  const progress = ((state.questionIndex + 1) / total) * 100;
-  const keys = ['A', 'B', 'C', 'D'];
-
-  return `
-    <div class="screen" id="screen-q">
-      <button class="back-btn" onclick="goBack()">◀ BACK</button>
-      <div class="xp-bar-wrap">
-        <span class="xp-label">LV.${state.questionIndex + 1}</span>
-        <div class="xp-track">
-          <div class="xp-fill" style="width:${progress}%"></div>
-        </div>
-        <span class="xp-count">${state.questionIndex + 1}/${total}</span>
-      </div>
-      <div style="text-align:center">
-        <div class="sys-label">${q.sys}</div>
-        <div class="glitch glitch-question">${q.title}</div>
-      </div>
-      ${q.sys === 'GENDER.SYS' ? `
-      <div class="gender-grid">
-        <button class="gender-card" onclick="answerQuestion(0)">
-          <img src="/male.webp" alt="Male" class="gender-img" />
-          <span class="gender-label">MALE</span>
-        </button>
-        <button class="gender-card" onclick="answerQuestion(1)">
-          <img src="/female.webp" alt="Female" class="gender-img" />
-          <span class="gender-label">FEMALE</span>
-        </button>
-      </div>
-      ` : `
-      <div class="choice-list">
-        ${q.options.map((opt, i) => `
-          <button class="choice-card" onclick="answerQuestion(${i})">
-            <span class="choice-key">${keys[i]}</span>
-            <span class="choice-label">${opt}</span>
-            <span class="choice-star">✦</span>
-          </button>
-        `).join('')}
-      </div>
-      `}
-    </div>
-  `;
-}
-
-function answerQuestion(i) {
-  const questions = QUESTIONS[state.mode];
-  const q = questions[state.questionIndex];
-
-  // Visual feedback
-  const cards = document.querySelectorAll('.choice-card, .gender-card');
-  cards.forEach(c => c.classList.remove('selected'));
-  if (cards[i]) cards[i].classList.add('selected');
-
-  updateCombo();
-  state.answers.push(q.keys[i]);
-
-  track('quiz_question_answered', {
-    quiz_mode: state.mode,
-    question_number: state.questionIndex + 1,
-    question_title: q.sys,
-    answer: q.keys[i]
-  });
-
-  posthog.capture('question_answered', {
-    mode: state.mode,
-    question_number: state.questionIndex + 1,
-    answer: q.keys[i]
-  });
-
-  flash();
-  setTimeout(() => {
-    if (state.questionIndex < questions.length - 1) {
-      pushState('question');
-      state.questionIndex++;
-      render();
-    } else {
-      hideCombo();
-      pushState('email');
-      render();
-    }
-  }, 350);
-}
-
-// ── Email Capture ──
-function renderEmail() {
-  const isGamePath = state.mode === 'adventure' || state.mode === 'play';
-  const ctaLabel = "REVEAL MATCH ▶";
-
-  return `
-    <div class="screen" id="screen-email">
-      <button class="back-btn" onclick="goBack()">◀ BACK</button>
-
-      <div>
-        <div class="glitch glitch-heading">ALMOST THERE</div>
-        <div class="subtitle-small" style="margin-top:8px">ENTER YOUR EMAIL TO SEE YOUR MATCH</div>
-      </div>
-
-      <div class="email-wrap">
-        <input
-          type="email"
-          class="email-input"
-          id="emailInput"
-          placeholder="your@email.com"
-          value="${state.email}"
-          oninput="state.email = this.value; clearEmailError();"
-          onkeydown="if(event.key==='Enter') submitEmail();"
-          autofocus
-        />
-        <div class="email-error" id="emailError"></div>
-        <label class="consent-label" for="marketingConsent">
-          <input type="checkbox" id="marketingConsent" class="consent-checkbox" />
-          <span class="consent-text">I agree to receive marketing emails from ourdream. You can unsubscribe at any time.</span>
-        </label>
-        <div class="email-disclosure">
-          Your email is required to prevent spam. We will only send marketing emails if you opt in above.
-        </div>
-      </div>
-
-      <div style="text-align:center">
-        <button class="arcade-btn large" onclick="submitEmail()">${ctaLabel}</button>
-      </div>
-    </div>
-  `;
-}
-
-function clearEmailError() {
-  document.getElementById('emailError').textContent = '';
-}
-
-function isValidEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-function submitEmail() {
-  const email = state.email.trim();
-  if (!email) {
-    posthog.capture('email_validation_failed', { reason: 'empty', mode: state.mode });
-    document.getElementById('emailError').textContent = 'EMAIL REQUIRED';
-    document.getElementById('emailInput').style.animation = 'shakeSm 0.3s';
-    setTimeout(() => { document.getElementById('emailInput').style.animation = ''; }, 300);
-    return;
-  }
-  if (!isValidEmail(email)) {
-    posthog.capture('email_validation_failed', { reason: 'invalid_format', mode: state.mode });
-    document.getElementById('emailError').textContent = 'INVALID EMAIL FORMAT';
-    document.getElementById('emailInput').style.animation = 'shakeSm 0.3s';
-    setTimeout(() => { document.getElementById('emailInput').style.animation = ''; }, 300);
-    return;
-  }
-
-  // Save email entry
-  saveEmail(email);
-
-  const marketingConsent = document.getElementById('marketingConsent').checked;
-  track('quiz_email_submitted', {
-    quiz_mode: state.mode,
-    marketing_consent: marketingConsent ? 'yes' : 'no'
-  });
-
-  posthog.identify(email, {
-    quiz_mode: state.mode,
-    marketing_consent: marketingConsent
-  });
-  posthog.capture('email_submitted', {
-    mode: state.mode,
-    marketing_consent: marketingConsent
-  });
-
-  // Google Ads native conversion event
-  window.dataLayer.push({
-    event: 'generate_lead',
-    currency: 'USD',
-    value: 1.0,
-    user_data: {
-      email: email
-    }
-  });
-
-  flash();
-
-  // Compute archetype for analytics (no longer rendered on-screen)
-  const hasGender = state.mode === 'companion' || state.mode === 'romance';
-  const personality = hasGender ? (state.answers[1] || '') : (state.answers[0] || '');
-  const modeArchetypes = ARCHETYPES[state.mode] || ARCHETYPES.companion;
-  const arch = modeArchetypes[personality] || Object.values(modeArchetypes)[0];
-
-  track('quiz_match_revealed', {
-    quiz_mode: state.mode,
-    match_name: arch.name,
-    match_trait: arch.trait
-  });
-  posthog.capture('match_revealed', {
-    mode: state.mode,
-    match_name: arch.name
-  });
-  posthog.setPersonProperties({
-    archetype: arch.name,
-    quiz_mode: state.mode
-  });
-
-  // Redirect via RedTrack /click. RedTrack injects clickid/tracker and remaps
-  // sub11..sub18 back to ref/Q1/Q10/Q12/Q13/Q15/Q18/s on the final ourdream.ai URL.
-  const isGamePath = state.mode === 'adventure' || state.mode === 'play';
-  const _k = isGamePath
-    ? 'aHR0cHM6Ly9jbGsub3VyZHJlYW1uZXR3b3JrLmNvbS9jbGljay8y'
-    : 'aHR0cHM6Ly9jbGsub3VyZHJlYW1uZXR3b3JrLmNvbS9jbGljay8x';
-
-  const params = new URLSearchParams();
-  params.set('sub11', 'googlecpc');
-
-  // Forward clickid from the RedTrack cookie — /click endpoint needs it
-  // because the cookie is scoped to ourdreamnetwork.com, not clk.ourdreamnetwork.com.
-  var rtkMatch = document.cookie.match(/(?:^|;\s*)rtkclickid-store=([^;]+)/);
-  if (rtkMatch) {
-    params.set('clickid', decodeURIComponent(rtkMatch[1]));
-  }
-
-  if (!isGamePath) {
-    const genderMap = { male: 'Male', female: 'Female' };
-    const personalityMap = { playful: 'Playful', mysterious: 'Mysterious', caring: 'Caring', bold: 'Confident' };
-    const relationshipMap = state.mode === 'romance'
-      ? { intimate: 'Lover', dreamy: 'Crush', spontaneous: 'Stranger', comfort: 'Roommate' }
-      : { deep: 'Lover', adventure: 'Stranger', cozy: 'Roommate', romantic: 'Crush' };
-
-    var g = genderMap[state.answers[0]];
-    if (g) params.set('sub12', g);
-    params.set('sub13', 'Athletic');
-    params.set('sub14', 'ASMR');
-    var p = personalityMap[state.answers[1]];
-    if (p) params.set('sub15', p);
-    var r = relationshipMap[state.answers[2]];
-    if (r) params.set('sub16', r);
-    params.set('sub17', 'true');
-    params.set('sub18', '6');
-  }
-
-  const url = atob(_k) + '?' + params.toString();
-
-  track('quiz_redirect', {
-    quiz_mode: state.mode,
-    redirect_url: url
-  });
-  posthog.capture('redirected', {
-    mode: state.mode,
-    destination: url
-  });
-
-  getDecoratedUrl(url).then(function(finalUrl) {
-    window.location.href = finalUrl;
-  });
-}
-
-// ══════════════════════════════════════════════
-//  EMAIL STORAGE
-// ══════════════════════════════════════════════
-
-function saveEmail(email) {
-  const marketingConsent = document.getElementById('marketingConsent').checked;
-  fetch('/api/save-email', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      email: email,
-      mode: state.mode,
-      answers: [...state.answers],
-      marketingConsent: marketingConsent
-    })
-  }).catch(err => console.error('Failed to save email:', err));
-}
-
-// ══════════════════════════════════════════════
 //  INIT
 // ══════════════════════════════════════════════
 
-initParticles();
-render();
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('[init] state ready', state);
+  render();
+});
 </script>
-<div class="legal-footer">
-  <a href="/terms.html">TERMS</a>
-  <a href="/privacy.html">PRIVACY</a>
-</div>
 </body>
 </html>
