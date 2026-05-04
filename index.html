@@ -419,7 +419,80 @@ function renderStep1() {
     grid.appendChild(card);
   });
 }
-function renderStep2() { /* Task 9 */ }
+function renderStep2() {
+  const root = document.getElementById('step-2');
+  root.classList.add('c3s-step-enter');
+  const styleKey = state.style || 'Realistic';
+
+  root.innerHTML = `
+    <h1 class="c3s-h1">Design her look</h1>
+    <p class="c3s-h2">Pick one from each row.</p>
+    ${renderPickSection('Ethnicity', ETHNICITY[styleKey],  state.ethnicity, 'ethnicity')}
+    ${renderPickSection('Hair Style', HAIR[styleKey],      state.hairStyle, 'hairStyle')}
+    ${renderPickSection('Physique',   PHYSIQUE[styleKey],  state.physique && state.physique.value, 'physique')}
+  `;
+
+  attachPickHandlers(root);
+  maybeAutoAdvance();
+}
+
+function renderPickSection(title, options, selectedValue, stateKey) {
+  const grid = options.map(opt => {
+    const isSelected = opt.value === selectedValue;
+    return `
+      <button type="button" class="c3s-pick-card${isSelected ? ' is-selected' : ''}"
+              data-state-key="${stateKey}" data-value="${opt.value}"
+              aria-label="Choose ${opt.label}">
+        <img src="${opt.img}" alt="${opt.label}" loading="lazy">
+        <div class="c3s-pick-card-label">${opt.label}</div>
+      </button>
+    `;
+  }).join('');
+
+  return `
+    <div class="c3s-pick-section">
+      <h3 class="c3s-pick-title">${title}</h3>
+      <div class="c3s-pick-grid">${grid}</div>
+    </div>
+  `;
+}
+
+function attachPickHandlers(root) {
+  root.querySelectorAll('.c3s-pick-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const key = card.dataset.stateKey;
+      const value = card.dataset.value;
+      const styleKey = state.style || 'Realistic';
+
+      let patch;
+      if (key === 'physique') {
+        const opt = PHYSIQUE[styleKey].find(p => p.value === value);
+        patch = { physique: opt };
+      } else {
+        patch = { [key]: value };
+      }
+
+      track('quiz_pick', { step: 2, key, value });
+      setState(patch);
+    });
+  });
+}
+
+function maybeAutoAdvance() {
+  const allPicked = state.ethnicity && state.hairStyle && state.physique;
+  if (!allPicked) return;
+
+  // Guard against double-fire if user re-picks after timer started
+  if (state.autoAdvanceTimer) {
+    clearTimeout(state.autoAdvanceTimer);
+  }
+  state.autoAdvanceTimer = setTimeout(() => {
+    state.autoAdvanceTimer = null;
+    if (state.currentStep === 2) {
+      setState({ currentStep: 3 });
+    }
+  }, 350);
+}
 function renderStep3() { /* Task 10 */ }
 function renderEmailGate(_visible) { /* Task 11 */ }
 
