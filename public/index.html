@@ -143,9 +143,9 @@ body {
 .legal-footer a { color: rgba(255,255,255,0.4); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin: 0 12px; text-decoration: none; }
 .legal-footer a:hover { color: rgba(255,255,255,0.8); }
 
-/* Visibility helper for steps */
+/* Visibility helper for steps — active step flexes vertically so its grid can fill remaining height */
 .c3s-step { display: none; width: 100%; }
-.c3s-step.is-active { display: block; }
+.c3s-step.is-active { display: flex; flex-direction: column; flex: 1; min-height: 0; }
 </style>
 </head>
 <body>
