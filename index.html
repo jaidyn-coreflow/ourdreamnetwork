@@ -605,11 +605,10 @@ function renderEmailGate(visible) {
     <div class="c3s-gate" role="dialog" aria-modal="true" aria-labelledby="c3s-gate-title">
       <div class="c3s-gate-card">
         <h1 id="c3s-gate-title" class="c3s-gate-h1">Almost there - enter to reveal your creation</h1>
-        <p class="c3s-gate-sub">We'll send your match details to this email.</p>
         <form id="c3s-gate-form" novalidate>
           <input type="email" name="email" id="c3s-gate-email" class="c3s-gate-input"
                  placeholder="you@example.com" autocomplete="email" autofocus required>
-          <div id="c3s-gate-err" class="c3s-gate-error">Please enter a valid email.</div>
+          <div id="c3s-gate-err" class="c3s-gate-error">Enter a valid email like name@example.com</div>
           <button type="submit" id="c3s-gate-submit" class="c3s-cta" style="margin-top: 14px;">
             Continue
           </button>
@@ -649,7 +648,7 @@ function renderEmailGate(visible) {
 
     state.submitting = true;
     submit.disabled = true;
-    submit.innerHTML = 'Continue<span class="c3s-cta-spinner" aria-hidden="true"></span>';
+    submit.innerHTML = 'Submitting<span class="c3s-cta-spinner" aria-hidden="true"></span>';
 
     track('quiz_email_captured', { email_provided: true });
 
