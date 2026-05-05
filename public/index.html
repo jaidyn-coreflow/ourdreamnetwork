@@ -70,9 +70,12 @@ body {
 .c3s-stats-num { color: #fff; font-weight: 600; }
 @media (min-width: 768px) { .c3s-logo { width: 170px; } .c3s-stats { font-size: 14px; } }
 
-/* Step indicator (text-only, replaces segmented progress bar) */
-.c3s-step-indicator { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; color: rgba(255,255,255,0.55); text-transform: uppercase; margin: 4px 0 16px; }
-.c3s-step-indicator::before, .c3s-step-indicator::after { content: ''; flex: 0 0 24px; height: 1px; background: rgba(255,255,255,0.2); }
+/* Step indicator (text + optional back button) */
+.c3s-step-indicator { position: relative; display: flex; align-items: center; justify-content: center; min-height: 24px; margin: 4px 0 12px; }
+.c3s-step-indicator-text { display: inline-flex; align-items: center; gap: 12px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; color: rgba(255,255,255,0.55); text-transform: uppercase; }
+.c3s-step-indicator-text::before, .c3s-step-indicator-text::after { content: ''; flex: 0 0 24px; height: 1px; background: rgba(255,255,255,0.2); }
+.c3s-back-btn { position: absolute; left: 0; top: 50%; transform: translateY(-50%); display: inline-flex; align-items: center; gap: 4px; background: none; border: none; cursor: pointer; font-size: 12px; font-weight: 600; letter-spacing: 0.05em; color: rgba(255,255,255,0.7); padding: 4px 6px; text-transform: uppercase; }
+.c3s-back-btn:hover { color: #fff; }
 
 /* Headings (centered) */
 .c3s-h1 { font-size: 28px; line-height: 1.15; font-weight: 800; text-align: center; margin: 0 0 8px; letter-spacing: -0.01em; }
@@ -94,14 +97,16 @@ body {
 .c3s-style-card-label { position: absolute; bottom: 12px; left: 12px; right: auto; font-size: 14px; font-weight: 600; color: #fff; text-align: left; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
 
 /* Pick grid (Step 2 sub-component) */
-.c3s-pick-section { width: 100%; margin-bottom: 20px; }
-.c3s-pick-title { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.8); margin: 0 0 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+.c3s-pick-section { width: 100%; margin-bottom: 14px; }
+.c3s-pick-title { font-size: 11px; font-weight: 700; margin: 0 0 8px; letter-spacing: 0.15em; }
+.c3s-pick-title-name { color: rgba(255,255,255,0.75); text-transform: uppercase; }
+.c3s-pick-title-hint { color: rgba(255,255,255,0.4); margin-left: 6px; font-weight: 500; letter-spacing: 0.02em; text-transform: none; }
 .c3s-pick-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-.c3s-pick-card { position: relative; aspect-ratio: 1; border-radius: 12px; overflow: hidden; cursor: pointer; border: 2px solid rgba(255,255,255,0.08); transition: border-color 0.15s, transform 0.1s; background: #1a1a1a; }
+.c3s-pick-card { position: relative; aspect-ratio: 4/5; border-radius: 12px; overflow: hidden; cursor: pointer; border: 2px solid rgba(255,255,255,0.08); transition: border-color 0.15s, transform 0.1s; background: #1a1a1a; }
 .c3s-pick-card:hover { border-color: rgba(236,72,153,0.4); }
 .c3s-pick-card.is-selected { border-color: #ec4899; box-shadow: 0 0 0 3px rgba(236,72,153,0.25); }
 .c3s-pick-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.c3s-pick-card-label { position: absolute; bottom: 6px; left: 0; right: 0; text-align: center; font-size: 12px; font-weight: 600; color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
+.c3s-pick-card-label { position: absolute; bottom: 6px; left: 8px; right: auto; font-size: 12px; font-weight: 600; color: #fff; text-align: left; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
 
 /* Personality (Step 3) */
 .c3s-persona-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-bottom: 16px; }
@@ -372,7 +377,13 @@ function renderProgressBar() {
   const el = document.getElementById('c3s-step-indicator');
   if (!el) return;
   const stepNum = typeof state.currentStep === 'number' ? state.currentStep : 3; // gate counts as on step 3
-  el.textContent = `Step ${stepNum} of 3`;
+  const showBack = stepNum > 1 && state.currentStep !== 'email';
+  el.innerHTML =
+    (showBack ? `<button type="button" class="c3s-back-btn" data-action="back" aria-label="Go back">‹ Back</button>` : '') +
+    `<span class="c3s-step-indicator-text">Step ${stepNum} of 3</span>`;
+  if (showBack) {
+    el.querySelector('[data-action="back"]').addEventListener('click', () => goToStep(stepNum - 1));
+  }
 }
 
 function goToStep(n) {
@@ -425,11 +436,10 @@ function renderStep2() {
   const styleKey = state.style || 'Realistic';
 
   root.innerHTML = `
-    <h1 class="c3s-h1">Design her look</h1>
-    <p class="c3s-h2">Pick one from each row.</p>
+    <h1 class="c3s-h1">Design her <span class="c3s-h1-accent">look</span></h1>
     ${renderPickSection('Ethnicity', ETHNICITY[styleKey],  state.ethnicity, 'ethnicity')}
-    ${renderPickSection('Hair Style', HAIR[styleKey],      state.hairStyle, 'hairStyle')}
-    ${renderPickSection('Physique',   PHYSIQUE[styleKey],  state.physique && state.physique.value, 'physique')}
+    ${renderPickSection('Hair', HAIR[styleKey],            state.hairStyle, 'hairStyle')}
+    ${renderPickSection('Physique', PHYSIQUE[styleKey],    state.physique && state.physique.value, 'physique')}
   `;
 
   attachPickHandlers(root);
@@ -451,7 +461,7 @@ function renderPickSection(title, options, selectedValue, stateKey) {
 
   return `
     <div class="c3s-pick-section">
-      <h3 class="c3s-pick-title">${title}</h3>
+      <h3 class="c3s-pick-title"><span class="c3s-pick-title-name">${title}</span><span class="c3s-pick-title-hint">· pick one</span></h3>
       <div class="c3s-pick-grid">${grid}</div>
     </div>
   `;
