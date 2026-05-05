@@ -104,7 +104,10 @@ body {
 .c3s-pick-title-hint { color: rgba(255,255,255,0.4); margin-left: 6px; font-weight: 500; letter-spacing: 0.02em; text-transform: none; }
 .c3s-pick-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .c3s-pick-card { position: relative; aspect-ratio: 4/5; border-radius: 8px; overflow: hidden; cursor: pointer; border: 2px solid rgba(255,255,255,0.08); transition: border-color 0.15s, transform 0.1s; background: #1a1a1a; }
-@media (min-width: 768px) { .c3s-pick-card { aspect-ratio: 5/4; } }
+@media (min-width: 768px) {
+  .c3s-pick-grid { grid-template-columns: repeat(3, 160px); justify-content: center; gap: 16px; }
+  .c3s-pick-card { aspect-ratio: 1/1; }
+}
 .c3s-pick-card:hover { border-color: rgba(236,72,153,0.4); }
 .c3s-pick-card.is-selected { border-color: #ec4899; box-shadow: 0 0 0 3px rgba(236,72,153,0.25); }
 .c3s-pick-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
