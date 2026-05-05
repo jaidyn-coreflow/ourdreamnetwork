@@ -60,15 +60,15 @@ body {
 .c3s-container { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 12px 16px 8px; max-width: 520px; margin: 0 auto; width: 100%; }
 @media (min-width: 768px) { .c3s-container { padding: 16px 24px 12px; max-width: 700px; } }
 
-/* Header (logo + stats counter) */
-.c3s-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 4px 0 16px; }
+/* Header (logo + stats counter) — full viewport width, sits above .c3s-container */
+.c3s-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 12px 16px; flex: 0 0 auto; box-sizing: border-box; }
 .c3s-logo { display: inline-block; width: 140px; opacity: 0.95; transition: opacity 0.2s; text-decoration: none; }
 .c3s-logo:hover { opacity: 1; }
 .c3s-logo svg { width: 100%; height: auto; display: block; }
 .c3s-stats { display: flex; align-items: center; gap: 6px; font-size: 13px; color: rgba(255,255,255,0.55); white-space: nowrap; }
 .c3s-stats-dot { width: 8px; height: 8px; border-radius: 50%; background: #ec4899; box-shadow: 0 0 6px rgba(236,72,153,0.7); flex: 0 0 auto; }
 .c3s-stats-num { color: #fff; font-weight: 600; }
-@media (min-width: 768px) { .c3s-logo { width: 170px; } .c3s-stats { font-size: 14px; } }
+@media (min-width: 768px) { .c3s-header { padding: 16px 32px; } .c3s-logo { width: 170px; } .c3s-stats { font-size: 14px; } }
 
 /* Step indicator (text + optional back button on left) */
 .c3s-step-indicator { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 24px; margin: 4px 0 10px; gap: 8px; }
@@ -92,6 +92,7 @@ body {
 /* Style picker (Step 1) — fixed-aspect cards, ~1:2 portrait, breathing room above the fold below */
 .c3s-style-grid { display: flex; gap: 12px; width: 100%; }
 .c3s-style-card { position: relative; flex: 1; min-width: 0; aspect-ratio: 1/2; border-radius: 12px; overflow: hidden; cursor: pointer; border: 2px solid rgba(255,255,255,0.1); transition: border-color 0.2s, transform 0.15s; background: #1a1a1a; }
+@media (min-width: 768px) { .c3s-style-card { aspect-ratio: 2/3; } }
 .c3s-style-card:hover, .c3s-style-card:focus-visible { border-color: rgba(236,72,153,0.5); transform: translateY(-2px); }
 .c3s-style-card video, .c3s-style-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .c3s-style-card-label { position: absolute; bottom: 12px; left: 12px; right: auto; font-size: 14px; font-weight: 600; color: #fff; text-align: left; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
@@ -103,6 +104,7 @@ body {
 .c3s-pick-title-hint { color: rgba(255,255,255,0.4); margin-left: 6px; font-weight: 500; letter-spacing: 0.02em; text-transform: none; }
 .c3s-pick-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .c3s-pick-card { position: relative; aspect-ratio: 4/5; border-radius: 8px; overflow: hidden; cursor: pointer; border: 2px solid rgba(255,255,255,0.08); transition: border-color 0.15s, transform 0.1s; background: #1a1a1a; }
+@media (min-width: 768px) { .c3s-pick-card { aspect-ratio: 5/4; } }
 .c3s-pick-card:hover { border-color: rgba(236,72,153,0.4); }
 .c3s-pick-card.is-selected { border-color: #ec4899; box-shadow: 0 0 0 3px rgba(236,72,153,0.25); }
 .c3s-pick-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
@@ -162,9 +164,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="c3s-ambient"></div>
 
 <div id="root">
-  <div class="c3s-container">
-    <div class="c3s-header">
-      <a href="/" class="c3s-logo" aria-label="ourdream.ai">
+  <div class="c3s-header">
+    <a href="/" class="c3s-logo" aria-label="ourdream.ai">
         <svg viewBox="0 0 151 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M144.024 2.7L144.604 0H150.164L149.584 2.7H144.024ZM141.444 14.78L143.844 3.48H149.404L147.004 14.78H141.444Z" fill="white"/>
         <path d="M130.981 15.0399C128.821 15.0399 126.921 14.0999 126.921 12.0999C126.921 9.41991 129.681 8.67991 133.241 8.25991C135.701 7.99991 136.381 7.61991 136.381 6.93991C136.381 6.43991 135.761 6.19991 135.061 6.19991C134.141 6.19991 133.401 6.63991 133.041 7.59991H128.081C129.041 4.65991 132.021 3.15991 135.441 3.15991C139.641 3.15991 142.281 4.93991 141.501 8.57991L140.181 14.7799H134.741L134.961 13.7199C133.881 14.5799 132.481 15.0399 130.981 15.0399ZM132.241 11.5799C132.241 12.0799 132.701 12.3599 133.441 12.3599C134.161 12.3599 134.901 12.0799 135.401 11.6799L135.701 10.2799L135.821 9.73991C135.381 9.93991 134.841 10.0799 134.161 10.1799C132.861 10.4199 132.241 10.7999 132.241 11.5799Z" fill="white"/>
@@ -179,13 +180,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <path d="M6.88 15.14C2.8 15.14 0 13.22 0 9.96C0 9.58 0.04 9.19999 0.12 8.77999C0.76 5.19999 4.02 3.12 8.08 3.12C12.16 3.12 14.96 5.04 14.96 8.3C14.96 8.68 14.92 9.05999 14.84 9.47999C14.2 13.08 10.94 15.14 6.88 15.14ZM7.08 11.78C8.22 11.78 9.22 11.04 9.58 9.24C9.64 8.93999 9.68 8.65999 9.68 8.39999C9.68 7.15999 8.98 6.51999 7.88 6.51999C6.74 6.51999 5.72 7.25999 5.36 9.05999C5.3 9.35999 5.28 9.62 5.28 9.88C5.28 11.12 5.96 11.78 7.08 11.78Z" fill="#EC4899"/>
         </svg>
       </a>
-      <div class="c3s-stats" aria-label="Companions created today">
-        <span class="c3s-stats-dot" aria-hidden="true"></span>
-        <span class="c3s-stats-num" id="c3s-stats-num">201,503</span>
-        <span class="c3s-stats-label">created today</span>
-      </div>
+    <div class="c3s-stats" aria-label="Companions created today">
+      <span class="c3s-stats-dot" aria-hidden="true"></span>
+      <span class="c3s-stats-num" id="c3s-stats-num">201,503</span>
+      <span class="c3s-stats-label">created today</span>
     </div>
+  </div>
 
+  <div class="c3s-container">
     <div id="c3s-step-indicator" class="c3s-step-indicator" role="status" aria-live="polite"></div>
 
     <section id="step-1" class="c3s-step"></section>
