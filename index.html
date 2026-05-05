@@ -70,11 +70,11 @@ body {
 .c3s-stats-num { color: #fff; font-weight: 600; }
 @media (min-width: 768px) { .c3s-logo { width: 170px; } .c3s-stats { font-size: 14px; } }
 
-/* Step indicator (text + optional back button) */
-.c3s-step-indicator { position: relative; display: flex; align-items: center; justify-content: center; min-height: 24px; margin: 4px 0 12px; }
-.c3s-step-indicator-text { display: inline-flex; align-items: center; gap: 12px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; color: rgba(255,255,255,0.55); text-transform: uppercase; }
+/* Step indicator (text + optional back button on left) */
+.c3s-step-indicator { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 24px; margin: 4px 0 10px; gap: 8px; }
+.c3s-step-indicator-text { grid-column: 2; display: inline-flex; align-items: center; gap: 12px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; color: rgba(255,255,255,0.55); text-transform: uppercase; }
 .c3s-step-indicator-text::before, .c3s-step-indicator-text::after { content: ''; flex: 0 0 24px; height: 1px; background: rgba(255,255,255,0.2); }
-.c3s-back-btn { position: absolute; left: 0; top: 50%; transform: translateY(-50%); display: inline-flex; align-items: center; gap: 4px; background: none; border: none; cursor: pointer; font-size: 12px; font-weight: 600; letter-spacing: 0.05em; color: rgba(255,255,255,0.7); padding: 4px 6px; text-transform: uppercase; }
+.c3s-back-btn { grid-column: 1; justify-self: start; display: inline-flex; align-items: center; gap: 4px; background: none; border: none; cursor: pointer; font-size: 12px; font-weight: 600; letter-spacing: 0.05em; color: rgba(255,255,255,0.7); padding: 4px 6px; text-transform: uppercase; }
 .c3s-back-btn:hover { color: #fff; }
 
 /* Headings (centered) */
@@ -271,29 +271,34 @@ const ETHNICITY_APPEARANCE = {
   Demon:   { skinTone: 'Darker', hairColor: 'Red',      eyeColor: 'Red' },
 };
 
+// Hair + Physique use the CDN preview URLs (resolved from the TSX mediaUrl() helper).
+// These were originally constructed by analogy in Task 4 but those URLs 404; replaced
+// with the actual UUIDs captured from the original TSX data tables.
+const _PREVIEW = (uuid) => `https://static.ourdream.ai/cdn-cgi/image/width=400,format=auto/previews/${uuid}`;
+
 const HAIR = {
   Realistic: [
-    { value: 'Wavy',          label: 'Wavy',     img: 'https://static.ourdream.ai/create-videos/sfw-realistic-wavy.webp' },
-    { value: 'Long Straight', label: 'Long',     img: 'https://static.ourdream.ai/create-videos/sfw-realistic-long.webp' },
-    { value: 'Ponytail',      label: 'Ponytail', img: 'https://static.ourdream.ai/create-videos/sfw-realistic-ponytail.webp' },
+    { value: 'Wavy',          label: 'Wavy',     img: _PREVIEW('3b0afa73-c4fd-4737-acb3-89bab8407b07') },
+    { value: 'Long Straight', label: 'Long',     img: _PREVIEW('03c51e73-cb69-45c5-aab4-d0f6f96fd309') },
+    { value: 'Ponytail',      label: 'Ponytail', img: _PREVIEW('a6e764f1-7590-4bc9-87db-6c056a5e6588') },
   ],
   Anime: [
-    { value: 'Wavy',          label: 'Wavy',     img: 'https://static.ourdream.ai/create-videos/sfw-anime-wavy.webp' },
-    { value: 'Long Straight', label: 'Long',     img: 'https://static.ourdream.ai/create-videos/sfw-anime-long.webp' },
-    { value: 'Ponytail',      label: 'Ponytail', img: 'https://static.ourdream.ai/create-videos/sfw-anime-ponytail.webp' },
+    { value: 'Wavy',          label: 'Wavy',     img: _PREVIEW('4973ffcd-ac5f-4d9e-af10-1ed730487469') },
+    { value: 'Long Straight', label: 'Long',     img: _PREVIEW('da2be427-d8cb-48ca-b68b-cc637f44c1f9') },
+    { value: 'Ponytail',      label: 'Ponytail', img: _PREVIEW('dbc7fe92-73e2-4595-80ed-554e38a45b6b') },
   ],
 };
 
 const PHYSIQUE = {
   Realistic: [
-    { value: 'slim',     label: 'Slim',     img: 'https://static.ourdream.ai/create-videos/sfw-realistic-slim.webp',     bodyType: 'Slim',        breastSize: 'Small',  buttSize: 'Skinny' },
-    { value: 'athletic', label: 'Athletic', img: 'https://static.ourdream.ai/create-videos/sfw-realistic-athletic.webp', bodyType: 'Athletic',    breastSize: 'Medium', buttSize: 'Athletic' },
-    { value: 'curvy',    label: 'Curvy',    img: 'https://static.ourdream.ai/create-videos/sfw-realistic-curvy.webp',    bodyType: 'Voluptuous',  breastSize: 'Large',  buttSize: 'Large' },
+    { value: 'slim',     label: 'Slim',     img: _PREVIEW('0e299ca6-36ca-4012-91b1-742d287365b6'), bodyType: 'Slim',        breastSize: 'Small',  buttSize: 'Skinny' },
+    { value: 'athletic', label: 'Athletic', img: _PREVIEW('18e43301-273a-498a-888d-65bc8c1087d2'), bodyType: 'Athletic',    breastSize: 'Medium', buttSize: 'Athletic' },
+    { value: 'curvy',    label: 'Curvy',    img: _PREVIEW('30e66f37-96a8-4013-b69e-438292120188'), bodyType: 'Voluptuous',  breastSize: 'Large',  buttSize: 'Large' },
   ],
   Anime: [
-    { value: 'slim',     label: 'Slim',     img: 'https://static.ourdream.ai/create-videos/sfw-anime-slim.webp',     bodyType: 'Slim',        breastSize: 'Small',  buttSize: 'Skinny' },
-    { value: 'athletic', label: 'Athletic', img: 'https://static.ourdream.ai/create-videos/sfw-anime-athletic.webp', bodyType: 'Athletic',    breastSize: 'Medium', buttSize: 'Athletic' },
-    { value: 'curvy',    label: 'Curvy',    img: 'https://static.ourdream.ai/create-videos/sfw-anime-curvy.webp',    bodyType: 'Voluptuous',  breastSize: 'Large',  buttSize: 'Large' },
+    { value: 'slim',     label: 'Slim',     img: _PREVIEW('09530a34-5b25-4970-b3de-b665f5b66f5f'), bodyType: 'Slim',        breastSize: 'Small',  buttSize: 'Skinny' },
+    { value: 'athletic', label: 'Athletic', img: _PREVIEW('e97a8220-66d6-4e25-b561-d4ef517e2153'), bodyType: 'Athletic',    breastSize: 'Medium', buttSize: 'Athletic' },
+    { value: 'curvy',    label: 'Curvy',    img: _PREVIEW('8a3a67e4-9c7d-4651-b2dc-4c19ccc8ce95'), bodyType: 'Voluptuous',  breastSize: 'Large',  buttSize: 'Large' },
   ],
 };
 
