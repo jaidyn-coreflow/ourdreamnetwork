@@ -672,29 +672,34 @@ function saveEmail(email) {
 }
 
 function redirectToRedtrack() {
-  // Build RedTrack URL: clk.ourdreamnetwork.com/click/1?sub11=googlecpc&clickid=<cookie>&<inbound>
-  const base = atob(REDTRACK_BASE_B64); // https://clk.ourdreamnetwork.com/click/1
+  // RedTrack /click/1 requires a non-empty clickid; if the rtkclickid-store cookie
+  // isn't set (organic / direct visitor), the endpoint returns
+  // "status: 0 message: empty clickid value" and the user gets stuck.
+  // Fallback: when no clickid is available, skip RedTrack and go straight to
+  // ourdream.ai with the same ref=googlecpc + inbound params we'd have produced
+  // post-remap.
+  const cookieMatch = document.cookie.match(/(?:^|;\s*)rtkclickid-store=([^;]+)/);
   const params = new URLSearchParams();
 
-  // Fixed traffic source (RedTrack remaps → ref=googlecpc on ourdream.ai)
-  params.set('sub11', 'googlecpc');
-
-  // Forward clickid from the rtkclickid-store cookie. The cookie is scoped to
-  // ourdreamnetwork.com (NOT clk.ourdreamnetwork.com), so we must pass it as a query.
-  const cookieMatch = document.cookie.match(/(?:^|;\s*)rtkclickid-store=([^;]+)/);
-  if (cookieMatch) {
-    params.set('clickid', decodeURIComponent(cookieMatch[1]));
-  }
-
-  // Pass through inbound URL params (utm_*, gclid, fbclid, etc.). RedTrack ignores
-  // unknown params; ourdream.ai may use them for campaign attribution.
+  // Inbound URL params (utm_*, gclid, fbclid, etc.) ride along either path.
   state.inboundParams.forEach((v, k) => {
     if (!params.has(k)) params.set(k, v);
   });
 
-  const url = base + '?' + params.toString();
+  let url;
+  if (cookieMatch) {
+    // Paid path — clk.ourdreamnetwork.com/click/1 with sub11+clickid
+    params.set('sub11', 'googlecpc');
+    params.set('clickid', decodeURIComponent(cookieMatch[1]));
+    url = atob(REDTRACK_BASE_B64) + '?' + params.toString();
+  } else {
+    // Organic path — direct to ourdream.ai with ref=googlecpc (matches the
+    // post-RedTrack-remap final URL that paid visitors would land on).
+    params.set('ref', 'googlecpc');
+    url = 'https://ourdream.ai/?' + params.toString();
+  }
 
-  track('quiz_redirect', { redirect_url: url });
+  track('quiz_redirect', { redirect_url: url, has_clickid: !!cookieMatch });
 
   getDecoratedUrl(url).then(finalUrl => {
     window.location.href = finalUrl;
