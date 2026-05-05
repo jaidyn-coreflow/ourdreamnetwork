@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<title>Create AI Girlfriend | Design Your Perfect Companion | ourdream.ai</title>
+<title>Create Your AI Companion | Ourdreamnetwork</title>
 <meta name="description" content="Create your AI girlfriend on Ourdream in 30 seconds. Choose her look, personality, and style. 100% private, always available.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://static.ourdream.ai" crossorigin>
@@ -453,7 +453,6 @@ function renderStep2() {
   `;
 
   attachPickHandlers(root);
-  maybeAutoAdvance();
 }
 
 function renderPickSection(title, options, selectedValue, stateKey) {
@@ -494,6 +493,9 @@ function attachPickHandlers(root) {
 
       track('quiz_pick', { step: 2, key, value });
       setState(patch);
+      // Auto-advance only fires from a fresh pick, not on every re-render.
+      // (Avoids bouncing the user back to step 3 when they navigate back.)
+      maybeAutoAdvance();
     });
   });
 }
