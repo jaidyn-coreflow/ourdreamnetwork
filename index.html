@@ -91,7 +91,7 @@ body {
 
 /* Style picker (Step 1) — fixed-aspect cards, ~1:2 portrait, breathing room above the fold below */
 .c3s-style-grid { display: flex; gap: 12px; width: 100%; }
-.c3s-style-card { position: relative; flex: 1; min-width: 0; aspect-ratio: 1/2; border-radius: 20px; overflow: hidden; cursor: pointer; border: 2px solid rgba(255,255,255,0.1); transition: border-color 0.2s, transform 0.15s; background: #1a1a1a; }
+.c3s-style-card { position: relative; flex: 1; min-width: 0; aspect-ratio: 1/2; border-radius: 12px; overflow: hidden; cursor: pointer; border: 2px solid rgba(255,255,255,0.1); transition: border-color 0.2s, transform 0.15s; background: #1a1a1a; }
 .c3s-style-card:hover, .c3s-style-card:focus-visible { border-color: rgba(236,72,153,0.5); transform: translateY(-2px); }
 .c3s-style-card video, .c3s-style-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .c3s-style-card-label { position: absolute; bottom: 12px; left: 12px; right: auto; font-size: 14px; font-weight: 600; color: #fff; text-align: left; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
@@ -102,7 +102,7 @@ body {
 .c3s-pick-title-name { color: rgba(255,255,255,0.75); text-transform: uppercase; }
 .c3s-pick-title-hint { color: rgba(255,255,255,0.4); margin-left: 6px; font-weight: 500; letter-spacing: 0.02em; text-transform: none; }
 .c3s-pick-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-.c3s-pick-card { position: relative; aspect-ratio: 4/5; border-radius: 12px; overflow: hidden; cursor: pointer; border: 2px solid rgba(255,255,255,0.08); transition: border-color 0.15s, transform 0.1s; background: #1a1a1a; }
+.c3s-pick-card { position: relative; aspect-ratio: 4/5; border-radius: 8px; overflow: hidden; cursor: pointer; border: 2px solid rgba(255,255,255,0.08); transition: border-color 0.15s, transform 0.1s; background: #1a1a1a; }
 .c3s-pick-card:hover { border-color: rgba(236,72,153,0.4); }
 .c3s-pick-card.is-selected { border-color: #ec4899; box-shadow: 0 0 0 3px rgba(236,72,153,0.25); }
 .c3s-pick-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
@@ -110,7 +110,7 @@ body {
 
 /* Personality (Step 3) — 2x2 grid that fills available height */
 .c3s-persona-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 12px; width: 100%; flex: 1; min-height: 0; }
-.c3s-persona-card { position: relative; min-width: 0; min-height: 0; border-radius: 16px; overflow: hidden; border: 2px solid rgba(255,255,255,0.1); background: #1a1a1a; cursor: pointer; transition: border-color 0.2s, transform 0.15s; }
+.c3s-persona-card { position: relative; min-width: 0; min-height: 0; border-radius: 10px; overflow: hidden; border: 2px solid rgba(255,255,255,0.1); background: #1a1a1a; cursor: pointer; transition: border-color 0.2s, transform 0.15s; }
 .c3s-persona-card:hover { border-color: rgba(236,72,153,0.4); transform: translateY(-1px); }
 .c3s-persona-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .c3s-persona-card::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 60%; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%); pointer-events: none; }
