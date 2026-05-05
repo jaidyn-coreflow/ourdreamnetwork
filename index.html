@@ -672,14 +672,22 @@ function saveEmail(email) {
 }
 
 function redirectToRedtrack() {
-  // RedTrack /click/1 requires a non-empty clickid; if the rtkclickid-store cookie
-  // isn't set (organic / direct visitor), the endpoint returns
-  // "status: 0 message: empty clickid value" and the user gets stuck.
-  // Fallback: when no clickid is available, skip RedTrack and go straight to
-  // ourdream.ai with the same ref=googlecpc + inbound params we'd have produced
-  // post-remap.
+  // Two paths, both ending on ourdream.ai/create with the quiz answers prefilled.
+  //
+  //   PAID (rtkclickid-store cookie present): clk.ourdreamnetwork.com/click/1 with
+  //     sub11..sub18 populated. RedTrack's /click/1 destination is configured as:
+  //       https://ourdream.ai/create?ref=googlecpc&Q1={sub12}&Q10={sub13}&Q12={sub14}
+  //         &Q13={sub15}&Q15={sub16}&Q18={sub17}&s={sub18}&clickid={clickid}&tracker=rt
+  //     We feed each sub-slot the matching quiz answer; RedTrack remaps and appends
+  //     clickid + tracker=rt before redirecting.
+  //
+  //   ORGANIC (no cookie): RedTrack would reject with "empty clickid value", so
+  //     skip it. Go straight to ourdream.ai/create with the FULL Q1..Q18 + s set —
+  //     no 8-sub-slot ceiling, so organic users actually get a richer prefill than
+  //     paid.
   const cookieMatch = document.cookie.match(/(?:^|;\s*)rtkclickid-store=([^;]+)/);
   const params = new URLSearchParams();
+  const q = state.qParams || new URLSearchParams();
 
   // Inbound URL params (utm_*, gclid, fbclid, etc.) ride along either path.
   state.inboundParams.forEach((v, k) => {
@@ -688,15 +696,22 @@ function redirectToRedtrack() {
 
   let url;
   if (cookieMatch) {
-    // Paid path — clk.ourdreamnetwork.com/click/1 with sub11+clickid
+    // Paid path — feed sub11..sub18 to match RedTrack's /click/1 destination URL.
     params.set('sub11', 'googlecpc');
+    params.set('sub12', q.get('Q1')  || 'Female');     // → Q1
+    params.set('sub13', q.get('Q10') || 'Athletic');   // → Q10
+    params.set('sub14', 'ASMR');                       // → Q12 (legacy default; quiz has no Q12)
+    params.set('sub15', q.get('Q13') || 'Sweet');      // → Q13
+    params.set('sub16', q.get('Q15') || 'Crush');      // → Q15
+    params.set('sub17', q.get('Q18') || 'true');       // → Q18
+    params.set('sub18', q.get('s')   || '6');          // → s
     params.set('clickid', decodeURIComponent(cookieMatch[1]));
     url = atob(REDTRACK_BASE_B64) + '?' + params.toString();
   } else {
-    // Organic path — direct to ourdream.ai with ref=googlecpc (matches the
-    // post-RedTrack-remap final URL that paid visitors would land on).
-    params.set('ref', 'googlecpc');
-    url = 'https://ourdream.ai/?' + params.toString();
+    // Organic path — skip RedTrack, go direct to ourdream.ai/create with full Q-data.
+    q.forEach((v, k) => { if (!params.has(k)) params.set(k, v); });
+    params.set('ref', 'googlecpc'); // override any ref from qParams; keep paid attribution consistent
+    url = 'https://ourdream.ai/create?' + params.toString();
   }
 
   track('quiz_redirect', { redirect_url: url, has_clickid: !!cookieMatch });
