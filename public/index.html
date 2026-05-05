@@ -108,15 +108,15 @@ body {
 .c3s-pick-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .c3s-pick-card-label { position: absolute; bottom: 6px; left: 8px; right: auto; font-size: 12px; font-weight: 600; color: #fff; text-align: left; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
 
-/* Personality (Step 3) */
-.c3s-persona-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-bottom: 16px; }
-.c3s-persona-card { position: relative; aspect-ratio: 3/4; border-radius: 16px; overflow: hidden; border: 2px solid rgba(255,255,255,0.1); background: #1a1a1a; cursor: pointer; transition: border-color 0.2s; }
-.c3s-persona-card:hover { border-color: rgba(236,72,153,0.4); }
-.c3s-persona-card.is-selected { border-color: #ec4899; box-shadow: 0 0 0 3px rgba(236,72,153,0.25); }
+/* Personality (Step 3) — 2x2 grid that fills available height */
+.c3s-persona-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 12px; width: 100%; flex: 1; min-height: 0; }
+.c3s-persona-card { position: relative; min-width: 0; min-height: 0; border-radius: 16px; overflow: hidden; border: 2px solid rgba(255,255,255,0.1); background: #1a1a1a; cursor: pointer; transition: border-color 0.2s, transform 0.15s; }
+.c3s-persona-card:hover { border-color: rgba(236,72,153,0.4); transform: translateY(-1px); }
 .c3s-persona-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.c3s-persona-meta { position: absolute; left: 12px; right: 12px; bottom: 10px; }
-.c3s-persona-name { font-size: 16px; font-weight: 700; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.7); }
-.c3s-persona-vibe { font-size: 12px; color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,0.7); }
+.c3s-persona-card::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 60%; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%); pointer-events: none; }
+.c3s-persona-meta { position: absolute; left: 12px; right: 12px; bottom: 10px; z-index: 1; }
+.c3s-persona-name { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 2px; }
+.c3s-persona-vibe { font-size: 11px; color: rgba(255,255,255,0.8); line-height: 1.3; }
 
 /* Primary CTA */
 .c3s-cta {
@@ -515,9 +515,8 @@ function renderStep3() {
 
   const cards = PERSONALITIES[styleKey].map(p => {
     const display = PERSONALITY_DISPLAY[p.id];
-    const isSelected = state.personality === p.id;
     return `
-      <button type="button" class="c3s-persona-card${isSelected ? ' is-selected' : ''}"
+      <button type="button" class="c3s-persona-card"
               data-personality="${p.id}" aria-label="Choose ${display.name}">
         <img src="${p.img}" alt="${display.name}" loading="lazy">
         <div class="c3s-persona-meta">
@@ -529,28 +528,20 @@ function renderStep3() {
   }).join('');
 
   root.innerHTML = `
-    <h1 class="c3s-h1">Pick her personality</h1>
-    <p class="c3s-h2">This shapes how she talks and acts.</p>
+    <h1 class="c3s-h1">Pick her <span class="c3s-h1-accent">personality</span></h1>
+    <p class="c3s-h2">We'll fill in the rest with AI to match your vibe.</p>
     <div class="c3s-persona-grid">${cards}</div>
-    <button type="button" id="c3s-final-cta" class="c3s-cta" ${state.personality ? '' : 'disabled'}>
-      Meet your match
-    </button>
   `;
 
   root.querySelectorAll('.c3s-persona-card').forEach(card => {
     card.addEventListener('click', () => {
       const id = card.dataset.personality;
       track('quiz_pick', { step: 3, key: 'personality', value: id });
-      setState({ personality: id });
+      track('quiz_step_complete', { step: 3, personality: id });
+      state.personality = id;
+      state.qParams = buildQParams();
+      setState({ currentStep: 'email' });
     });
-  });
-
-  const cta = root.querySelector('#c3s-final-cta');
-  cta.addEventListener('click', () => {
-    if (!state.personality) return;
-    state.qParams = buildQParams();
-    track('quiz_step_complete', { step: 3, personality: state.personality });
-    setState({ currentStep: 'email' });
   });
 }
 
