@@ -86,9 +86,9 @@ body {
 .c3s-trust-item svg { width: 14px; height: 14px; flex: 0 0 auto; opacity: 0.7; }
 @media (min-width: 768px) { .c3s-trust { max-width: 700px; padding: 14px 24px 8px; } .c3s-trust-item { font-size: 13px; } }
 
-/* Style picker (Step 1) — grid grows to fill remaining height so cards stretch tall without overflow */
-.c3s-style-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; flex: 1; min-height: 0; }
-.c3s-style-card { position: relative; min-height: 0; border-radius: 20px; overflow: hidden; cursor: pointer; border: 2px solid rgba(255,255,255,0.1); transition: border-color 0.2s, transform 0.15s; background: #1a1a1a; }
+/* Style picker (Step 1) — flex row that stretches to fill remaining height */
+.c3s-style-grid { display: flex; gap: 12px; width: 100%; flex: 1; min-height: 0; }
+.c3s-style-card { position: relative; flex: 1; min-width: 0; min-height: 0; border-radius: 20px; overflow: hidden; cursor: pointer; border: 2px solid rgba(255,255,255,0.1); transition: border-color 0.2s, transform 0.15s; background: #1a1a1a; }
 .c3s-style-card:hover, .c3s-style-card:focus-visible { border-color: rgba(236,72,153,0.5); transform: translateY(-2px); }
 .c3s-style-card video, .c3s-style-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .c3s-style-card-label { position: absolute; bottom: 12px; left: 12px; right: auto; font-size: 14px; font-weight: 600; color: #fff; text-align: left; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
