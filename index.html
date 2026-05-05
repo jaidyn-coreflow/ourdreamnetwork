@@ -72,10 +72,10 @@ body {
 .c3s-step-indicator { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; color: rgba(255,255,255,0.55); text-transform: uppercase; margin: 4px 0 16px; }
 .c3s-step-indicator::before, .c3s-step-indicator::after { content: ''; flex: 0 0 24px; height: 1px; background: rgba(255,255,255,0.2); }
 
-/* Headings (left-aligned, smaller) */
-.c3s-h1 { font-size: 28px; line-height: 1.15; font-weight: 800; text-align: left; margin: 0 0 8px; letter-spacing: -0.01em; }
+/* Headings (centered) */
+.c3s-h1 { font-size: 28px; line-height: 1.15; font-weight: 800; text-align: center; margin: 0 0 8px; letter-spacing: -0.01em; }
 .c3s-h1-accent { color: #ec4899; }
-.c3s-h2 { font-size: 15px; font-weight: 400; text-align: left; color: rgba(255,255,255,0.55); margin: 0 0 18px; }
+.c3s-h2 { font-size: 15px; font-weight: 400; text-align: center; color: rgba(255,255,255,0.55); margin: 0 0 18px; }
 @media (min-width: 768px) { .c3s-h1 { font-size: 34px; } .c3s-h2 { font-size: 16px; } }
 
 /* Trust badges (bottom row) */
@@ -89,7 +89,7 @@ body {
 .c3s-style-card { position: relative; aspect-ratio: 3/4; border-radius: 16px; overflow: hidden; cursor: pointer; border: 2px solid rgba(255,255,255,0.1); transition: border-color 0.2s, transform 0.15s; background: #1a1a1a; }
 .c3s-style-card:hover, .c3s-style-card:focus-visible { border-color: rgba(236,72,153,0.5); transform: translateY(-2px); }
 .c3s-style-card video, .c3s-style-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.c3s-style-card-label { position: absolute; bottom: 12px; left: 12px; right: 12px; font-size: 18px; font-weight: 600; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
+.c3s-style-card-label { position: absolute; bottom: 12px; left: 12px; right: auto; font-size: 14px; font-weight: 600; color: #fff; text-align: left; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
 
 /* Pick grid (Step 2 sub-component) */
 .c3s-pick-section { width: 100%; margin-bottom: 20px; }
