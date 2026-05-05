@@ -27,6 +27,8 @@ body {
   font-family: system-ui, -apple-system, sans-serif;
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Ambient background (ported from PAGE_CSS) */
@@ -53,10 +55,10 @@ body {
 .c3s-step-enter { animation: c3s-stepIn 0.4s ease forwards; }
 .c3s-step-exit  { animation: c3s-stepOut 0.2s ease forwards; }
 
-/* Layout */
-#root { position: relative; z-index: 1; min-height: 100dvh; display: flex; flex-direction: column; }
-.c3s-container { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 20px 16px 16px; max-width: 520px; margin: 0 auto; width: 100%; }
-@media (min-width: 768px) { .c3s-container { padding: 32px 24px 24px; max-width: 700px; } }
+/* Layout — body flexes vertically so trust + footer sit at the viewport bottom without scrolling */
+#root { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.c3s-container { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 12px 16px 8px; max-width: 520px; margin: 0 auto; width: 100%; }
+@media (min-width: 768px) { .c3s-container { padding: 16px 24px 12px; max-width: 700px; } }
 
 /* Header (logo + stats counter) */
 .c3s-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 4px 0 16px; }
@@ -78,15 +80,15 @@ body {
 .c3s-h2 { font-size: 15px; font-weight: 400; text-align: center; color: rgba(255,255,255,0.55); margin: 0 0 18px; }
 @media (min-width: 768px) { .c3s-h1 { font-size: 34px; } .c3s-h2 { font-size: 16px; } }
 
-/* Trust badges (bottom row) */
-.c3s-trust { display: flex; align-items: center; justify-content: space-around; gap: 12px; padding: 20px 16px 8px; max-width: 520px; margin: 0 auto; width: 100%; }
+/* Trust badges (bottom row, pinned to viewport bottom via body flex layout) */
+.c3s-trust { display: flex; align-items: center; justify-content: space-around; gap: 12px; padding: 10px 16px 6px; max-width: 520px; margin: 0 auto; width: 100%; flex: 0 0 auto; }
 .c3s-trust-item { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: rgba(255,255,255,0.45); }
 .c3s-trust-item svg { width: 14px; height: 14px; flex: 0 0 auto; opacity: 0.7; }
-@media (min-width: 768px) { .c3s-trust { max-width: 700px; padding: 28px 24px 12px; } .c3s-trust-item { font-size: 13px; } }
+@media (min-width: 768px) { .c3s-trust { max-width: 700px; padding: 14px 24px 8px; } .c3s-trust-item { font-size: 13px; } }
 
-/* Style picker (Step 1) */
-.c3s-style-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; }
-.c3s-style-card { position: relative; aspect-ratio: 1/2; border-radius: 20px; overflow: hidden; cursor: pointer; border: 2px solid rgba(255,255,255,0.1); transition: border-color 0.2s, transform 0.15s; background: #1a1a1a; }
+/* Style picker (Step 1) — grid grows to fill remaining height so cards stretch tall without overflow */
+.c3s-style-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; flex: 1; min-height: 0; }
+.c3s-style-card { position: relative; min-height: 0; border-radius: 20px; overflow: hidden; cursor: pointer; border: 2px solid rgba(255,255,255,0.1); transition: border-color 0.2s, transform 0.15s; background: #1a1a1a; }
 .c3s-style-card:hover, .c3s-style-card:focus-visible { border-color: rgba(236,72,153,0.5); transform: translateY(-2px); }
 .c3s-style-card video, .c3s-style-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .c3s-style-card-label { position: absolute; bottom: 12px; left: 12px; right: auto; font-size: 14px; font-weight: 600; color: #fff; text-align: left; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
@@ -137,7 +139,7 @@ body {
 .c3s-gate-legal a { color: rgba(255,255,255,0.6); text-decoration: underline; }
 
 /* Legal footer */
-.legal-footer { padding: 16px; text-align: center; position: relative; z-index: 1; }
+.legal-footer { padding: 6px 16px 10px; text-align: center; position: relative; z-index: 1; flex: 0 0 auto; }
 .legal-footer a { color: rgba(255,255,255,0.4); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin: 0 12px; text-decoration: none; }
 .legal-footer a:hover { color: rgba(255,255,255,0.8); }
 
