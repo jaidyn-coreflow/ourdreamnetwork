@@ -658,7 +658,7 @@ function openEmailGate(source) {
     submit.disabled = true;
     submit.innerHTML = 'Unlocking discount<span class="ts-gate-spinner" aria-hidden="true"></span>';
 
-    track('top_sites_email_captured', { email_provided: true, source, brand });
+    track('quiz_email_captured', { email_provided: true, source, brand });
 
     // Fire-and-forget — proceed even if save fails so the user is never blocked.
     saveEmail(email, source).catch((e) => console.warn('[save-email] failed:', e));
@@ -721,7 +721,7 @@ async function redirectToOurDream(source) {
     url = 'https://ourdream.ai/create?' + params.toString();
   }
 
-  track('top_sites_redirect', { redirect_url: url, has_clickid: !!cookieMatch, source });
+  track('quiz_redirect', { redirect_url: url, has_clickid: !!cookieMatch, source });
 
   const finalUrl = cookieMatch ? url : await getDecoratedUrl(url);
   window.location.href = finalUrl;
