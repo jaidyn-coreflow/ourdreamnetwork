@@ -4,6 +4,7 @@
   "framework": null,
   "rewrites": [
     { "source": "/api/save-email", "destination": "/api/save-email" },
-    { "source": "/top-sites", "destination": "/top-sites.html" }
+    { "source": "/top-sites", "destination": "/top-sites.html" },
+    { "source": "/top-gay-ai-sites", "destination": "/top-gay-ai-sites.html" }
   ]
 }

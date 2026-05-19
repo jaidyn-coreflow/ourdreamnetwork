@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<title>Top AI Girlfriend Sites 2026 | OurDream Network</title>
-<meta name="description" content="The top AI girlfriend sites of 2026, ranked. See which AI companion platforms deliver the most personalized, uncensored experiences.">
+<title>Top Gay AI Sites 2026 | OurDream Network</title>
+<meta name="description" content="The top gay AI companion sites of 2026, ranked. See which AI boyfriend platforms deliver the most personalized, uncensored experiences.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://static.ourdream.ai" crossorigin>
 <link rel="preconnect" href="https://ouraidream.com" crossorigin>
@@ -384,10 +384,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <section class="ts-hero">
   <div class="ts-hero-inner">
-    <h1>Top AI <span class="ts-accent">Girlfriend</span> Sites</h1>
-    <p class="ts-hero-sub">Our expert team tested every major AI companion platform — these are the only three worth your time in 2026.</p>
+    <h1>Top <span class="ts-accent">Gay</span> AI Sites</h1>
+    <p class="ts-hero-sub">Our expert team tested every gay AI companion platform — these are the only three worth your time in 2026.</p>
   </div>
-  <img src="/female.webp" alt="" class="ts-hero-image" loading="eager" decoding="async">
+  <img src="/male.webp" alt="" class="ts-hero-image" loading="eager" decoding="async">
 </section>
 
 <div class="ts-wrap">
@@ -438,7 +438,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <article class="ts-card ts-card-featured">
       <div class="ts-badge-row">
         <span class="ts-badge ts-badge-teal">🏆 Next-Level AI Interaction</span>
-        <span class="ts-badge ts-badge-pink">💖 Join 50,000+ Users Who Trust This Site</span>
+        <span class="ts-badge ts-badge-pink">🌈 Join 50,000+ Users Who Trust This Site</span>
       </div>
       <div class="ts-card-body">
         <div class="ts-brand-col">
@@ -461,10 +461,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
 
         <div class="ts-blurb">
-          <p class="ts-blurb-title">Top choice for those seeking highly personalized AI companions with a spicy flavor</p>
+          <p class="ts-blurb-title">Top choice for those seeking highly personalized AI boyfriends with a spicy flavor</p>
           <ul class="ts-blurb-list">
             <li>Raw, lifelike roleplay without limits</li>
-            <li>AI characters that feel deeply personal</li>
+            <li>AI boyfriends that feel deeply personal</li>
             <li>Meaningful chats with video & calls</li>
             <li>100% anonymous & secure payments</li>
           </ul>
@@ -491,7 +491,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
 
         <div class="ts-blurb">
-          <p class="ts-blurb-title">Leading AI platform for immersive experiences & uncensored pleasure</p>
+          <p class="ts-blurb-title">Leading AI platform for immersive male companion experiences & uncensored pleasure</p>
           <ul class="ts-blurb-list">
             <li>The most complete AI interaction</li>
             <li>Powerful customization & videos</li>
@@ -553,6 +553,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 // ══════════════════════════════════════════════
 //  CONSTANTS
 // ══════════════════════════════════════════════
+
+const PAGE_ID = 'top-gay-ai-sites';
 
 const REDTRACK_BASE_B64 = 'aHR0cHM6Ly9jbGsub3VyZHJlYW1uZXR3b3JrLmNvbS9jbGljay8x'; // clk.ourdreamnetwork.com/click/1
 
@@ -687,7 +689,7 @@ function saveEmail(email, source) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       email,
-      mode: 'top-sites',
+      mode: PAGE_ID,
       answers: [source || 'unknown'],
       marketingConsent: false,
     }),
@@ -706,7 +708,7 @@ async function redirectToOurDream(source) {
   if (cookieMatch) {
     const gl = await getGlValue();
     params.set('sub11', 'googlecpc');
-    params.set('sub12', 'Female');     // → Q1
+    params.set('sub12', 'Male');       // → Q1
     params.set('sub13', 'Athletic');   // → Q10
     params.set('sub14', 'ASMR');       // → Q12
     params.set('sub15', 'Sweet');      // → Q13
@@ -734,7 +736,7 @@ async function redirectToOurDream(source) {
 window.dataLayer = window.dataLayer || [];
 
 function track(eventName, params) {
-  const data = { event: eventName, ...params };
+  const data = { event: eventName, page: PAGE_ID, ...params };
   window.dataLayer.push(data);
   console.log('[dataLayer]', data);
 }
