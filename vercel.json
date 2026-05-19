@@ -5,6 +5,7 @@
   "rewrites": [
     { "source": "/api/save-email", "destination": "/api/save-email" },
     { "source": "/top-sites", "destination": "/top-sites.html" },
-    { "source": "/top-gay-ai-sites", "destination": "/top-gay-ai-sites.html" }
+    { "source": "/top-gay-ai-sites", "destination": "/top-gay-ai-sites.html" },
+    { "source": "/top-ai-bf-sites", "destination": "/top-ai-bf-sites.html" }
   ]
 }

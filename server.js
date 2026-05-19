@@ -7,6 +7,15 @@ const PORT = 3000;
 const CSV_FILE = path.join(__dirname, 'emails.csv');
 
 app.use(express.json());
+
+// Mirror Vercel's clean-URL rewrites from vercel.json
+app.get('/top-sites',        (_req, res) => res.sendFile(path.join(__dirname, 'public', 'top-sites.html')));
+app.get('/top-gay-ai-sites', (_req, res) => res.sendFile(path.join(__dirname, 'public', 'top-gay-ai-sites.html')));
+app.get('/top-ai-bf-sites',  (_req, res) => res.sendFile(path.join(__dirname, 'public', 'top-ai-bf-sites.html')));
+
+// public/ takes precedence over root so the latest versions of files that
+// exist in both places (e.g. top-sites.html) are served locally.
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(__dirname));
 
 // Create CSV with headers if it doesn't exist
