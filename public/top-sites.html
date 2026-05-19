@@ -230,8 +230,6 @@ body {
 .ts-brand-logo .ts-brand-tld { color: #ec4899; font-weight: 800; }
 .ts-brand-logo-candy { font-family: 'Georgia', serif; }
 .ts-brand-logo-candy .ts-brand-tld { color: #f472b6; }
-.ts-brand-logo-camsoda { font-family: 'Brush Script MT', cursive; font-size: 28px; }
-.ts-brand-logo-camsoda .ts-brand-tld { color: #ec4899; font-family: system-ui, sans-serif; font-size: 22px; }
 .ts-brand-stars { color: #facc15; font-size: 14px; letter-spacing: 1px; }
 .ts-brand-review { font-size: 11px; color: #8a6273; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; }
 .ts-brand-review:hover { color: #1a0e15; }
@@ -346,6 +344,108 @@ body {
 .ts-gate-legal { font-size: 11px; color: #8a6273; text-align: center; margin-top: 14px; }
 .ts-gate-legal a { color: #6b3950; text-decoration: underline; }
 
+/* ── Intro copy ────────────────────────────────────────────── */
+.ts-intro { margin: 56px 4px 8px; max-width: 880px; }
+.ts-intro h2 {
+  font-size: clamp(24px, 3.5vw, 32px); font-weight: 800;
+  letter-spacing: -0.01em; margin: 0 0 18px; color: #1a0e15;
+}
+.ts-intro p {
+  font-size: 15px; line-height: 1.65; color: #3a2a32; margin: 0 0 14px;
+}
+
+/* ── Offer Of The Month ────────────────────────────────────── */
+.ts-offer {
+  position: relative; margin: 48px 0 56px;
+  padding: 36px 22px 40px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+  box-shadow: 0 20px 60px rgba(236,72,153,0.25);
+}
+.ts-offer-title {
+  font-size: clamp(24px, 3.5vw, 30px); font-weight: 800;
+  color: #fff; text-align: center; margin: 0 0 24px; letter-spacing: -0.01em;
+}
+.ts-offer .ts-card { margin: 0 auto; max-width: 880px; }
+
+/* ── FAQ + Sidebar layout ──────────────────────────────────── */
+.ts-faq-layout {
+  display: grid; grid-template-columns: 1fr 300px;
+  gap: 36px; margin: 0 0 48px; align-items: start;
+}
+@media (max-width: 900px) {
+  .ts-faq-layout { grid-template-columns: 1fr; }
+}
+
+.ts-faq h2 {
+  font-size: clamp(24px, 3.5vw, 32px); font-weight: 800;
+  letter-spacing: -0.01em; margin: 0 0 20px; color: #1a0e15;
+}
+.ts-faq-item {
+  background: #d8efe7; border-radius: 12px;
+  margin-bottom: 12px; padding: 0; overflow: hidden;
+  transition: background 0.15s;
+}
+.ts-faq-item:hover { background: #cfeae0; }
+.ts-faq-item > summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  cursor: pointer; list-style: none;
+  font-size: 15px; font-weight: 700; color: #1a0e15;
+  padding: 18px 18px; user-select: none;
+}
+.ts-faq-item > summary::-webkit-details-marker { display: none; }
+.ts-faq-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: 50%; flex: 0 0 auto;
+  background: #2dd4bf; color: #fff; font-size: 16px; font-weight: 700; line-height: 1;
+  transition: transform 0.2s;
+}
+.ts-faq-item:not([open]) .ts-faq-icon { transform: rotate(45deg); }
+.ts-faq-body {
+  padding: 0 18px 18px;
+  font-size: 14px; line-height: 1.6; color: #3a2a32;
+}
+
+/* ── Sidebar ───────────────────────────────────────────────── */
+.ts-sidebar {
+  position: sticky; top: 20px;
+  border: 1.5px solid #ec4899; border-radius: 16px;
+  padding: 20px 18px; background: #fff;
+}
+.ts-sidebar h3 {
+  font-size: 13px; font-weight: 800; letter-spacing: 0.14em;
+  text-transform: uppercase; color: #1a0e15; margin: 0 0 16px;
+}
+.ts-sidebar-row { padding: 12px 0; }
+.ts-sidebar-row + .ts-sidebar-row {
+  border-top: 1px solid rgba(236,72,153,0.12); margin-top: 4px;
+}
+.ts-sidebar-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px; margin-bottom: 10px;
+}
+.ts-sidebar-brand {
+  font-size: 15px; font-weight: 700; color: #1a0e15;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.ts-sidebar-brand .ts-brand-tld { color: #ec4899; }
+.ts-sidebar-score {
+  font-size: 13px; font-weight: 700; color: #1a0e15;
+  background: #fff5fa; border: 1px solid rgba(236,72,153,0.18);
+  border-radius: 6px; padding: 3px 8px;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.ts-sidebar-score .ts-sidebar-star { color: #facc15; font-size: 12px; }
+.ts-sidebar-cta {
+  display: block; width: 100%;
+  background: linear-gradient(90deg, #ec4899, #db2777);
+  color: #fff; border: none; border-radius: 8px;
+  padding: 10px; font-size: 12px; font-weight: 800; letter-spacing: 0.08em;
+  text-transform: uppercase; cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.2s;
+}
+.ts-sidebar-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(236,72,153,0.35); }
+
 /* ── Footer ────────────────────────────────────────────────── */
 .ts-footer { padding: 24px 16px 16px; text-align: center; position: relative; z-index: 1; }
 .ts-footer a { color: #8a6273; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin: 0 12px; text-decoration: none; }
@@ -416,10 +516,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <div class="ts-top3-card">
         <div class="ts-top3-brand">
-          <div class="ts-top3-brand-name" style="font-family:'Brush Script MT',cursive;font-size:18px">CamSoda<span style="color:#ec4899;font-family:system-ui;font-size:15px">.ai</span></div>
+          <div class="ts-top3-brand-name"><span aria-hidden="true" style="color:#a855f7">👁️</span> Joi <span style="color:#a855f7">AI</span></div>
           <div class="ts-top3-brand-score"><b>8.7</b><span class="ts-top3-stars">★★★★☆</span></div>
         </div>
-        <button class="ts-top3-cta" data-cta="camsoda-top3">Get Started</button>
+        <button class="ts-top3-cta" data-cta="joi-top3">Get Started</button>
       </div>
 
     </div>
@@ -507,13 +607,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </article>
 
-    <!-- Card #3 — CamSoda.ai -->
+    <!-- Card #3 — Joi AI -->
     <article class="ts-card">
       <div class="ts-card-body">
         <div class="ts-brand-col">
-          <div class="ts-brand-logo ts-brand-logo-camsoda">
-            <span aria-hidden="true" style="font-size:22px">🫧</span>
-            <span>CamSoda<span class="ts-brand-tld">.ai</span></span>
+          <div class="ts-brand-logo">
+            <span aria-hidden="true" style="font-size:24px;color:#a855f7">👁️</span>
+            <span>Joi <span class="ts-brand-tld" style="color:#a855f7">AI</span></span>
           </div>
           <div class="ts-brand-stars">★★★★☆</div>
           <a class="ts-brand-review">Read Review</a>
@@ -531,11 +631,120 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <div class="ts-score-col">
           <div class="ts-score-ring">8.7</div>
-          <button class="ts-card-cta" data-cta="camsoda">Visit Site</button>
+          <button class="ts-card-cta" data-cta="joi">Visit Site</button>
         </div>
       </div>
     </article>
 
+  </div>
+
+  <!-- ── Your Ideal AI Girlfriend ─────────────────────────── -->
+  <section class="ts-intro">
+    <h2>Your Ideal AI Girlfriend</h2>
+    <p>AI companion platforms now offer immersive, interactive experiences beyond simple chats. Whether you're looking for a realistic partner, anime persona, or unique character, there's a platform for everyone. These services include AI-generated images, videos, voice calls, and live streams to create lifelike virtual relationships.</p>
+    <p>However, not all platforms live up to expectations. Some offer repetitive conversations or lack key features, while others raise privacy concerns or hidden fees. We're here to guide you through the options, helping you find the best, most reliable platform for a secure, personalized experience.</p>
+  </section>
+
+  <!-- ── Offer Of The Month ───────────────────────────────── -->
+  <section class="ts-offer">
+    <h2 class="ts-offer-title">Offer Of The Month</h2>
+    <article class="ts-card">
+      <div class="ts-card-body">
+        <div class="ts-brand-col">
+          <div class="ts-brand-logo">
+            <svg class="ts-brand-icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="od-grad-offer" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#f9a8d4"/>
+                  <stop offset="100%" stop-color="#ec4899"/>
+                </linearGradient>
+              </defs>
+              <path d="M8 18 C 8 14, 12 12, 14 14 C 16 12, 20 14, 20 18 C 20 22, 14 26, 14 26 C 14 26, 8 22, 8 18 Z" fill="url(#od-grad-offer)"/>
+              <ellipse cx="22" cy="12" rx="6" ry="3.5" fill="url(#od-grad-offer)" opacity="0.85"/>
+              <ellipse cx="16" cy="9" rx="5" ry="2.8" fill="url(#od-grad-offer)" opacity="0.7"/>
+            </svg>
+            <span>ourdream<span class="ts-brand-tld">.ai</span></span>
+          </div>
+          <div class="ts-brand-stars">★★★★★</div>
+          <a class="ts-brand-review">Read Review</a>
+        </div>
+
+        <div class="ts-blurb">
+          <p class="ts-blurb-title">Leading AI platform for immersive experiences & uncensored pleasure</p>
+          <ul class="ts-blurb-list">
+            <li>The most complete AI interaction</li>
+            <li>Powerful customization & videos</li>
+            <li>Top-tier security & data protection</li>
+            <li>Exclusive bonuses upon registration</li>
+          </ul>
+        </div>
+
+        <div class="ts-score-col">
+          <div class="ts-score-ring">9.9</div>
+          <button class="ts-card-cta" data-cta="ourdream-offer">Visit Site</button>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ── FAQ + Sidebar ────────────────────────────────────── -->
+  <div class="ts-faq-layout">
+    <section class="ts-faq">
+      <h2>Frequently Asked Questions</h2>
+
+      <details class="ts-faq-item" open>
+        <summary>What are AI Companions used for?<span class="ts-faq-icon" aria-hidden="true">×</span></summary>
+        <div class="ts-faq-body">AI Companions are designed to provide virtual companionship, offering personalized interactions, emotional support, and simulated relationships for entertainment or personal connection.</div>
+      </details>
+
+      <details class="ts-faq-item" open>
+        <summary>How do I communicate with my AI Companion?<span class="ts-faq-icon" aria-hidden="true">×</span></summary>
+        <div class="ts-faq-body">You can interact with your AI Companion through text or voice chats. The AI uses advanced technology to respond in a way that mimics human-like conversations based on your preferences.</div>
+      </details>
+
+      <details class="ts-faq-item" open>
+        <summary>Is my AI Companion safe to use?<span class="ts-faq-icon" aria-hidden="true">×</span></summary>
+        <div class="ts-faq-body">Yes, AI Companions are designed with privacy in mind, ensuring that all interactions are secure and your data remains private.</div>
+      </details>
+
+      <details class="ts-faq-item" open>
+        <summary>Can I change the personality of my AI Companion?<span class="ts-faq-icon" aria-hidden="true">×</span></summary>
+        <div class="ts-faq-body">Absolutely! Many platforms allow you to adjust your AI Companion's personality, preferences, and behaviors to match your ideal partner's traits.</div>
+      </details>
+
+      <details class="ts-faq-item" open>
+        <summary>How much does an AI Companion cost?<span class="ts-faq-icon" aria-hidden="true">×</span></summary>
+        <div class="ts-faq-body">Prices vary depending on the platform and features, with options ranging from free basic versions to premium subscriptions that unlock more customization and advanced features.</div>
+      </details>
+    </section>
+
+    <aside class="ts-sidebar">
+      <h3>Top 3 Sites In 2026</h3>
+
+      <div class="ts-sidebar-row">
+        <div class="ts-sidebar-head">
+          <span class="ts-sidebar-brand">ourdream<span class="ts-brand-tld">.ai</span></span>
+          <span class="ts-sidebar-score">9.9 <span class="ts-sidebar-star">★</span></span>
+        </div>
+        <button class="ts-sidebar-cta" data-cta="ourdream-sidebar">Visit Site</button>
+      </div>
+
+      <div class="ts-sidebar-row">
+        <div class="ts-sidebar-head">
+          <span class="ts-sidebar-brand" style="font-family:Georgia,serif">candy<span class="ts-brand-tld" style="color:#f472b6">.ai</span></span>
+          <span class="ts-sidebar-score">9.4 <span class="ts-sidebar-star">★</span></span>
+        </div>
+        <button class="ts-sidebar-cta" data-cta="candy-sidebar">Visit Site</button>
+      </div>
+
+      <div class="ts-sidebar-row">
+        <div class="ts-sidebar-head">
+          <span class="ts-sidebar-brand"><span aria-hidden="true" style="color:#a855f7">👁️</span> Joi <span class="ts-brand-tld" style="color:#a855f7">AI</span></span>
+          <span class="ts-sidebar-score">8.7 <span class="ts-sidebar-star">★</span></span>
+        </div>
+        <button class="ts-sidebar-cta" data-cta="joi-sidebar">Visit Site</button>
+      </div>
+    </aside>
   </div>
 </div>
 
@@ -561,12 +770,16 @@ const INBOUND_PARAMS = new URLSearchParams(location.search);
 
 // Per-button brand label, drives the popup heading copy.
 const BRAND_LABELS = {
-  'ourdream':       'ourdream',
-  'ourdream-top3':  'ourdream',
-  'candy':          'candy',
-  'candy-top3':     'candy',
-  'camsoda':        'CamSoda',
-  'camsoda-top3':   'CamSoda',
+  'ourdream':         'ourdream',
+  'ourdream-top3':    'ourdream',
+  'ourdream-offer':   'ourdream',
+  'ourdream-sidebar': 'ourdream',
+  'candy':            'candy',
+  'candy-top3':       'candy',
+  'candy-sidebar':    'candy',
+  'joi':              'Joi AI',
+  'joi-top3':         'Joi AI',
+  'joi-sidebar':      'Joi AI',
 };
 
 // ══════════════════════════════════════════════
