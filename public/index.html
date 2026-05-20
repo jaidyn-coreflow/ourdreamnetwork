@@ -9,13 +9,24 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://static.ourdream.ai" crossorigin>
 <link rel="preconnect" href="https://ouraidream.com" crossorigin>
+<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+<link rel="dns-prefetch" href="https://clk.ourdreamnetwork.com">
 
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-5VRS8QPJ');</script>
+<!-- Preload Step 1 LCP posters -->
+<link rel="preload" as="image" type="image/webp" href="https://static.ourdream.ai/create-videos/sfw-realistic-female-poster.webp">
+<link rel="preload" as="image" type="image/webp" href="https://static.ourdream.ai/create-videos/sfw-anime-female-poster.webp">
+
+<!-- Google Tag Manager (deferred to window load for faster LCP; events queued in dataLayer pre-load) -->
+<script>
+window.dataLayer = window.dataLayer || [];
+addEventListener('load', function () {
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5VRS8QPJ');
+});
+</script>
 <!-- End Google Tag Manager -->
 
 <style>
@@ -333,9 +344,6 @@ function pickRandom(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-console.log('[init] data tables loaded',
-  { styles: Object.keys(STYLE_VIDEOS), personalities: PERSONALITIES.Realistic.length });
-
 // ══════════════════════════════════════════════
 //  STATE
 // ══════════════════════════════════════════════
@@ -410,7 +418,7 @@ function renderStep1() {
   root.classList.add('c3s-step-enter');
 
   root.innerHTML = `
-    <h1 class="c3s-h1">Create your <span class="c3s-h1-accent">AI character</span></h1>
+    <h1 class="c3s-h1">Create Your <span class="c3s-h1-accent">AI Character</span> For Our Dream AI</h1>
     <p class="c3s-h2">Pick the art style for your character.</p>
     <div class="c3s-style-grid"></div>
   `;
@@ -423,15 +431,17 @@ function renderStep1() {
     card.className = 'c3s-style-card';
     card.setAttribute('aria-label', `Choose ${styleKey} style`);
     card.innerHTML = `
-      <video muted loop playsinline autoplay preload="auto" poster="${data.poster}">
+      <video muted loop playsinline preload="none" poster="${data.poster}">
         <source src="${data.video}" type="video/mp4">
       </video>
       <div class="c3s-style-card-label">${styleKey}</div>
     `;
 
     const video = card.querySelector('video');
-    // Autoplay starts on load; ensure it plays even if the browser blocked autoplay initially
-    video.play().catch(() => {});
+    // Defer video load+play until after window.load so the poster wins the LCP race
+    const startVideo = () => { video.load(); video.play().catch(() => {}); };
+    if (document.readyState === 'complete') startVideo();
+    else addEventListener('load', startVideo, { once: true });
     card.addEventListener('click', () => {
       track('quiz_step_complete', { step: 1, style: styleKey });
       setState({ style: styleKey, currentStep: 2 });
@@ -737,9 +747,7 @@ async function redirectToRedtrack() {
 window.dataLayer = window.dataLayer || [];
 
 function track(eventName, params) {
-  const data = { event: eventName, ...params };
-  window.dataLayer.push(data);
-  console.log('[dataLayer]', data);
+  window.dataLayer.push({ event: eventName, ...params });
 }
 
 function getDecoratedUrl(baseUrl) {
@@ -784,7 +792,6 @@ function getGlValue() {
 // ══════════════════════════════════════════════
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('[init] state ready', state);
   render();
 });
 </script>

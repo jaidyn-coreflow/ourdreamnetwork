@@ -225,7 +225,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 'use strict';
 
 // ══════════════════════════════════════════════
-//  ASSETS / CONSTANTS
+//  ASSETS / CONSTANTS  (Male variant — mirror of index.html)
+//
+//  TODO(assets): Image URLs below are inherited from the female funnel
+//  pending male CDN paths. When swapping, the most likely candidates are:
+//    static.ourdream.ai/create-videos/sfw-realistic-male-poster.webp
+//    static.ourdream.ai/create-videos/sfw-anime-male-poster.webp
+//    static.ourdream.ai/create-videos/sfw-realistic-male-<ethnicity>.webp
+//    Hair/Physique preview UUIDs are unknown for male; replace inline.
+//    Personality images at ${LP}/sfw-(anime-)?<id>.webp — verify male
+//    variants exist or supply new asset paths.
 // ══════════════════════════════════════════════
 
 const LP = 'https://ouraidream.com/create-3step-assets';
@@ -234,7 +243,6 @@ const STEP_LABELS = ['Style', 'Look', 'Personality'];
 
 // ══════════════════════════════════════════════
 //  DATA TABLES (SFW-only — NSFW dropped per spec)
-//  Source of truth: create_v2/create-3step-flow.tsx
 // ══════════════════════════════════════════════
 
 const STYLE_VIDEOS = {
@@ -248,11 +256,13 @@ const STYLE_VIDEOS = {
   },
 };
 
+// Ethnicity options — subset of male-allowed values (Q3) that mirror the female funnel.
+// Allowed for Male: Asian, African, White, Latina, Arab, Indian, Italian, Elf, Alien, Demon, Angel
 const ETHNICITY = {
   Realistic: [
     { value: 'White',   label: 'White',  img: 'https://static.ourdream.ai/create-videos/sfw-realistic-white.webp' },
     { value: 'Asian',   label: 'Asian',  img: 'https://static.ourdream.ai/create-videos/sfw-realistic-asian.webp' },
-    { value: 'Latina',  label: 'Latina', img: 'https://static.ourdream.ai/create-videos/sfw-realistic-latina.webp' },
+    { value: 'Latina',  label: 'Latino', img: 'https://static.ourdream.ai/create-videos/sfw-realistic-latina.webp' },
     { value: 'African', label: 'Black',  img: 'https://static.ourdream.ai/create-videos/sfw-realistic-african.webp' },
     { value: 'Elf',     label: 'Elf',    img: 'https://static.ourdream.ai/create-videos/sfw-realistic-elf.webp' },
     { value: 'Demon',   label: 'Demon',  img: 'https://static.ourdream.ai/create-videos/sfw-realistic-demon.webp' },
@@ -260,7 +270,7 @@ const ETHNICITY = {
   Anime: [
     { value: 'White',   label: 'White',  img: 'https://static.ourdream.ai/create-videos/sfw-anime-white.webp' },
     { value: 'Asian',   label: 'Asian',  img: 'https://static.ourdream.ai/create-videos/sfw-anime-asian.webp' },
-    { value: 'Latina',  label: 'Latina', img: 'https://static.ourdream.ai/create-videos/sfw-anime-latina.webp' },
+    { value: 'Latina',  label: 'Latino', img: 'https://static.ourdream.ai/create-videos/sfw-anime-latina.webp' },
     { value: 'African', label: 'Black',  img: 'https://static.ourdream.ai/create-videos/sfw-anime-african.webp' },
     { value: 'Elf',     label: 'Elf',    img: 'https://static.ourdream.ai/create-videos/sfw-anime-elf.webp' },
     { value: 'Demon',   label: 'Demon',  img: 'https://static.ourdream.ai/create-videos/sfw-anime-demon.webp' },
@@ -268,57 +278,59 @@ const ETHNICITY = {
 };
 
 const ETHNICITY_APPEARANCE = {
-  White:   { skinTone: 'Fair',   hairColor: 'Blonde',   eyeColor: 'Blue' },
+  White:   { skinTone: 'Fair',   hairColor: 'Brunette', eyeColor: 'Blue' },
   Asian:   { skinTone: 'Light',  hairColor: 'Black',    eyeColor: 'Brown' },
-  Latina:  { skinTone: 'Olive',  hairColor: 'Brunette', eyeColor: 'Brown' },
+  Latina:  { skinTone: 'Olive',  hairColor: 'Black',    eyeColor: 'Brown' },
   African: { skinTone: 'Dark',   hairColor: 'Black',    eyeColor: 'Brown' },
   Elf:     { skinTone: 'Fair',   hairColor: 'Silver',   eyeColor: 'Green' },
-  Demon:   { skinTone: 'Darker', hairColor: 'Red',      eyeColor: 'Red' },
+  Demon:   { skinTone: 'Darker', hairColor: 'Black',    eyeColor: 'Red' },
 };
 
-// Hair + Physique use the CDN preview URLs (resolved from the TSX mediaUrl() helper).
-// These were originally constructed by analogy in Task 4 but those URLs 404; replaced
-// with the actual UUIDs captured from the original TSX data tables.
 const _PREVIEW = (uuid) => `https://static.ourdream.ai/cdn-cgi/image/width=400,format=auto/previews/${uuid}`;
 
+// Hair — uses male-allowed values from Q8 (Fade, Long Straight, Mullet, Pompadour,
+// Short, Bald, Slicked Back, Curly, Man Bun). Preview UUIDs are the female ones
+// from index.html as placeholders; swap when male previews are available.
 const HAIR = {
   Realistic: [
-    { value: 'Wavy',          label: 'Wavy',     img: _PREVIEW('3b0afa73-c4fd-4737-acb3-89bab8407b07') },
-    { value: 'Long Straight', label: 'Long',     img: _PREVIEW('03c51e73-cb69-45c5-aab4-d0f6f96fd309') },
-    { value: 'Ponytail',      label: 'Ponytail', img: _PREVIEW('a6e764f1-7590-4bc9-87db-6c056a5e6588') },
+    { value: 'Short',        label: 'Short',        img: _PREVIEW('3b0afa73-c4fd-4737-acb3-89bab8407b07') },
+    { value: 'Long Straight',label: 'Long',         img: _PREVIEW('03c51e73-cb69-45c5-aab4-d0f6f96fd309') },
+    { value: 'Slicked Back', label: 'Slicked Back', img: _PREVIEW('a6e764f1-7590-4bc9-87db-6c056a5e6588') },
   ],
   Anime: [
-    { value: 'Wavy',          label: 'Wavy',     img: _PREVIEW('4973ffcd-ac5f-4d9e-af10-1ed730487469') },
-    { value: 'Long Straight', label: 'Long',     img: _PREVIEW('da2be427-d8cb-48ca-b68b-cc637f44c1f9') },
-    { value: 'Ponytail',      label: 'Ponytail', img: _PREVIEW('dbc7fe92-73e2-4595-80ed-554e38a45b6b') },
+    { value: 'Short',        label: 'Short',        img: _PREVIEW('4973ffcd-ac5f-4d9e-af10-1ed730487469') },
+    { value: 'Long Straight',label: 'Long',         img: _PREVIEW('da2be427-d8cb-48ca-b68b-cc637f44c1f9') },
+    { value: 'Slicked Back', label: 'Slicked Back', img: _PREVIEW('dbc7fe92-73e2-4595-80ed-554e38a45b6b') },
   ],
 };
 
+// Physique — male-only bodyType (Q10): Slim, Athletic, Muscular, Dad Bod, Chubby.
+// Q4 (breastSize) and Q5 (buttSize) are N/A for Male and intentionally omitted.
 const PHYSIQUE = {
   Realistic: [
-    { value: 'slim',     label: 'Slim',     img: _PREVIEW('0e299ca6-36ca-4012-91b1-742d287365b6'), bodyType: 'Slim',        breastSize: 'Small',  buttSize: 'Skinny' },
-    { value: 'athletic', label: 'Athletic', img: _PREVIEW('18e43301-273a-498a-888d-65bc8c1087d2'), bodyType: 'Athletic',    breastSize: 'Medium', buttSize: 'Athletic' },
-    { value: 'curvy',    label: 'Curvy',    img: _PREVIEW('30e66f37-96a8-4013-b69e-438292120188'), bodyType: 'Voluptuous',  breastSize: 'Large',  buttSize: 'Large' },
+    { value: 'slim',     label: 'Slim',     img: _PREVIEW('0e299ca6-36ca-4012-91b1-742d287365b6'), bodyType: 'Slim' },
+    { value: 'athletic', label: 'Athletic', img: _PREVIEW('18e43301-273a-498a-888d-65bc8c1087d2'), bodyType: 'Athletic' },
+    { value: 'muscular', label: 'Muscular', img: _PREVIEW('30e66f37-96a8-4013-b69e-438292120188'), bodyType: 'Muscular' },
   ],
   Anime: [
-    { value: 'slim',     label: 'Slim',     img: _PREVIEW('09530a34-5b25-4970-b3de-b665f5b66f5f'), bodyType: 'Slim',        breastSize: 'Small',  buttSize: 'Skinny' },
-    { value: 'athletic', label: 'Athletic', img: _PREVIEW('e97a8220-66d6-4e25-b561-d4ef517e2153'), bodyType: 'Athletic',    breastSize: 'Medium', buttSize: 'Athletic' },
-    { value: 'curvy',    label: 'Curvy',    img: _PREVIEW('8a3a67e4-9c7d-4651-b2dc-4c19ccc8ce95'), bodyType: 'Voluptuous',  breastSize: 'Large',  buttSize: 'Large' },
+    { value: 'slim',     label: 'Slim',     img: _PREVIEW('09530a34-5b25-4970-b3de-b665f5b66f5f'), bodyType: 'Slim' },
+    { value: 'athletic', label: 'Athletic', img: _PREVIEW('e97a8220-66d6-4e25-b561-d4ef517e2153'), bodyType: 'Athletic' },
+    { value: 'muscular', label: 'Muscular', img: _PREVIEW('8a3a67e4-9c7d-4651-b2dc-4c19ccc8ce95'), bodyType: 'Muscular' },
   ],
 };
 
 const PERSONALITIES = {
   Realistic: [
-    { id: 'sweet',     img: `${LP}/sfw-sweet.webp`,     personality: ['Sweet', 'Caring'],       relationship: ['Crush', 'Friend'],            occupation: ['Nurse', 'Librarian'],   hobby: ['Cooking', 'Gardening'],   fetish: ['Vanilla', 'Roleplay'] },
-    { id: 'flirty',    img: `${LP}/sfw-flirty.webp`,    personality: ['Flirty', 'Charming'],    relationship: ['Fling', 'Roommate'],          occupation: ['Bartender', 'Dancer'],  hobby: ['Dancing', 'Yoga'],        fetish: ['Lingerie', 'High Heels'] },
-    { id: 'shy',       img: `${LP}/sfw-shy.webp`,       personality: ['Shy', 'Mysterious'],     relationship: ['Stranger', 'Secret Admirer'], occupation: ['Artist', 'Photographer'], hobby: ['Reading', 'Painting'],  fetish: ['Blindfolds', 'Stockings'] },
-    { id: 'confident', img: `${LP}/sfw-confident.webp`, personality: ['Confident', 'Sassy'],    relationship: ['Lover', 'Colleague'],         occupation: ['Entrepreneur', 'Lawyer'], hobby: ['Running', 'Cycling'],   fetish: ['Uniforms', 'Corsets'] },
+    { id: 'sweet',     img: `${LP}/sfw-sweet.webp`,     personality: ['Sweet', 'Caring'],       relationship: ['Crush', 'Friend'],            occupation: ['Doctor', 'Teacher'],      hobby: ['Cooking', 'Gardening'],   fetish: ['Vanilla', 'Roleplay'] },
+    { id: 'flirty',    img: `${LP}/sfw-flirty.webp`,    personality: ['Flirty', 'Charming'],    relationship: ['Fling', 'Roommate'],          occupation: ['Bartender', 'Musician'],  hobby: ['Dancing', 'Surfing'],     fetish: ['Lingerie', 'High Heels'] },
+    { id: 'shy',       img: `${LP}/sfw-shy.webp`,       personality: ['Shy', 'Mysterious'],     relationship: ['Stranger', 'Secret Admirer'], occupation: ['Artist', 'Photographer'], hobby: ['Reading', 'Painting'],    fetish: ['Blindfolds', 'Stockings'] },
+    { id: 'confident', img: `${LP}/sfw-confident.webp`, personality: ['Confident', 'Sassy'],    relationship: ['Lover', 'Colleague'],         occupation: ['Entrepreneur', 'Lawyer'], hobby: ['Running', 'Cycling'],     fetish: ['Uniforms', 'Corsets'] },
   ],
   Anime: [
-    { id: 'sweet',     img: `${LP}/sfw-anime-sweet.webp`,     personality: ['Sweet', 'Caring'],    relationship: ['Crush', 'Friend'],            occupation: ['Nurse', 'Librarian'],   hobby: ['Cooking', 'Gardening'],   fetish: ['Vanilla', 'Roleplay'] },
-    { id: 'flirty',    img: `${LP}/sfw-anime-flirty.webp`,    personality: ['Flirty', 'Charming'], relationship: ['Fling', 'Roommate'],          occupation: ['Bartender', 'Dancer'],  hobby: ['Dancing', 'Yoga'],        fetish: ['Lingerie', 'High Heels'] },
-    { id: 'shy',       img: `${LP}/sfw-anime-shy.webp`,       personality: ['Shy', 'Mysterious'],  relationship: ['Stranger', 'Secret Admirer'], occupation: ['Artist', 'Photographer'], hobby: ['Reading', 'Painting'],  fetish: ['Blindfolds', 'Stockings'] },
-    { id: 'confident', img: `${LP}/sfw-anime-confident.webp`, personality: ['Confident', 'Sassy'], relationship: ['Lover', 'Colleague'],         occupation: ['Entrepreneur', 'Lawyer'], hobby: ['Running', 'Cycling'],   fetish: ['Uniforms', 'Corsets'] },
+    { id: 'sweet',     img: `${LP}/sfw-anime-sweet.webp`,     personality: ['Sweet', 'Caring'],    relationship: ['Crush', 'Friend'],            occupation: ['Doctor', 'Teacher'],      hobby: ['Cooking', 'Gardening'],   fetish: ['Vanilla', 'Roleplay'] },
+    { id: 'flirty',    img: `${LP}/sfw-anime-flirty.webp`,    personality: ['Flirty', 'Charming'], relationship: ['Fling', 'Roommate'],          occupation: ['Bartender', 'Musician'],  hobby: ['Dancing', 'Surfing'],     fetish: ['Lingerie', 'High Heels'] },
+    { id: 'shy',       img: `${LP}/sfw-anime-shy.webp`,       personality: ['Shy', 'Mysterious'],  relationship: ['Stranger', 'Secret Admirer'], occupation: ['Artist', 'Photographer'], hobby: ['Reading', 'Painting'],    fetish: ['Blindfolds', 'Stockings'] },
+    { id: 'confident', img: `${LP}/sfw-anime-confident.webp`, personality: ['Confident', 'Sassy'], relationship: ['Lover', 'Colleague'],         occupation: ['Entrepreneur', 'Lawyer'], hobby: ['Running', 'Cycling'],     fetish: ['Uniforms', 'Corsets'] },
   ],
 };
 
@@ -333,7 +345,7 @@ function pickRandom(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-console.log('[init] data tables loaded',
+console.log('[init] data tables loaded (male)',
   { styles: Object.keys(STYLE_VIDEOS), personalities: PERSONALITIES.Realistic.length });
 
 // ══════════════════════════════════════════════
@@ -382,11 +394,10 @@ function toggleStep(id, isActive) {
   el.classList.toggle('is-active', isActive);
 }
 
-// Stubs filled in by later tasks
 function renderProgressBar() {
   const el = document.getElementById('c3s-step-indicator');
   if (!el) return;
-  const stepNum = typeof state.currentStep === 'number' ? state.currentStep : 3; // gate counts as on step 3
+  const stepNum = typeof state.currentStep === 'number' ? state.currentStep : 3;
   const showBack = stepNum > 1 && state.currentStep !== 'email';
   el.innerHTML =
     (showBack ? `<button type="button" class="c3s-back-btn" data-action="back" aria-label="Go back">‹ Back</button>` : '') +
@@ -405,7 +416,7 @@ function goToStep(n) {
 }
 function renderStep1() {
   const root = document.getElementById('step-1');
-  if (root.dataset.rendered === '1') return; // render once
+  if (root.dataset.rendered === '1') return;
   root.dataset.rendered = '1';
   root.classList.add('c3s-step-enter');
 
@@ -430,7 +441,6 @@ function renderStep1() {
     `;
 
     const video = card.querySelector('video');
-    // Autoplay starts on load; ensure it plays even if the browser blocked autoplay initially
     video.play().catch(() => {});
     card.addEventListener('click', () => {
       track('quiz_step_complete', { step: 1, style: styleKey });
@@ -446,7 +456,7 @@ function renderStep2() {
   const styleKey = state.style || 'Realistic';
 
   root.innerHTML = `
-    <h1 class="c3s-h1">Design her <span class="c3s-h1-accent">look</span></h1>
+    <h1 class="c3s-h1">Design his <span class="c3s-h1-accent">look</span></h1>
     ${renderPickSection('Ethnicity', ETHNICITY[styleKey],  state.ethnicity, 'ethnicity')}
     ${renderPickSection('Hair', HAIR[styleKey],            state.hairStyle, 'hairStyle')}
     ${renderPickSection('Physique', PHYSIQUE[styleKey],    state.physique && state.physique.value, 'physique')}
@@ -493,8 +503,6 @@ function attachPickHandlers(root) {
 
       track('quiz_pick', { step: 2, key, value });
       setState(patch);
-      // Auto-advance only fires from a fresh pick, not on every re-render.
-      // (Avoids bouncing the user back to step 3 when they navigate back.)
       maybeAutoAdvance();
     });
   });
@@ -504,7 +512,6 @@ function maybeAutoAdvance() {
   const allPicked = state.ethnicity && state.hairStyle && state.physique;
   if (!allPicked) return;
 
-  // Guard against double-fire if user re-picks after timer started
   if (state.autoAdvanceTimer) {
     clearTimeout(state.autoAdvanceTimer);
   }
@@ -535,7 +542,7 @@ function renderStep3() {
   }).join('');
 
   root.innerHTML = `
-    <h1 class="c3s-h1">Pick her <span class="c3s-h1-accent">personality</span></h1>
+    <h1 class="c3s-h1">Pick his <span class="c3s-h1-accent">personality</span></h1>
     <p class="c3s-h2">We'll fill in the rest with AI to match your vibe.</p>
     <div class="c3s-persona-grid">${cards}</div>
   `;
@@ -556,24 +563,25 @@ function buildQParams() {
   const styleKey = state.style;
   const eth = state.ethnicity;
   const phys = state.physique;
-  const hair = state.hairStyle || 'Wavy';
+  const hair = state.hairStyle || 'Short';
   const appearance = ETHNICITY_APPEARANCE[eth] || ETHNICITY_APPEARANCE.White;
   const persona = PERSONALITIES[styleKey].find(p => p.id === state.personality)
               || PERSONALITIES[styleKey][0];
 
   const params = new URLSearchParams();
 
-  // Carry over inbound URL params, except the Q-keys we'll be setting
+  // Carry over inbound URL params, except the Q-keys we'll be setting.
+  // Q4 (breastSize) and Q5 (buttSize) are N/A for Male — strip them too so
+  // a stale inbound value doesn't ride through.
   const skip = new Set(['Q1','Q2','Q3','Q4','Q5','Q6','Q7','Q8','Q9','Q10','Q13','Q14','Q15','Q16','Q17','Q18','s']);
   state.inboundParams.forEach((v, k) => { if (!skip.has(k)) params.set(k, v); });
 
   if (!params.has('ref')) params.set('ref', 'create-3step');
 
-  params.set('Q1', 'Female');
+  params.set('Q1', 'Male');
   params.set('Q2', styleKey);
   params.set('Q3', eth);
-  params.set('Q4', phys.breastSize);
-  params.set('Q5', phys.buttSize);
+  // Q4, Q5 intentionally omitted — N/A for Male
   params.set('Q6', appearance.skinTone);
   params.set('Q7', appearance.hairColor);
   params.set('Q8', hair);
@@ -652,10 +660,8 @@ function renderEmailGate(visible) {
 
     track('quiz_email_captured', { email_provided: true });
 
-    // Fire-and-forget save-email; we proceed regardless of outcome.
     saveEmail(email).catch(err => console.warn('[save-email] failed:', err));
 
-    // Wired in Task 12.
     redirectToRedtrack();
   });
 }
@@ -671,42 +677,26 @@ function saveEmail(email) {
     body: JSON.stringify({
       email,
       mode: 'companion',
-      answers: ['Female', state.style, state.ethnicity, state.hairStyle],
+      answers: ['Male', state.style, state.ethnicity, state.hairStyle],
       marketingConsent: false,
     }),
   });
 }
 
 async function redirectToRedtrack() {
-  // Two paths, both ending on ourdream.ai/create with the quiz answers prefilled.
-  //
-  //   PAID (rtkclickid-store cookie present): clk.ourdreamnetwork.com/click/1 with
-  //     sub11..sub19 populated. RedTrack's /click/1 destination is configured as:
-  //       https://ourdream.ai/create?ref=googlecpc&Q1={sub12}&Q10={sub13}&Q12={sub14}
-  //         &Q13={sub15}&Q15={sub16}&Q18={sub17}&s={sub18}&clickid={clickid}&tracker=rt&_gl={sub19}
-  //     We feed each sub-slot the matching quiz answer; RedTrack remaps and appends
-  //     clickid + tracker=rt before redirecting. sub19 carries GTM's cross-domain
-  //     _gl payload so GA4 session continuity survives the RedTrack hop.
-  //
-  //   ORGANIC (no cookie): RedTrack would reject with "empty clickid value", so
-  //     skip it. Go straight to ourdream.ai/create with the FULL Q1..Q18 + s set —
-  //     no 8-sub-slot ceiling, so organic users actually get a richer prefill than
-  //     paid.
   const cookieMatch = document.cookie.match(/(?:^|;\s*)rtkclickid-store=([^;]+)/);
   const params = new URLSearchParams();
   const q = state.qParams || new URLSearchParams();
 
-  // Inbound URL params (utm_*, gclid, fbclid, etc.) ride along either path.
   state.inboundParams.forEach((v, k) => {
     if (!params.has(k)) params.set(k, v);
   });
 
   let url;
   if (cookieMatch) {
-    // Paid path — feed sub11..sub19 to match RedTrack's /click/1 destination URL.
     const gl = await getGlValue();
     params.set('sub11', 'googlecpc');
-    params.set('sub12', q.get('Q1')  || 'Female');     // → Q1
+    params.set('sub12', q.get('Q1')  || 'Male');       // → Q1
     params.set('sub13', q.get('Q10') || 'Athletic');   // → Q10
     params.set('sub14', 'ASMR');                       // → Q12 (legacy default; quiz has no Q12)
     params.set('sub15', q.get('Q13') || 'Sweet');      // → Q13
@@ -717,9 +707,8 @@ async function redirectToRedtrack() {
     params.set('clickid', decodeURIComponent(cookieMatch[1]));
     url = atob(REDTRACK_BASE_B64) + '?' + params.toString();
   } else {
-    // Organic path — skip RedTrack, go direct to ourdream.ai/create with full Q-data.
     q.forEach((v, k) => { if (!params.has(k)) params.set(k, v); });
-    params.set('ref', 'googlecpc'); // override any ref from qParams; keep paid attribution consistent
+    params.set('ref', 'googlecpc');
     url = 'https://ourdream.ai/create?' + params.toString();
   }
 
@@ -731,7 +720,7 @@ async function redirectToRedtrack() {
 }
 
 // ══════════════════════════════════════════════
-//  TRACKING (verbatim port from quiz-old.html lines 610-636)
+//  TRACKING
 // ══════════════════════════════════════════════
 
 window.dataLayer = window.dataLayer || [];
@@ -744,16 +733,13 @@ function track(eventName, params) {
 
 function getDecoratedUrl(baseUrl) {
   return new Promise((resolve) => {
-    // Create a temporary anchor and let GTM's cross-domain linker decorate it
     const a = document.createElement('a');
     a.href = baseUrl;
     a.style.cssText = 'position:fixed;left:-9999px;';
     document.body.appendChild(a);
 
-    // GTM decorates links on mousedown — trigger it
     a.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
 
-    // Give GTM a tick to decorate, then read the href
     setTimeout(() => {
       const decoratedUrl = a.href;
       document.body.removeChild(a);
@@ -784,7 +770,7 @@ function getGlValue() {
 // ══════════════════════════════════════════════
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('[init] state ready', state);
+  console.log('[init] state ready (male)', state);
   render();
 });
 </script>
