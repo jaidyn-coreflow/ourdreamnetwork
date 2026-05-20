@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<title>Create Your AI Character | Ourdreamnetwork</title>
-<meta name="description" content="Design your AI character, the way you want on ourdream. Start personalizing your character for free today">
+<title>Create Your AI Boyfriend | Ourdreamnetwork</title>
+<meta name="description" content="Design your AI boyfriend, the way you want on ourdream. Start personalizing your boyfriend for free today">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://static.ourdream.ai" crossorigin>
 <link rel="preconnect" href="https://ouraidream.com" crossorigin>
@@ -226,18 +226,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 // ══════════════════════════════════════════════
 //  ASSETS / CONSTANTS  (Male variant — mirror of index.html)
-//
-//  TODO(assets): Image URLs below are inherited from the female funnel
-//  pending male CDN paths. When swapping, the most likely candidates are:
-//    static.ourdream.ai/create-videos/sfw-realistic-male-poster.webp
-//    static.ourdream.ai/create-videos/sfw-anime-male-poster.webp
-//    static.ourdream.ai/create-videos/sfw-realistic-male-<ethnicity>.webp
-//    Hair/Physique preview UUIDs are unknown for male; replace inline.
-//    Personality images at ${LP}/sfw-(anime-)?<id>.webp — verify male
-//    variants exist or supply new asset paths.
 // ══════════════════════════════════════════════
 
-const LP = 'https://ouraidream.com/create-3step-assets';
+const MALE_CDN = 'https://static.ourdream.ai/male-create-images';
 const REDTRACK_BASE_B64 = 'aHR0cHM6Ly9jbGsub3VyZHJlYW1uZXR3b3JrLmNvbS9jbGljay8x'; // clk.ourdreamnetwork.com/click/1
 const STEP_LABELS = ['Style', 'Look', 'Personality'];
 
@@ -247,12 +238,12 @@ const STEP_LABELS = ['Style', 'Look', 'Personality'];
 
 const STYLE_VIDEOS = {
   Realistic: {
-    poster: 'https://static.ourdream.ai/create-videos/sfw-realistic-female-poster.webp',
-    video:  'https://static.ourdream.ai/create-videos/w600/234b7ea4-be67-4b50-871e-8f65fe7a26f0.mp4',
+    poster: `${MALE_CDN}/image-7a0ed255.webp`,
+    video:  `${MALE_CDN}/video-97072b5d.mp4`,
   },
   Anime: {
-    poster: 'https://static.ourdream.ai/create-videos/sfw-anime-female-poster.webp',
-    video:  'https://static.ourdream.ai/create-videos/w600/514c0c25-05ec-452e-b56f-7e8841175aca.mp4',
+    poster: `${MALE_CDN}/image-3683aa03.webp`,
+    video:  `${MALE_CDN}/video-d127699e.mp4`,
   },
 };
 
@@ -260,20 +251,20 @@ const STYLE_VIDEOS = {
 // Allowed for Male: Asian, African, White, Latina, Arab, Indian, Italian, Elf, Alien, Demon, Angel
 const ETHNICITY = {
   Realistic: [
-    { value: 'White',   label: 'White',  img: 'https://static.ourdream.ai/create-videos/sfw-realistic-white.webp' },
-    { value: 'Asian',   label: 'Asian',  img: 'https://static.ourdream.ai/create-videos/sfw-realistic-asian.webp' },
-    { value: 'Latina',  label: 'Latino', img: 'https://static.ourdream.ai/create-videos/sfw-realistic-latina.webp' },
-    { value: 'African', label: 'Black',  img: 'https://static.ourdream.ai/create-videos/sfw-realistic-african.webp' },
-    { value: 'Elf',     label: 'Elf',    img: 'https://static.ourdream.ai/create-videos/sfw-realistic-elf.webp' },
-    { value: 'Demon',   label: 'Demon',  img: 'https://static.ourdream.ai/create-videos/sfw-realistic-demon.webp' },
+    { value: 'White',   label: 'White',  img: `${MALE_CDN}/image-7a0ed255.webp` },
+    { value: 'Asian',   label: 'Asian',  img: `${MALE_CDN}/image-bc429a8f.webp` },
+    { value: 'Latina',  label: 'Latino', img: `${MALE_CDN}/image-05a87733.webp` },
+    { value: 'African', label: 'Black',  img: `${MALE_CDN}/image-e359b59f.webp` },
+    { value: 'Elf',     label: 'Elf',    img: `${MALE_CDN}/image-d4b4edad.webp` },
+    { value: 'Demon',   label: 'Demon',  img: `${MALE_CDN}/image-c020fb9b.webp` },
   ],
   Anime: [
-    { value: 'White',   label: 'White',  img: 'https://static.ourdream.ai/create-videos/sfw-anime-white.webp' },
-    { value: 'Asian',   label: 'Asian',  img: 'https://static.ourdream.ai/create-videos/sfw-anime-asian.webp' },
-    { value: 'Latina',  label: 'Latino', img: 'https://static.ourdream.ai/create-videos/sfw-anime-latina.webp' },
-    { value: 'African', label: 'Black',  img: 'https://static.ourdream.ai/create-videos/sfw-anime-african.webp' },
-    { value: 'Elf',     label: 'Elf',    img: 'https://static.ourdream.ai/create-videos/sfw-anime-elf.webp' },
-    { value: 'Demon',   label: 'Demon',  img: 'https://static.ourdream.ai/create-videos/sfw-anime-demon.webp' },
+    { value: 'White',   label: 'White',  img: `${MALE_CDN}/image-7ced69d1.webp` },
+    { value: 'Asian',   label: 'Asian',  img: `${MALE_CDN}/image-a1ea842b.webp` },
+    { value: 'Latina',  label: 'Latino', img: `${MALE_CDN}/image-bd93952f.webp` },
+    { value: 'African', label: 'Black',  img: `${MALE_CDN}/image-5a5fe712.webp` },
+    { value: 'Elf',     label: 'Elf',    img: `${MALE_CDN}/image-29115249.webp` },
+    { value: 'Demon',   label: 'Demon',  img: `${MALE_CDN}/image-ae6491be.webp` },
   ],
 };
 
@@ -286,21 +277,19 @@ const ETHNICITY_APPEARANCE = {
   Demon:   { skinTone: 'Darker', hairColor: 'Black',    eyeColor: 'Red' },
 };
 
-const _PREVIEW = (uuid) => `https://static.ourdream.ai/cdn-cgi/image/width=400,format=auto/previews/${uuid}`;
+const _HAIR_IMG = (uuid) => `https://media.ourdream.ai/cdn-cgi/image/format=auto,q=90,width=400/character-creation/hairstyle/${uuid}`;
 
-// Hair — uses male-allowed values from Q8 (Fade, Long Straight, Mullet, Pompadour,
-// Short, Bald, Slicked Back, Curly, Man Bun). Preview UUIDs are the female ones
-// from index.html as placeholders; swap when male previews are available.
+// Hair — male-allowed Q8 values (Short, Long Straight, Slicked Back).
 const HAIR = {
   Realistic: [
-    { value: 'Short',        label: 'Short',        img: _PREVIEW('3b0afa73-c4fd-4737-acb3-89bab8407b07') },
-    { value: 'Long Straight',label: 'Long',         img: _PREVIEW('03c51e73-cb69-45c5-aab4-d0f6f96fd309') },
-    { value: 'Slicked Back', label: 'Slicked Back', img: _PREVIEW('a6e764f1-7590-4bc9-87db-6c056a5e6588') },
+    { value: 'Short',        label: 'Short',        img: _HAIR_IMG('54c7fdfe-9f50-4659-9a4b-224aada37914') },
+    { value: 'Long Straight',label: 'Long',         img: _HAIR_IMG('6b771b26-0a6f-4e18-b1db-2cf8467211b8') },
+    { value: 'Slicked Back', label: 'Slicked Back', img: _HAIR_IMG('0108c400-f0dc-4832-bb93-56a3d3f061a8') },
   ],
   Anime: [
-    { value: 'Short',        label: 'Short',        img: _PREVIEW('4973ffcd-ac5f-4d9e-af10-1ed730487469') },
-    { value: 'Long Straight',label: 'Long',         img: _PREVIEW('da2be427-d8cb-48ca-b68b-cc637f44c1f9') },
-    { value: 'Slicked Back', label: 'Slicked Back', img: _PREVIEW('dbc7fe92-73e2-4595-80ed-554e38a45b6b') },
+    { value: 'Short',        label: 'Short',        img: _HAIR_IMG('bb7ba703-683d-4512-a18c-77a38d51a780') },
+    { value: 'Long Straight',label: 'Long',         img: _HAIR_IMG('a8012557-9046-4858-b1bf-45380a66de17') },
+    { value: 'Slicked Back', label: 'Slicked Back', img: _HAIR_IMG('bf52ebf4-98db-48ac-8b66-e602d9494c8d') },
   ],
 };
 
@@ -308,37 +297,37 @@ const HAIR = {
 // Q4 (breastSize) and Q5 (buttSize) are N/A for Male and intentionally omitted.
 const PHYSIQUE = {
   Realistic: [
-    { value: 'slim',     label: 'Slim',     img: _PREVIEW('0e299ca6-36ca-4012-91b1-742d287365b6'), bodyType: 'Slim' },
-    { value: 'athletic', label: 'Athletic', img: _PREVIEW('18e43301-273a-498a-888d-65bc8c1087d2'), bodyType: 'Athletic' },
-    { value: 'muscular', label: 'Muscular', img: _PREVIEW('30e66f37-96a8-4013-b69e-438292120188'), bodyType: 'Muscular' },
+    { value: 'slim',     label: 'Slim',     img: `${MALE_CDN}/image-c006686d.webp`, bodyType: 'Slim' },
+    { value: 'athletic', label: 'Athletic', img: `${MALE_CDN}/image-af1eaeee.webp`, bodyType: 'Athletic' },
+    { value: 'muscular', label: 'Muscular', img: `${MALE_CDN}/image-db58d0e2.webp`, bodyType: 'Muscular' },
   ],
   Anime: [
-    { value: 'slim',     label: 'Slim',     img: _PREVIEW('09530a34-5b25-4970-b3de-b665f5b66f5f'), bodyType: 'Slim' },
-    { value: 'athletic', label: 'Athletic', img: _PREVIEW('e97a8220-66d6-4e25-b561-d4ef517e2153'), bodyType: 'Athletic' },
-    { value: 'muscular', label: 'Muscular', img: _PREVIEW('8a3a67e4-9c7d-4651-b2dc-4c19ccc8ce95'), bodyType: 'Muscular' },
+    { value: 'slim',     label: 'Slim',     img: `${MALE_CDN}/image-fe855f1b.webp`, bodyType: 'Slim' },
+    { value: 'athletic', label: 'Athletic', img: `${MALE_CDN}/image-28918c10.webp`, bodyType: 'Athletic' },
+    { value: 'muscular', label: 'Muscular', img: `${MALE_CDN}/image-32484314.webp`, bodyType: 'Muscular' },
   ],
 };
 
 const PERSONALITIES = {
   Realistic: [
-    { id: 'sweet',     img: `${LP}/sfw-sweet.webp`,     personality: ['Sweet', 'Caring'],       relationship: ['Crush', 'Friend'],            occupation: ['Doctor', 'Teacher'],      hobby: ['Cooking', 'Gardening'],   fetish: ['Vanilla', 'Roleplay'] },
-    { id: 'flirty',    img: `${LP}/sfw-flirty.webp`,    personality: ['Flirty', 'Charming'],    relationship: ['Fling', 'Roommate'],          occupation: ['Bartender', 'Musician'],  hobby: ['Dancing', 'Surfing'],     fetish: ['Lingerie', 'High Heels'] },
-    { id: 'shy',       img: `${LP}/sfw-shy.webp`,       personality: ['Shy', 'Mysterious'],     relationship: ['Stranger', 'Secret Admirer'], occupation: ['Artist', 'Photographer'], hobby: ['Reading', 'Painting'],    fetish: ['Blindfolds', 'Stockings'] },
-    { id: 'confident', img: `${LP}/sfw-confident.webp`, personality: ['Confident', 'Sassy'],    relationship: ['Lover', 'Colleague'],         occupation: ['Entrepreneur', 'Lawyer'], hobby: ['Running', 'Cycling'],     fetish: ['Uniforms', 'Corsets'] },
+    { id: 'sweet',     img: `${MALE_CDN}/image-fb271758.webp`, personality: ['Sweet', 'Caring'],       relationship: ['Crush', 'Friend'],            occupation: ['Doctor', 'Teacher'],      hobby: ['Cooking', 'Gardening'],   fetish: ['Vanilla', 'Roleplay'] },
+    { id: 'flirty',    img: `${MALE_CDN}/image-8e0766be.webp`, personality: ['Flirty', 'Charming'],    relationship: ['Fling', 'Roommate'],          occupation: ['Bartender', 'Musician'],  hobby: ['Dancing', 'Surfing'],     fetish: ['Lingerie', 'High Heels'] },
+    { id: 'shy',       img: `${MALE_CDN}/image-4362875c.webp`, personality: ['Shy', 'Mysterious'],     relationship: ['Stranger', 'Secret Admirer'], occupation: ['Artist', 'Photographer'], hobby: ['Reading', 'Painting'],    fetish: ['Blindfolds', 'Stockings'] },
+    { id: 'confident', img: `${MALE_CDN}/image-49740bb9.webp`, personality: ['Confident', 'Sassy'],    relationship: ['Lover', 'Colleague'],         occupation: ['Entrepreneur', 'Lawyer'], hobby: ['Running', 'Cycling'],     fetish: ['Uniforms', 'Corsets'] },
   ],
   Anime: [
-    { id: 'sweet',     img: `${LP}/sfw-anime-sweet.webp`,     personality: ['Sweet', 'Caring'],    relationship: ['Crush', 'Friend'],            occupation: ['Doctor', 'Teacher'],      hobby: ['Cooking', 'Gardening'],   fetish: ['Vanilla', 'Roleplay'] },
-    { id: 'flirty',    img: `${LP}/sfw-anime-flirty.webp`,    personality: ['Flirty', 'Charming'], relationship: ['Fling', 'Roommate'],          occupation: ['Bartender', 'Musician'],  hobby: ['Dancing', 'Surfing'],     fetish: ['Lingerie', 'High Heels'] },
-    { id: 'shy',       img: `${LP}/sfw-anime-shy.webp`,       personality: ['Shy', 'Mysterious'],  relationship: ['Stranger', 'Secret Admirer'], occupation: ['Artist', 'Photographer'], hobby: ['Reading', 'Painting'],    fetish: ['Blindfolds', 'Stockings'] },
-    { id: 'confident', img: `${LP}/sfw-anime-confident.webp`, personality: ['Confident', 'Sassy'], relationship: ['Lover', 'Colleague'],         occupation: ['Entrepreneur', 'Lawyer'], hobby: ['Running', 'Cycling'],     fetish: ['Uniforms', 'Corsets'] },
+    { id: 'sweet',     img: `${MALE_CDN}/image-3745f247.webp`, personality: ['Sweet', 'Caring'],    relationship: ['Crush', 'Friend'],            occupation: ['Doctor', 'Teacher'],      hobby: ['Cooking', 'Gardening'],   fetish: ['Vanilla', 'Roleplay'] },
+    { id: 'flirty',    img: `${MALE_CDN}/image-3c6da4ed.webp`, personality: ['Flirty', 'Charming'], relationship: ['Fling', 'Roommate'],          occupation: ['Bartender', 'Musician'],  hobby: ['Dancing', 'Surfing'],     fetish: ['Lingerie', 'High Heels'] },
+    { id: 'shy',       img: `${MALE_CDN}/image-05a85fce.webp`, personality: ['Shy', 'Mysterious'],  relationship: ['Stranger', 'Secret Admirer'], occupation: ['Artist', 'Photographer'], hobby: ['Reading', 'Painting'],    fetish: ['Blindfolds', 'Stockings'] },
+    { id: 'confident', img: `${MALE_CDN}/image-8c9ede21.webp`, personality: ['Confident', 'Sassy'], relationship: ['Lover', 'Colleague'],         occupation: ['Entrepreneur', 'Lawyer'], hobby: ['Running', 'Cycling'],     fetish: ['Uniforms', 'Corsets'] },
   ],
 };
 
 const PERSONALITY_DISPLAY = {
-  sweet:     { name: 'Sweet & Caring',     vibe: 'Warm, affectionate, always there for you' },
-  flirty:    { name: 'Flirty & Playful',   vibe: 'Teasing, fun, keeps you on your toes' },
-  shy:       { name: 'Shy & Mysterious',   vibe: 'Quiet charm, meaningful conversations' },
-  confident: { name: 'Confident & Bold',   vibe: 'Knows what they want, takes the lead' },
+  sweet:     { name: 'Soft & Devoted',       vibe: 'Warm, affectionate, always there for you' },
+  flirty:    { name: 'Charming & Teasing',   vibe: 'Playful, fun, keeps you on your toes' },
+  shy:       { name: 'Quiet & Intense',      vibe: 'Quiet charm, meaningful conversations' },
+  confident: { name: 'Alpha & Take-Charge',  vibe: 'Knows what he wants, takes the lead' },
 };
 
 function pickRandom(arr) {
@@ -421,8 +410,8 @@ function renderStep1() {
   root.classList.add('c3s-step-enter');
 
   root.innerHTML = `
-    <h1 class="c3s-h1">Create your <span class="c3s-h1-accent">AI character</span></h1>
-    <p class="c3s-h2">Pick the art style for your character.</p>
+    <h1 class="c3s-h1">Create Your <span class="c3s-h1-accent">AI Boyfriend</span></h1>
+    <p class="c3s-h2">Pick the art style for your boyfriend.</p>
     <div class="c3s-style-grid"></div>
   `;
 

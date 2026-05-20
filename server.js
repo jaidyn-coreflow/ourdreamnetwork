@@ -9,6 +9,7 @@ const CSV_FILE = path.join(__dirname, 'emails.csv');
 app.use(express.json());
 
 // Mirror Vercel's clean-URL rewrites from vercel.json
+app.get('/male-quiz',        (_req, res) => res.sendFile(path.join(__dirname, 'public', 'male.html')));
 app.get('/top-sites',        (_req, res) => res.sendFile(path.join(__dirname, 'public', 'top-sites.html')));
 app.get('/top-gay-ai-sites', (_req, res) => res.sendFile(path.join(__dirname, 'public', 'top-gay-ai-sites.html')));
 app.get('/top-ai-bf-sites',  (_req, res) => res.sendFile(path.join(__dirname, 'public', 'top-ai-bf-sites.html')));
