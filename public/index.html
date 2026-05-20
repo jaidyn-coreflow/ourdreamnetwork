@@ -75,11 +75,12 @@ body {
 .c3s-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 12px 16px; flex: 0 0 auto; box-sizing: border-box; }
 .c3s-logo { display: inline-block; width: 180px; opacity: 0.95; transition: opacity 0.2s; text-decoration: none; }
 .c3s-logo:hover { opacity: 1; }
-.c3s-logo svg { width: 100%; height: auto; display: block; }
+.c3s-logo svg, .c3s-logo img { width: 100%; height: auto; display: block; }
+.c3s-welcome { display: block; width: 260px; max-width: 80%; height: auto; margin: 18px auto 4px; opacity: 0.85; }
 .c3s-stats { display: flex; align-items: center; gap: 6px; font-size: 13px; color: rgba(255,255,255,0.55); white-space: nowrap; }
-.c3s-stats-dot { width: 8px; height: 8px; border-radius: 50%; background: #ec4899; box-shadow: 0 0 6px rgba(236,72,153,0.7); flex: 0 0 auto; }
+.c3s-stats-dot { width: 8px; height: 8px; border-radius: 50%; background: #F17BB6; box-shadow: 0 0 6px rgba(241,123,182,0.7); flex: 0 0 auto; }
 .c3s-stats-num { color: #fff; font-weight: 600; }
-@media (min-width: 768px) { .c3s-header { padding: 16px 32px; } .c3s-logo { width: 240px; } .c3s-stats { font-size: 14px; } }
+@media (min-width: 768px) { .c3s-header { padding: 16px 32px; } .c3s-logo { width: 240px; } .c3s-stats { font-size: 14px; } .c3s-welcome { width: 340px; } }
 
 /* Step indicator (text + optional back button on left) */
 .c3s-step-indicator { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 24px; margin: 4px 0 10px; gap: 8px; }
@@ -90,7 +91,7 @@ body {
 
 /* Headings (centered) */
 .c3s-h1 { font-size: 28px; line-height: 1.15; font-weight: 800; text-align: center; margin: 0 0 8px; letter-spacing: -0.01em; }
-.c3s-h1-accent { color: #ec4899; }
+.c3s-h1-accent { color: #F17BB6; }
 .c3s-h2 { font-size: 15px; font-weight: 400; text-align: center; color: rgba(255,255,255,0.55); margin: 0 0 18px; }
 @media (min-width: 768px) { .c3s-h1 { font-size: 34px; } .c3s-h2 { font-size: 16px; } }
 
@@ -104,7 +105,7 @@ body {
 .c3s-style-grid { display: flex; gap: 12px; width: 100%; }
 .c3s-style-card { position: relative; flex: 1; min-width: 0; aspect-ratio: 1/2; border-radius: 12px; overflow: hidden; cursor: pointer; border: 2px solid rgba(255,255,255,0.1); transition: border-color 0.2s, transform 0.15s; background: #1a1a1a; }
 @media (min-width: 768px) { .c3s-style-card { aspect-ratio: 2/3; } }
-.c3s-style-card:hover, .c3s-style-card:focus-visible { border-color: rgba(236,72,153,0.5); transform: translateY(-2px); }
+.c3s-style-card:hover, .c3s-style-card:focus-visible { border-color: rgba(241,123,182,0.5); transform: translateY(-2px); }
 .c3s-style-card video, .c3s-style-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .c3s-style-card-label { position: absolute; bottom: 12px; left: 12px; right: auto; font-size: 14px; font-weight: 600; color: #fff; text-align: left; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
 
@@ -119,15 +120,15 @@ body {
   .c3s-pick-grid { grid-template-columns: repeat(3, 160px); justify-content: center; gap: 16px; }
   .c3s-pick-card { aspect-ratio: 1/1; }
 }
-.c3s-pick-card:hover { border-color: rgba(236,72,153,0.4); }
-.c3s-pick-card.is-selected { border-color: #ec4899; box-shadow: 0 0 0 3px rgba(236,72,153,0.25); }
+.c3s-pick-card:hover { border-color: rgba(241,123,182,0.4); }
+.c3s-pick-card.is-selected { border-color: #F17BB6; box-shadow: 0 0 0 3px rgba(241,123,182,0.25); }
 .c3s-pick-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .c3s-pick-card-label { position: absolute; bottom: 6px; left: 8px; right: auto; font-size: 12px; font-weight: 600; color: #fff; text-align: left; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
 
 /* Personality (Step 3) — 2x2 grid that fills available height */
 .c3s-persona-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 12px; width: 100%; flex: 1; min-height: 0; }
 .c3s-persona-card { position: relative; min-width: 0; min-height: 0; border-radius: 10px; overflow: hidden; border: 2px solid rgba(255,255,255,0.1); background: #1a1a1a; cursor: pointer; transition: border-color 0.2s, transform 0.15s; }
-.c3s-persona-card:hover { border-color: rgba(236,72,153,0.4); transform: translateY(-1px); }
+.c3s-persona-card:hover { border-color: rgba(241,123,182,0.4); transform: translateY(-1px); }
 .c3s-persona-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .c3s-persona-card::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 60%; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%); pointer-events: none; }
 .c3s-persona-meta { position: absolute; left: 10px; right: 10px; bottom: 8px; z-index: 1; text-align: left; }
@@ -137,27 +138,35 @@ body {
 /* Primary CTA */
 .c3s-cta {
   display: block; width: 100%; padding: 16px 24px; border: none; border-radius: 12px;
-  background: linear-gradient(90deg, #ec4899, #db2777); color: #fff;
+  background: #F17BB6; color: #fff;
   font-size: 18px; font-weight: 700; cursor: pointer; transition: transform 0.1s, box-shadow 0.2s;
   margin-top: 8px;
 }
-.c3s-cta:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(236,72,153,0.35); }
+.c3s-cta:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(241,123,182,0.35); }
 .c3s-cta:disabled { opacity: 0.6; cursor: not-allowed; }
 .c3s-cta-spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: c3s-spin 0.7s linear infinite; vertical-align: middle; margin-left: 8px; }
 
 /* Email gate (overlay) */
 .c3s-gate { position: fixed; inset: 0; z-index: 100; background: rgba(10,10,10,0.92); backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: center; padding: 20px; animation: c3s-fadeIn 0.25s ease; }
-.c3s-gate-card { width: 100%; max-width: 420px; background: rgba(20,20,20,0.85); border: 1px solid rgba(236,72,153,0.25); border-radius: 16px; padding: 28px 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); }
+.c3s-gate-card { position: relative; width: 100%; max-width: 420px; background: rgba(20,20,20,0.85); border: 1px solid rgba(241,123,182,0.25); border-radius: 16px; padding: 28px 24px 56px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); }
+.c3s-gate-brand { position: absolute; right: 14px; bottom: 12px; width: 110px; height: auto; opacity: 0.7; pointer-events: none; }
 .c3s-gate-h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; text-align: center; }
 .c3s-gate-sub { font-size: 14px; color: rgba(255,255,255,0.6); text-align: center; margin: 0 0 20px; }
 .c3s-gate-input { width: 100%; padding: 14px 16px; background: rgba(255,255,255,0.05); border: 1.5px solid rgba(255,255,255,0.1); border-radius: 10px; color: #fff; font-size: 16px; outline: none; transition: border-color 0.15s; }
-.c3s-gate-input:focus { border-color: #ec4899; }
+.c3s-gate-input:focus { border-color: #F17BB6; }
 .c3s-gate-error { display: none; color: #ef4444; font-size: 13px; margin-top: 8px; }
 .c3s-gate-error.is-shown { display: block; }
 .c3s-gate-back { display: inline-block; margin-top: 14px; font-size: 13px; color: rgba(255,255,255,0.5); cursor: pointer; background: none; border: none; padding: 0; }
 .c3s-gate-back:hover { color: rgba(255,255,255,0.8); }
 .c3s-gate-legal { font-size: 11px; color: rgba(255,255,255,0.4); text-align: center; margin-top: 16px; }
 .c3s-gate-legal a { color: rgba(255,255,255,0.6); text-decoration: underline; }
+
+/* FAQ section (bottom of page) */
+.c3s-faq { position: relative; z-index: 1; padding: 40px 20px 32px; max-width: 720px; margin: 0 auto; width: 100%; box-sizing: border-box; }
+.c3s-faq-q { font-size: 20px; font-weight: 700; color: #fff; margin: 28px 0 10px; line-height: 1.3; }
+.c3s-faq-q:first-child { margin-top: 0; }
+.c3s-faq-a { font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.7); margin: 0; }
+@media (min-width: 768px) { .c3s-faq { padding: 56px 24px 40px; } .c3s-faq-q { font-size: 22px; margin-top: 36px; } .c3s-faq-a { font-size: 16px; } }
 
 /* Legal footer */
 .legal-footer { padding: 6px 16px 10px; text-align: center; position: relative; z-index: 1; flex: 0 0 auto; }
@@ -207,6 +216,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <section id="step-1" class="c3s-step"></section>
     <section id="step-2" class="c3s-step"></section>
     <section id="step-3" class="c3s-step"></section>
+
+    <img class="c3s-welcome" src="/ourdreamnetworklogov2.svg" alt="Ourdream Network — powered by ourdream.ai" />
   </div>
 </div>
 
@@ -226,6 +237,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     Ready in 30s
   </div>
 </div>
+
+<section id="c3s-faq" class="c3s-faq">
+  <h2 class="c3s-faq-q">What is ourdream network?</h2>
+  <p class="c3s-faq-a">The ourdream network is a creative project built by the AI roleplay enthusiasts inside our dream ai. It's where the team members most passionate about character design, roleplay, and storytelling get to build experimental projects, deeper characters, and community-focused work that lives alongside the main our dream ai platform.</p>
+
+  <h2 class="c3s-faq-q">Is ourdream.ai affiliated with ourdream network?</h2>
+  <p class="c3s-faq-a">Yes. ourdream network is an official partner of our dream ai, founded and run by people inside the company. Everything we build runs on our dream ai models, infrastructure, and safety standards.</p>
+
+  <h2 class="c3s-faq-q">Who runs ourdream network?</h2>
+  <p class="c3s-faq-a">ourdream network is run by the AI roleplay enthusiasts inside our dream ai — the team members who spend their time deep in character creation, prompt craft, and worldbuilding. It exists because that passion deserved its own space, separate from the main product.</p>
+
+  <h2 class="c3s-faq-q">How is ourdream network different from ourdream.ai?</h2>
+  <p class="c3s-faq-a">ourdream network is the creative side project whin it: experimental characters, deeper lore, and community-driven work.</p>
+
+  <h2 class="c3s-faq-q">Why does ourdream network exist as its own brand?</h2>
+  <p class="c3s-faq-a">Some projects do their best work when they have their own identity. Giving the enthusiast side of our dream ai its own name lets the team experiment more freely and build for people who want to go deeper into AI roleplay as a craft.</p>
+</section>
 
 <div class="legal-footer">
   <a href="/terms.html">TERMS</a>
@@ -382,6 +410,9 @@ function render() {
   if (state.currentStep === 3) renderStep3();
 
   renderEmailGate(state.currentStep === 'email');
+
+  const faq = document.getElementById('c3s-faq');
+  if (faq) faq.style.display = state.currentStep === 1 ? '' : 'none';
 }
 
 function toggleStep(id, isActive) {
@@ -614,7 +645,7 @@ function renderEmailGate(visible) {
   mount.innerHTML = `
     <div class="c3s-gate" role="dialog" aria-modal="true" aria-labelledby="c3s-gate-title">
       <div class="c3s-gate-card">
-        <h1 id="c3s-gate-title" class="c3s-gate-h1">Almost there - enter to reveal your creation</h1>
+        <h1 id="c3s-gate-title" class="c3s-gate-h1">Almost there — your character is waiting for you on <span class="c3s-h1-accent">ourdream</span></h1>
         <form id="c3s-gate-form" novalidate>
           <input type="email" name="email" id="c3s-gate-email" class="c3s-gate-input"
                  placeholder="you@example.com" autocomplete="email" autofocus required>
@@ -629,6 +660,7 @@ function renderEmailGate(visible) {
         <div class="c3s-gate-legal">
           By continuing you agree to our <a href="/terms.html">Terms</a> and <a href="/privacy.html">Privacy Policy</a>.
         </div>
+        <img class="c3s-gate-brand" src="/ourdreamnetworklogov2.svg" alt="" aria-hidden="true" />
       </div>
     </div>
   `;
