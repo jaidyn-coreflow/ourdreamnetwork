@@ -13,6 +13,7 @@ app.get('/male-quiz',        (_req, res) => res.sendFile(path.join(__dirname, 'p
 app.get('/top-sites',        (_req, res) => res.sendFile(path.join(__dirname, 'public', 'top-sites.html')));
 app.get('/top-gay-ai-sites', (_req, res) => res.sendFile(path.join(__dirname, 'public', 'top-gay-ai-sites.html')));
 app.get('/top-ai-bf-sites',  (_req, res) => res.sendFile(path.join(__dirname, 'public', 'top-ai-bf-sites.html')));
+app.get('/candy',            (_req, res) => res.sendFile(path.join(__dirname, 'public', 'candy.html')));
 
 // public/ takes precedence over root so the latest versions of files that
 // exist in both places (e.g. top-sites.html) are served locally.
