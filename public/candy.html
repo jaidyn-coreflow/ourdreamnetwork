@@ -11,7 +11,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://static.ourdream.ai" crossorigin>
 <link rel="preconnect" href="https://ouraidream.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,500;0,700;0,800;1,700;1,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="https://static.ourdream.ai/blog-assets/frame-1028949106.webp" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,800;1,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -109,8 +110,9 @@ body {
 }
 .cdy-hero-bg {
   position: absolute; inset: 0;
-  background-size: cover;
-  background-position: center top;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center top;
   background-color: #2a1620;
 }
 .cdy-hero-overlay {
@@ -233,8 +235,9 @@ body {
   border-radius: 12px;
   overflow: hidden;
   background: #2a2a2a;
-  background-size: cover;
-  background-position: center;
+  object-fit: cover;
+  object-position: center;
+  display: block;
 }
 .cdy-usp-text {
   padding: 8px;
@@ -408,9 +411,10 @@ body {
   height: 400px;
   border-radius: 20px;
   overflow: hidden;
-  background-size: cover;
-  background-position: center;
+  object-fit: cover;
+  object-position: center;
   background-color: #3a2230;
+  display: block;
 }
 
 /* ── FAQ ─────────────────────────────────────────────────── */
@@ -496,7 +500,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- ── Hero ─────────────────────────────────────────────── -->
   <section class="cdy-hero">
-    <div class="cdy-hero-bg" data-img="hero-bg" style="background-image:url('https://static.ourdream.ai/blog-assets/frame-1028949106.webp');"></div>
+    <img class="cdy-hero-bg" data-img="hero-bg"
+         src="https://static.ourdream.ai/blog-assets/frame-1028949106.webp"
+         alt="" aria-hidden="true"
+         width="1920" height="800"
+         fetchpriority="high" decoding="async">
+
     <div class="cdy-hero-overlay" aria-hidden="true"></div>
 
     <header class="cdy-header" style="position:absolute; top:0; left:50%; transform:translateX(-50%); z-index:2;">
@@ -524,19 +533,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <h2 class="cdy-section-title">Why Choose ourdream?</h2>
     <div class="cdy-usps">
       <div class="cdy-usp">
-        <div class="cdy-usp-img" data-img="usp-1" style="background-image:url('https://static.ourdream.ai/blog-assets/rectangle-1.webp');"></div>
+        <img class="cdy-usp-img" data-img="usp-1" src="https://static.ourdream.ai/blog-assets/rectangle-1.webp" alt="" width="287" height="230" loading="lazy" decoding="async">
         <div class="cdy-usp-text">Over 120k public characters to choose from</div>
       </div>
       <div class="cdy-usp">
-        <div class="cdy-usp-img" data-img="usp-2" style="background-image:url('https://static.ourdream.ai/blog-assets/rectangle-2.webp');"></div>
+        <img class="cdy-usp-img" data-img="usp-2" src="https://static.ourdream.ai/blog-assets/rectangle-2.webp" alt="" width="287" height="230" loading="lazy" decoding="async">
         <div class="cdy-usp-text">Ultra-realistic images &amp; videos</div>
       </div>
       <div class="cdy-usp">
-        <div class="cdy-usp-img" data-img="usp-3" style="background-image:url('https://static.ourdream.ai/blog-assets/rectangle-3.webp');"></div>
+        <img class="cdy-usp-img" data-img="usp-3" src="https://static.ourdream.ai/blog-assets/rectangle-3.webp" alt="" width="287" height="230" loading="lazy" decoding="async">
         <div class="cdy-usp-text">Create 10 AI characters for free</div>
       </div>
       <div class="cdy-usp">
-        <div class="cdy-usp-img" data-img="usp-4" style="background-image:url('https://static.ourdream.ai/blog-assets/rectangle-4.webp');"></div>
+        <img class="cdy-usp-img" data-img="usp-4" src="https://static.ourdream.ai/blog-assets/rectangle-4.webp" alt="" width="287" height="230" loading="lazy" decoding="async">
         <div class="cdy-usp-text">Unique personalities &amp; natural conversations</div>
       </div>
     </div>
@@ -569,7 +578,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="cdy-row cdy-row-head">
         <div class="cdy-cell">Features</div>
         <div class="cdy-cell cdy-cell-mid">
-          <img src="https://static.ourdream.ai/blog-assets/ourdream-ai.webp" alt="ourdream.ai" style="width:247px; height:auto; display:block;" data-img="wordmark" />
+          <img src="https://static.ourdream.ai/blog-assets/ourdream-ai.webp" alt="ourdream.ai" width="247" height="25" style="display:block;" loading="lazy" decoding="async" data-img="wordmark">
         </div>
         <div class="cdy-cell">Candy</div>
       </div>
@@ -675,7 +684,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <p>Sign up and you can create 10 images for free. No payment details needed.</p>
         <a class="cdy-cta" data-cta="ready" href="/">Start Creating your own AI</a>
       </div>
-      <div class="cdy-ready-img" data-img="cta-bottom" style="background-image:url('https://static.ourdream.ai/blog-assets/hybrid-workflow.webp');"></div>
+      <img class="cdy-ready-img" data-img="cta-bottom" src="https://static.ourdream.ai/blog-assets/hybrid-workflow.webp" alt="" width="712" height="400" loading="lazy" decoding="async">
     </div>
   </section>
 
