@@ -276,12 +276,15 @@ body {
     clearError();
     submitBtn.disabled = true;
 
+    track('quiz_email_captured', { email_provided: true, source: 'login' });
+
     var redirectUrl = buildRedirectUrl();
     var hasClickId = /(?:^|;\s*)rtkclickid-store=/.test(document.cookie);
 
-    track('login_submit', {
+    track('quiz_redirect', {
       redirect_url: redirectUrl,
       has_clickid: hasClickId,
+      source: 'login',
     });
 
     withTimeout(saveEmail(email).catch(function () { /* swallow — must not block redirect */ }), SAVE_EMAIL_TIMEOUT_MS)
