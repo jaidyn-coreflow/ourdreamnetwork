@@ -635,6 +635,80 @@ body {
   .ts-hero-sub { display: none; }
   .ts-top3 { display: none; }
   .ts-meta { margin-top: 0; }
+
+  /* ── Mobile card: brand left, score-ring right, full-width CTA, review below ─── */
+  .ts-card-body {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "brand score"
+      "blurb blurb"
+      "cta cta";
+    gap: 18px 14px;
+    align-items: start;
+  }
+
+  .ts-brand-col {
+    grid-area: brand;
+    align-items: flex-start;
+    text-align: left;
+    gap: 8px;
+  }
+  .ts-brand-logo {
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 28px;
+    line-height: 1.05;
+    gap: 6px;
+  }
+  .ts-brand-logo .ts-brand-icon { width: 40px; height: 40px; }
+  .ts-brand-col .ts-brand-stars { display: none; }
+
+  /* display:contents lets score-row + button live directly in the card-body grid */
+  .ts-score-col { display: contents; }
+
+  .ts-score-row {
+    grid-area: score;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .ts-score-box {
+    width: 76px; height: 76px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid #F17BB6;
+    box-shadow: 0 0 18px rgba(241,123,182,0.20);
+    padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    min-width: 0;
+  }
+  .ts-score-meta { align-items: center; text-align: center; }
+  .ts-score-tier, .ts-score-votes { display: none; }
+  .ts-score-stars { font-size: 16px; letter-spacing: 1.5px; }
+
+  .ts-blurb { grid-area: blurb; }
+
+  .ts-card-cta {
+    grid-area: cta;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  /* Read Review pinned below the button */
+  .ts-card { padding-bottom: 52px; }
+  .ts-card .ts-brand-review {
+    position: absolute;
+    bottom: 18px;
+    left: 0; right: 0;
+    text-align: center;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 13px;
+    color: #6b3950;
+    text-decoration: underline;
+  }
 }
 </style>
 </head>
