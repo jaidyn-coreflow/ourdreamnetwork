@@ -169,5 +169,106 @@ body {
   </form>
 </main>
 
+<script>
+(function () {
+  // Base64 of "https://clk.ourdreamnetwork.com/click/1" — same pattern as top-sites.html.
+  var REDTRACK_BASE_B64 = 'aHR0cHM6Ly9jbGsub3VyZHJlYW1uZXR3b3JrLmNvbS9jbGljay8x';
+  var SAVE_EMAIL_TIMEOUT_MS = 600;
+
+  var form = document.getElementById('login-form');
+  var emailInput = document.getElementById('email');
+  var errorEl = document.getElementById('login-error');
+  var submitBtn = document.getElementById('submit-btn');
+
+  function isValidEmail(value) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  }
+
+  function showError(message) {
+    errorEl.textContent = message;
+    errorEl.style.display = 'block';
+  }
+
+  function clearError() {
+    errorEl.textContent = '';
+    errorEl.style.display = 'none';
+  }
+
+  function buildRedirectUrl() {
+    var base = atob(REDTRACK_BASE_B64);
+    var url = new URL(base);
+    url.searchParams.set('sub11', 'login');
+
+    var cookieMatch = document.cookie.match(/(?:^|;\s*)rtkclickid-store=([^;]+)/);
+    if (cookieMatch) {
+      url.searchParams.set('clickid', decodeURIComponent(cookieMatch[1]));
+    }
+
+    var pageParams = new URLSearchParams(window.location.search);
+    var gl = pageParams.get('_gl');
+    if (gl) {
+      url.searchParams.set('sub19', gl);
+    }
+
+    return url.toString();
+  }
+
+  function track(event, payload) {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(Object.assign({ event: event }, payload || {}));
+  }
+
+  function saveEmail(email) {
+    return fetch('/api/save-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, mode: 'login' }),
+    });
+  }
+
+  // Resolve when either the promise settles or the timeout fires — whichever is first.
+  function withTimeout(promise, ms) {
+    return new Promise(function (resolve) {
+      var done = false;
+      var timer = setTimeout(function () {
+        if (done) return;
+        done = true;
+        resolve();
+      }, ms);
+      promise.then(
+        function () { if (done) return; done = true; clearTimeout(timer); resolve(); },
+        function () { if (done) return; done = true; clearTimeout(timer); resolve(); }
+      );
+    });
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    var email = (emailInput.value || '').trim();
+    if (!isValidEmail(email)) {
+      showError('Please enter a valid email address.');
+      emailInput.focus();
+      return;
+    }
+    clearError();
+    submitBtn.disabled = true;
+
+    var redirectUrl = buildRedirectUrl();
+    var hasClickId = /(?:^|;\s*)rtkclickid-store=/.test(document.cookie);
+
+    track('login_submit', {
+      redirect_url: redirectUrl,
+      has_clickid: hasClickId,
+    });
+
+    withTimeout(saveEmail(email).catch(function () { /* swallow — must not block redirect */ }), SAVE_EMAIL_TIMEOUT_MS)
+      .then(function () {
+        window.location.href = redirectUrl;
+      });
+  });
+})();
+</script>
+
 </body>
 </html>
