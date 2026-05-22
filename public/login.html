@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Log in | Ourdreamnetwork</title>
+<meta name="description" content="Log in to ourdream and claim 50 bonus dreamcoins.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+<link rel="dns-prefetch" href="https://clk.ourdreamnetwork.com">
+
+<!-- Google Tag Manager (deferred to window load; events queued pre-load) -->
+<script>
+window.dataLayer = window.dataLayer || [];
+addEventListener('load', function () {
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5VRS8QPJ');
+});
+</script>
+<!-- End Google Tag Manager -->
+
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #0a0a0a;
+  color: #fff;
+  font-family: system-ui, -apple-system, sans-serif;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+/* Ambient pink-radial glow (matches index.html) */
+.lp-ambient { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.lp-ambient::before {
+  content: ''; position: absolute; top: -20%; left: -10%; width: 60%; height: 60%;
+  background: radial-gradient(ellipse, rgba(219,39,119,0.10) 0%, transparent 70%);
+  animation: lp-drift 20s ease-in-out infinite;
+}
+.lp-ambient::after {
+  content: ''; position: absolute; bottom: -20%; right: -10%; width: 50%; height: 50%;
+  background: radial-gradient(ellipse, rgba(219,39,119,0.08) 0%, transparent 70%);
+  animation: lp-drift 25s ease-in-out infinite reverse;
+}
+@keyframes lp-drift {
+  0%, 100% { transform: translate(0,0); }
+  33% { transform: translate(5%,-3%); }
+  66% { transform: translate(-3%,5%); }
+}
+
+.lp-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+  background: rgba(20,20,20,0.95);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 32px 28px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+@media (min-width: 768px) {
+  .lp-card { padding: 40px 36px; }
+}
+
+.lp-logo { display: block; width: 200px; max-width: 70%; height: auto; margin: 0 auto 24px; }
+@media (min-width: 768px) { .lp-logo { width: 240px; margin-bottom: 28px; } }
+
+.lp-h1 {
+  font-size: 22px;
+  line-height: 1.25;
+  font-weight: 800;
+  text-align: center;
+  margin: 0 0 24px;
+  letter-spacing: -0.01em;
+}
+.lp-h1-accent { color: #F17BB6; }
+@media (min-width: 768px) { .lp-h1 { font-size: 26px; margin-bottom: 28px; } }
+
+.lp-field { margin: 0 0 14px; }
+.lp-input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+  font-family: inherit;
+  color: #fff;
+  background: #0f0f0f;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  -webkit-appearance: none;
+}
+.lp-input::placeholder { color: rgba(255,255,255,0.35); }
+.lp-input:focus {
+  border-color: #F17BB6;
+  box-shadow: 0 0 0 3px rgba(241,123,182,0.18);
+}
+
+.lp-error {
+  display: none;
+  font-size: 13px;
+  color: #F17BB6;
+  margin: -6px 0 12px;
+  text-align: left;
+}
+
+.lp-submit {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: inherit;
+  color: #fff;
+  background: #F17BB6;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.05s;
+  -webkit-appearance: none;
+}
+.lp-submit:hover { background: #ec6aa9; }
+.lp-submit:active { transform: translateY(1px); }
+.lp-submit:disabled { opacity: 0.7; cursor: not-allowed; }
+</style>
+</head>
+<body>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5VRS8QPJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<div class="lp-ambient" aria-hidden="true"></div>
+
+<main class="lp-card">
+  <img class="lp-logo" src="/ourdreamnetworklogo.svg" alt="ourdreamnetwork">
+  <h1 class="lp-h1">Enter Your Email For <span class="lp-h1-accent">50 bonus dreamcoins</span> on ourdream</h1>
+
+  <form id="login-form" novalidate>
+    <div class="lp-field">
+      <input
+        id="email"
+        class="lp-input"
+        type="email"
+        name="email"
+        placeholder="your@email.com"
+        autocomplete="email"
+        inputmode="email"
+        required
+        aria-label="Email address">
+    </div>
+    <div id="login-error" class="lp-error" role="alert"></div>
+    <button id="submit-btn" class="lp-submit" type="submit">Submit</button>
+  </form>
+</main>
+
+</body>
+</html>
