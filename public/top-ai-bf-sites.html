@@ -450,6 +450,183 @@ body {
 .ts-footer { padding: 24px 16px 16px; text-align: center; position: relative; z-index: 1; }
 .ts-footer a { color: #8a6273; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; margin: 0 12px; text-decoration: none; }
 .ts-footer a:hover { color: #1a0e15; }
+
+/* ══════════════════════════════════════════════
+   ── LISTICLE REDESIGN (2026-05-22) ──
+   ══════════════════════════════════════════════ */
+
+/* ── 2-column wrap (listicle + sticky banner) ─── */
+.ts-listicle-wrap {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 28px;
+  align-items: start;
+  margin-bottom: 48px;
+}
+@media (max-width: 1179px) { .ts-listicle-wrap { grid-template-columns: 1fr 240px; gap: 20px; } }
+@media (max-width: 899px)  { .ts-listicle-wrap { grid-template-columns: 1fr; } }
+
+/* ── Card override: extra left padding for floating rank circle,
+       top padding so the badge pill doesn't overlap blurb content ─── */
+.ts-card { padding-top: 36px; padding-left: 40px; }
+@media (max-width: 859px) { .ts-card { padding-left: 24px; padding-top: 56px; } }
+
+/* ── Card body grid: brand col + features + score+CTA ─── */
+.ts-card-body {
+  grid-template-columns: 170px 1fr 240px;
+}
+@media (max-width: 1179px) { .ts-card-body { grid-template-columns: 150px 1fr 220px; gap: 20px; } }
+@media (max-width: 859px)  { .ts-card-body { grid-template-columns: 1fr; gap: 18px; } }
+
+/* ── Rank circle (floats off left edge of card) ─── */
+.ts-rank {
+  position: absolute;
+  left: -22px; top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px; border-radius: 50%;
+  background: linear-gradient(135deg, #F17BB6, #db2777);
+  color: #fff; font-size: 22px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 16px rgba(241,123,182,0.35);
+  z-index: 2;
+  font-family: inherit;
+}
+@media (max-width: 859px) {
+  .ts-rank {
+    position: absolute; left: 50%; top: -22px; transform: translateX(-50%);
+  }
+}
+
+/* ── Category badge pill (cards 1–3 only) ─── */
+.ts-cat-badge {
+  position: absolute;
+  top: -14px; left: 60px;
+  background: linear-gradient(90deg, #F17BB6, #db2777);
+  color: #fff;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 6px 14px; border-radius: 999px;
+  box-shadow: 0 4px 12px rgba(241,123,182,0.35);
+  display: inline-flex; align-items: center; gap: 6px;
+  white-space: nowrap;
+  z-index: 2;
+}
+@media (max-width: 859px) {
+  .ts-cat-badge { left: 50%; transform: translateX(-50%); top: 12px; }
+}
+
+/* ── New score row (replaces .ts-score-ring) ─── */
+.ts-score-row {
+  display: flex; align-items: center; gap: 12px;
+  justify-content: center;
+}
+.ts-score-box {
+  background: #fff5fa;
+  border: 1px solid rgba(241,123,182,0.25);
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-size: 22px; font-weight: 800; color: #1a0e15;
+  flex: 0 0 auto; line-height: 1;
+  min-width: 56px; text-align: center;
+}
+.ts-score-meta { display: flex; flex-direction: column; gap: 2px; line-height: 1.15; }
+.ts-score-tier { font-size: 13px; font-weight: 800; color: #1a0e15; }
+.ts-score-stars { color: #facc15; font-size: 12px; letter-spacing: 0.5px; }
+.ts-score-votes { font-size: 10px; color: #8a6273; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
+.ts-card-featured .ts-score-box { box-shadow: 0 0 18px rgba(241,123,182,0.20); }
+
+/* ── Side banner (sticky right column) ─── */
+.ts-banner {
+  position: sticky; top: 20px;
+  background: #fff;
+  border: 1.5px solid #F17BB6;
+  border-radius: 16px;
+  padding: 18px 16px 20px;
+  box-shadow: 0 20px 60px rgba(241,123,182,0.18);
+  text-align: center;
+}
+.ts-banner-brand {
+  font-size: 16px; font-weight: 800; color: #1a0e15;
+  margin: 0 0 12px;
+}
+.ts-banner-brand .ts-brand-tld { color: #F17BB6; }
+.ts-banner-img {
+  width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
+  border-radius: 12px; margin-bottom: 14px;
+  display: block;
+}
+.ts-banner-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: #8a6273;
+}
+.ts-banner-deal {
+  font-size: 26px; font-weight: 800; color: #db2777;
+  margin: 4px 0 14px; letter-spacing: -0.01em; line-height: 1;
+}
+.ts-banner-cta {
+  display: block; width: 100%;
+  background: linear-gradient(90deg, #F17BB6, #db2777);
+  color: #fff; border: none; border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 13px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.2s;
+}
+.ts-banner-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(241,123,182,0.4); }
+
+/* ── Best Overall closing card ─── */
+.ts-best-overall {
+  position: relative;
+  margin: 48px 0 56px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(241,123,182,0.10);
+}
+.ts-best-overall-bar {
+  background: linear-gradient(90deg, #F17BB6, #db2777);
+  color: #fff; text-align: center;
+  padding: 14px 16px;
+  font-size: 14px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+}
+.ts-best-overall .ts-card-body {
+  display: grid;
+  grid-template-columns: 170px 1fr 240px;
+  gap: 24px;
+  align-items: center;
+  padding: 26px 24px;
+}
+@media (max-width: 1179px) {
+  .ts-best-overall .ts-card-body { grid-template-columns: 150px 1fr 220px; gap: 20px; }
+}
+@media (max-width: 859px) {
+  .ts-best-overall .ts-card-body { grid-template-columns: 1fr; gap: 18px; padding: 22px 20px; }
+}
+
+/* ── FAQ layout: single column (sidebar removed) ─── */
+.ts-faq-layout { grid-template-columns: 1fr; }
+.ts-sidebar { display: none; }
+
+/* ── Lovescape & GirlfriendGPT wordmark styles ─── */
+.ts-brand-lovescape {
+  font-family: 'Arial Black', system-ui, sans-serif;
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  color: #1a0e15;
+  text-transform: uppercase;
+}
+.ts-brand-lovescape::after {
+  content: '|';
+  color: #F17BB6;
+  margin-left: 2px;
+  animation: ts-blink 1.2s steps(2) infinite;
+}
+@keyframes ts-blink { 50% { opacity: 0; } }
+.ts-brand-gfgpt {
+  font-size: 18px; font-weight: 800; color: #db2777;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.ts-brand-gfgpt::before { content: '💧'; font-size: 16px; }
 </style>
 </head>
 <body>
@@ -519,15 +696,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <span>Advertising Disclosure | We receive fees from partners that influence rating listings</span>
   </div>
 
-  <!-- ── Main review cards ──────────────────────────────── -->
+  <!-- ── Listicle + sticky side banner ──────────────────── -->
+  <div class="ts-listicle-wrap">
   <div class="ts-cards" id="reviews">
 
     <!-- Card #1 — OurDream (featured) -->
     <article class="ts-card ts-card-featured">
-      <div class="ts-badge-row">
-        <span class="ts-badge ts-badge-teal">🏆 Next-Level AI Interaction</span>
-        <span class="ts-badge ts-badge-pink">💕 Join 50,000+ Users Who Trust This Site</span>
-      </div>
+      <div class="ts-rank" aria-hidden="true">1</div>
+      <span class="ts-cat-badge">✨ Most Realistic Experience</span>
       <div class="ts-card-body">
         <div class="ts-brand-col">
           <div class="ts-brand-logo">
@@ -551,16 +727,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="ts-blurb">
           <p class="ts-blurb-title">Top choice for those seeking highly personalized AI boyfriends with a spicy flavor</p>
           <ul class="ts-blurb-list">
-            <li>Raw, lifelike roleplay without limits</li>
-            <li>AI boyfriends that feel deeply personal</li>
-            <li>Meaningful chats with video & calls</li>
-            <li>100% anonymous & secure payments</li>
+            <li>Special offer: 75% saving</li>
+            <li>The ultimate AI chat experience</li>
+            <li>Create your dream boyfriend and bring your imagination to life</li>
           </ul>
         </div>
 
         <div class="ts-score-col">
-          <div class="ts-score-ring">9.9</div>
-          <div class="ts-score-tag">💖 Best AI Personalization & Realism</div>
+          <div class="ts-score-row">
+            <div class="ts-score-box">9.9</div>
+            <div class="ts-score-meta">
+              <span class="ts-score-tier">Top-Rated</span>
+              <span class="ts-score-stars">★★★★★</span>
+              <span class="ts-score-votes">User Votes</span>
+            </div>
+          </div>
           <button class="ts-card-cta" data-cta="ourdream">Visit Site</button>
         </div>
       </div>
@@ -568,6 +749,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <!-- Card #2 — candy.ai -->
     <article class="ts-card">
+      <div class="ts-rank" aria-hidden="true">2</div>
+      <span class="ts-cat-badge">✨ Top Pick by Users</span>
       <div class="ts-card-body">
         <div class="ts-brand-col">
           <div class="ts-brand-logo ts-brand-logo-candy">
@@ -581,15 +764,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="ts-blurb">
           <p class="ts-blurb-title">Leading AI platform for immersive boyfriend experiences & uncensored pleasure</p>
           <ul class="ts-blurb-list">
-            <li>The most complete AI interaction</li>
-            <li>Powerful customization & videos</li>
-            <li>Top-tier security & data protection</li>
-            <li>Exclusive bonuses upon registration</li>
+            <li>Exclusive discount: Up to 70% off</li>
+            <li>Create your dream AI boyfriend tailored to your exact preferences</li>
           </ul>
         </div>
 
         <div class="ts-score-col">
-          <div class="ts-score-ring">9.4</div>
+          <div class="ts-score-row">
+            <div class="ts-score-box">9.4</div>
+            <div class="ts-score-meta">
+              <span class="ts-score-tier">Excellent</span>
+              <span class="ts-score-stars">★★★★★</span>
+              <span class="ts-score-votes">User Votes</span>
+            </div>
+          </div>
           <button class="ts-card-cta" data-cta="candy">Visit Site</button>
         </div>
       </div>
@@ -597,6 +785,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <!-- Card #3 — Joi AI -->
     <article class="ts-card">
+      <div class="ts-rank" aria-hidden="true">3</div>
+      <span class="ts-cat-badge">✨ Most Romantic</span>
       <div class="ts-card-body">
         <div class="ts-brand-col">
           <div class="ts-brand-logo">
@@ -610,21 +800,103 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="ts-blurb">
           <p class="ts-blurb-title">Where imagination comes to life with deep emotions & connections</p>
           <ul class="ts-blurb-list">
-            <li>Diverse adult-friendly characters</li>
-            <li>Private & judgment-free conversations</li>
-            <li>Full anonymity & privacy protection</li>
-            <li class="is-neg">Limited distinctive features</li>
+            <li>Top deal: 70% off for first purchase</li>
+            <li>Enjoy playful conversations and a romantic AI companion 24/7</li>
           </ul>
         </div>
 
         <div class="ts-score-col">
-          <div class="ts-score-ring">8.7</div>
+          <div class="ts-score-row">
+            <div class="ts-score-box">8.7</div>
+            <div class="ts-score-meta">
+              <span class="ts-score-tier">Very Good</span>
+              <span class="ts-score-stars">★★★★☆</span>
+              <span class="ts-score-votes">User Votes</span>
+            </div>
+          </div>
           <button class="ts-card-cta" data-cta="joi">Visit Site</button>
         </div>
       </div>
     </article>
 
-  </div>
+    <!-- Card #4 — Lovescape -->
+    <article class="ts-card">
+      <div class="ts-rank" aria-hidden="true">4</div>
+      <div class="ts-card-body">
+        <div class="ts-brand-col">
+          <div class="ts-brand-logo">
+            <span class="ts-brand-lovescape">Lovescape</span>
+          </div>
+          <div class="ts-brand-stars">★★★★☆</div>
+          <a class="ts-brand-review">Read Review</a>
+        </div>
+
+        <div class="ts-blurb">
+          <p class="ts-blurb-title">Match your mood with an AI boyfriend designed to follow your lead</p>
+          <ul class="ts-blurb-list">
+            <li>Special discount: Up to 70% Off</li>
+            <li>Matches your every mood — sweet, playful, or adventurous</li>
+          </ul>
+        </div>
+
+        <div class="ts-score-col">
+          <div class="ts-score-row">
+            <div class="ts-score-box">8.5</div>
+            <div class="ts-score-meta">
+              <span class="ts-score-tier">Very Good</span>
+              <span class="ts-score-stars">★★★★☆</span>
+              <span class="ts-score-votes">User Votes</span>
+            </div>
+          </div>
+          <button class="ts-card-cta" data-cta="lovescape">Visit Site</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- Card #5 — GirlfriendGPT (presented as a chat-only AI on this page) -->
+    <article class="ts-card">
+      <div class="ts-rank" aria-hidden="true">5</div>
+      <div class="ts-card-body">
+        <div class="ts-brand-col">
+          <div class="ts-brand-logo">
+            <span class="ts-brand-gfgpt">GirlfriendGPT</span>
+          </div>
+          <div class="ts-brand-stars">★★★★☆</div>
+          <a class="ts-brand-review">Read Review</a>
+        </div>
+
+        <div class="ts-blurb">
+          <p class="ts-blurb-title">Interactive AI companion experience with chat plus dynamic visual generation</p>
+          <ul class="ts-blurb-list">
+            <li>Best offer: Save 34% by going annual</li>
+            <li>The most immersive experience featuring chat and dynamic visual generation</li>
+          </ul>
+        </div>
+
+        <div class="ts-score-col">
+          <div class="ts-score-row">
+            <div class="ts-score-box">8.3</div>
+            <div class="ts-score-meta">
+              <span class="ts-score-tier">Very Good</span>
+              <span class="ts-score-stars">★★★★☆</span>
+              <span class="ts-score-votes">User Votes</span>
+            </div>
+          </div>
+          <button class="ts-card-cta" data-cta="girlfriendgpt">Visit Site</button>
+        </div>
+      </div>
+    </article>
+
+  </div><!-- /.ts-cards -->
+
+  <aside class="ts-banner">
+    <p class="ts-banner-brand">ourdream<span class="ts-brand-tld">.ai</span></p>
+    <img src="/male.webp" alt="" class="ts-banner-img" loading="lazy" decoding="async">
+    <div class="ts-banner-label">Special Offer</div>
+    <div class="ts-banner-deal">75% Saving</div>
+    <button class="ts-banner-cta" data-cta="ourdream-banner">Get Started</button>
+  </aside>
+  </div><!-- /.ts-listicle-wrap -->
 
   <!-- ── Your Ideal AI Boyfriend ──────────────────────────── -->
   <section class="ts-intro">
@@ -633,46 +905,50 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p>However, not all platforms live up to expectations. Some offer repetitive conversations or lack key features, while others raise privacy concerns or hidden fees. We're here to guide you through the options, helping you find the best, most reliable platform for a secure, personalized experience.</p>
   </section>
 
-  <!-- ── Offer Of The Month ───────────────────────────────── -->
-  <section class="ts-offer">
-    <h2 class="ts-offer-title">Offer Of The Month</h2>
-    <article class="ts-card">
-      <div class="ts-card-body">
-        <div class="ts-brand-col">
-          <div class="ts-brand-logo">
-            <svg class="ts-brand-icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <defs>
-                <linearGradient id="od-grad-offer" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#f9a8d4"/>
-                  <stop offset="100%" stop-color="#F17BB6"/>
-                </linearGradient>
-              </defs>
-              <path d="M8 18 C 8 14, 12 12, 14 14 C 16 12, 20 14, 20 18 C 20 22, 14 26, 14 26 C 14 26, 8 22, 8 18 Z" fill="url(#od-grad-offer)"/>
-              <ellipse cx="22" cy="12" rx="6" ry="3.5" fill="url(#od-grad-offer)" opacity="0.85"/>
-              <ellipse cx="16" cy="9" rx="5" ry="2.8" fill="url(#od-grad-offer)" opacity="0.7"/>
-            </svg>
-            <span>ourdream<span class="ts-brand-tld">.ai</span></span>
-          </div>
-          <div class="ts-brand-stars">★★★★★</div>
-          <a class="ts-brand-review">Read Review</a>
+  <!-- ── Best Overall closing card ────────────────────────── -->
+  <section class="ts-best-overall">
+    <div class="ts-best-overall-bar">🏆 Best Overall</div>
+    <div class="ts-card-body">
+      <div class="ts-brand-col">
+        <div class="ts-brand-logo">
+          <svg class="ts-brand-icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="od-grad-best" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#f9a8d4"/>
+                <stop offset="100%" stop-color="#F17BB6"/>
+              </linearGradient>
+            </defs>
+            <path d="M8 18 C 8 14, 12 12, 14 14 C 16 12, 20 14, 20 18 C 20 22, 14 26, 14 26 C 14 26, 8 22, 8 18 Z" fill="url(#od-grad-best)"/>
+            <ellipse cx="22" cy="12" rx="6" ry="3.5" fill="url(#od-grad-best)" opacity="0.85"/>
+            <ellipse cx="16" cy="9" rx="5" ry="2.8" fill="url(#od-grad-best)" opacity="0.7"/>
+          </svg>
+          <span>ourdream<span class="ts-brand-tld">.ai</span></span>
         </div>
-
-        <div class="ts-blurb">
-          <p class="ts-blurb-title">Leading AI platform for immersive experiences & uncensored pleasure</p>
-          <ul class="ts-blurb-list">
-            <li>The most complete AI interaction</li>
-            <li>Powerful customization & videos</li>
-            <li>Top-tier security & data protection</li>
-            <li>Exclusive bonuses upon registration</li>
-          </ul>
-        </div>
-
-        <div class="ts-score-col">
-          <div class="ts-score-ring">9.9</div>
-          <button class="ts-card-cta" data-cta="ourdream-offer">Visit Site</button>
-        </div>
+        <div class="ts-brand-stars">★★★★★</div>
+        <a class="ts-brand-review">Read Review</a>
       </div>
-    </article>
+
+      <div class="ts-blurb">
+        <p class="ts-blurb-title">The top-rated AI boyfriend platform for personalized, lifelike chat</p>
+        <ul class="ts-blurb-list">
+          <li>Special offer: 75% saving</li>
+          <li>The ultimate AI chat experience</li>
+          <li>Create your dream boyfriend and bring your imagination to life</li>
+        </ul>
+      </div>
+
+      <div class="ts-score-col">
+        <div class="ts-score-row">
+          <div class="ts-score-box">9.9</div>
+          <div class="ts-score-meta">
+            <span class="ts-score-tier">Top-Rated</span>
+            <span class="ts-score-stars">★★★★★</span>
+            <span class="ts-score-votes">User Votes</span>
+          </div>
+        </div>
+        <button class="ts-card-cta" data-cta="ourdream-offer">Visit Site</button>
+      </div>
+    </div>
   </section>
 
   <!-- ── FAQ + Sidebar ────────────────────────────────────── -->
@@ -706,33 +982,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </details>
     </section>
 
-    <aside class="ts-sidebar">
-      <h3>Top 3 Sites In 2026</h3>
-
-      <div class="ts-sidebar-row">
-        <div class="ts-sidebar-head">
-          <span class="ts-sidebar-brand">ourdream<span class="ts-brand-tld">.ai</span></span>
-          <span class="ts-sidebar-score">9.9 <span class="ts-sidebar-star">★</span></span>
-        </div>
-        <button class="ts-sidebar-cta" data-cta="ourdream-sidebar">Visit Site</button>
-      </div>
-
-      <div class="ts-sidebar-row">
-        <div class="ts-sidebar-head">
-          <span class="ts-sidebar-brand" style="font-family:Georgia,serif">candy<span class="ts-brand-tld" style="color:#f472b6">.ai</span></span>
-          <span class="ts-sidebar-score">9.4 <span class="ts-sidebar-star">★</span></span>
-        </div>
-        <button class="ts-sidebar-cta" data-cta="candy-sidebar">Visit Site</button>
-      </div>
-
-      <div class="ts-sidebar-row">
-        <div class="ts-sidebar-head">
-          <span class="ts-sidebar-brand"><span aria-hidden="true" style="color:#a855f7">👁️</span> Joi <span class="ts-brand-tld" style="color:#a855f7">AI</span></span>
-          <span class="ts-sidebar-score">8.7 <span class="ts-sidebar-star">★</span></span>
-        </div>
-        <button class="ts-sidebar-cta" data-cta="joi-sidebar">Visit Site</button>
-      </div>
-    </aside>
   </div>
 </div>
 
@@ -763,13 +1012,13 @@ const BRAND_LABELS = {
   'ourdream':         'ourdream',
   'ourdream-top3':    'ourdream',
   'ourdream-offer':   'ourdream',
-  'ourdream-sidebar': 'ourdream',
+  'ourdream-banner':  'ourdream',
   'candy':            'candy',
   'candy-top3':       'candy',
-  'candy-sidebar':    'candy',
   'joi':              'Joi AI',
   'joi-top3':         'Joi AI',
-  'joi-sidebar':      'Joi AI',
+  'lovescape':        'Lovescape',
+  'girlfriendgpt':    'GirlfriendGPT',
 };
 
 // ══════════════════════════════════════════════
