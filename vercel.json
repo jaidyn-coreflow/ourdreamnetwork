@@ -8,6 +8,7 @@
     { "source": "/top-sites", "destination": "/top-sites.html" },
     { "source": "/top-gay-ai-sites", "destination": "/top-gay-ai-sites.html" },
     { "source": "/top-ai-bf-sites", "destination": "/top-ai-bf-sites.html" },
-    { "source": "/candy", "destination": "/candy.html" }
+    { "source": "/candy", "destination": "/candy.html" },
+    { "source": "/login", "destination": "/login.html" }
   ]
 }
