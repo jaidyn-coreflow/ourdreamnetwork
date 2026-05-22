@@ -632,6 +632,9 @@ body {
 /* ── Mobile-only top-of-page disclosure bar ─── */
 .ts-disclosure-bar { display: none; }
 
+/* ── Hamburger toggle (mobile only) ─── */
+.ts-nav-toggle { display: none; }
+
 /* ── Mobile: hero compaction + drop top-3 pill ─── */
 @media (max-width: 768px) {
   .ts-disclosure-bar {
@@ -649,6 +652,46 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  /* ── Hamburger menu on mobile ─── */
+  .ts-header { position: relative; }
+  .ts-nav-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px; height: 40px;
+    padding: 0;
+    background: none; border: none;
+    cursor: pointer;
+    align-items: center;
+  }
+  .ts-nav-toggle span {
+    display: block;
+    width: 22px; height: 2px;
+    background: #1a0e15;
+    border-radius: 2px;
+    transition: transform 0.2s, opacity 0.2s;
+  }
+  .ts-nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .ts-nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .ts-nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .ts-nav {
+    display: none;
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    flex-direction: column;
+    gap: 0;
+    background: #fff;
+    border-bottom: 1px solid rgba(241,123,182,0.14);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    padding: 8px 24px 14px;
+    z-index: 5;
+  }
+  .ts-nav.is-open { display: flex; }
+  .ts-nav a { padding: 10px 0; border-bottom: 1px solid rgba(241,123,182,0.10); }
+  .ts-nav a:last-child { border-bottom: none; }
 
   .ts-hero { padding: 28px 20px 20px; }
   .ts-hero h1 { font-size: 28px; white-space: nowrap; margin: 0 0 12px; }
@@ -747,8 +790,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <a href="/" class="ts-logo" aria-label="ourdream network">
     <img src="/ourdreamnetworklogo-dark.svg" alt="" aria-hidden="true" />
   </a>
-  <nav class="ts-nav">
-    <a href="#top3">Top 5</a>
+  <button class="ts-nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="ts-nav">
+    <span></span><span></span><span></span>
+  </button>
+  <nav class="ts-nav" id="ts-nav">
+    <a href="#reviews">Top 5</a>
     <a href="#reviews">Reviews</a>
   </nav>
 </header>
@@ -1139,6 +1185,30 @@ document.querySelectorAll('[data-cta]').forEach((btn) => {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeEmailGate();
 });
+
+// ══════════════════════════════════════════════
+//  MOBILE NAV TOGGLE
+// ══════════════════════════════════════════════
+
+(function () {
+  const toggle = document.querySelector('.ts-nav-toggle');
+  const nav = document.querySelector('.ts-nav');
+  if (!toggle || !nav) return;
+
+  const setOpen = (open) => {
+    nav.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  };
+
+  toggle.addEventListener('click', () => {
+    setOpen(!nav.classList.contains('is-open'));
+  });
+
+  nav.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') setOpen(false);
+  });
+})();
 
 // ══════════════════════════════════════════════
 //  EMAIL GATE
