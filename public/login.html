@@ -8,6 +8,7 @@
 <meta name="description" content="Log in to ourdream and claim 50 bonus dreamcoins.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+<link rel="preconnect" href="https://vid.ourdream.ai">
 <link rel="dns-prefetch" href="https://clk.ourdreamnetwork.com">
 
 <!-- Google Tag Manager (deferred to window load; events queued pre-load) -->
@@ -38,25 +39,26 @@ body {
   padding: 24px 16px;
 }
 
-/* Ambient pink-radial glow (matches index.html) */
-.lp-ambient { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-.lp-ambient::before {
-  content: ''; position: absolute; top: -20%; left: -10%; width: 60%; height: 60%;
-  background: radial-gradient(ellipse, rgba(219,39,119,0.10) 0%, transparent 70%);
-  animation: lp-drift 20s ease-in-out infinite;
+/* Background video — fills viewport, sits under card */
+.lp-bg-video {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
 }
-.lp-ambient::after {
-  content: ''; position: absolute; bottom: -20%; right: -10%; width: 50%; height: 50%;
-  background: radial-gradient(ellipse, rgba(219,39,119,0.08) 0%, transparent 70%);
-  animation: lp-drift 25s ease-in-out infinite reverse;
+/* Dark scrim above the video for visual consistency with the card */
+.lp-bg-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: rgba(0,0,0,0.35);
+  pointer-events: none;
 }
-@keyframes lp-drift {
-  0%, 100% { transform: translate(0,0); }
-  33% { transform: translate(5%,-3%); }
-  66% { transform: translate(-3%,5%); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .lp-ambient::before, .lp-ambient::after { animation: none; }
+@media (prefers-reduced-motion: reduce), (prefers-reduced-data: reduce) {
+  .lp-bg-video { display: none; }
 }
 
 .lp-card {
@@ -140,7 +142,10 @@ body {
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5VRS8QPJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-<div class="lp-ambient" aria-hidden="true"></div>
+<video class="lp-bg-video" autoplay muted loop playsinline preload="auto" disablepictureinpicture aria-hidden="true">
+  <source src="https://vid.ourdream.ai/heartcloudsmall7.webm" type="video/webm">
+</video>
+<div class="lp-bg-scrim" aria-hidden="true"></div>
 
 <main class="lp-card">
   <img class="lp-logo" src="/ourdreamnetworklogo.svg" alt="ourdreamnetwork">
