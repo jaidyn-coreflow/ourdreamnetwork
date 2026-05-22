@@ -628,6 +628,14 @@ body {
   display: inline-flex; align-items: center; gap: 4px;
 }
 .ts-brand-gfgpt::before { content: '💧'; font-size: 16px; }
+
+/* ── Mobile: hero compaction + drop top-3 pill ─── */
+@media (max-width: 768px) {
+  .ts-hero { padding: 28px 20px 20px; }
+  .ts-hero-sub { display: none; }
+  .ts-top3 { display: none; }
+  .ts-meta { margin-top: 0; }
+}
 </style>
 </head>
 <body>
