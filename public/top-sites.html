@@ -654,7 +654,8 @@ body {
   }
 
   /* ── Hamburger menu on mobile ─── */
-  .ts-header { position: relative; }
+  .ts-header { position: relative; padding: 10px 16px; }
+  .ts-logo { width: 170px; }
   .ts-nav-toggle {
     display: flex;
     flex-direction: column;
@@ -1208,6 +1209,17 @@ document.addEventListener('keydown', (e) => {
   nav.addEventListener('click', (e) => {
     if (e.target.tagName === 'A') setOpen(false);
   });
+})();
+
+// ══════════════════════════════════════════════
+//  DYNAMIC "Updated for <month> <year>"
+// ══════════════════════════════════════════════
+
+(function () {
+  const el = document.querySelector('.ts-meta-updated');
+  if (!el) return;
+  const stamp = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(new Date());
+  el.textContent = `Updated for ${stamp}`;
 })();
 
 // ══════════════════════════════════════════════
