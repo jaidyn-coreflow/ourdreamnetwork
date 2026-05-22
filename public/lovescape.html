@@ -1,0 +1,1293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Escape From Lovescape | ourdream</title>
+<meta name="description" content="See why so many users are switching from Lovescape to ourdream. Compare features, ratings, and creative freedom side-by-side.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://static.ourdream.ai" crossorigin>
+<link rel="preconnect" href="https://ouraidream.com" crossorigin>
+<link rel="preload" as="image" href="https://static.ourdream.ai/blog-assets/frame-1028949106.webp" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,800;1,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5VRS8QPJ');</script>
+<!-- End Google Tag Manager -->
+
+<!--
+  ────────────────────────────────────────────────────────────────
+  IMAGE SWAP TARGETS — replace these data-img placeholders with
+  your real URLs (these are clearly labelled with data-img="...").
+  ────────────────────────────────────────────────────────────────
+   data-img="hero-bg"      — full-bleed hero background (woman w/ lollipop)
+   data-img="usp-1"        — "Over 120k public characters"
+   data-img="usp-2"        — "Ultra-realistic images & videos"
+   data-img="usp-3"        — "Create 10 AI characters for free"
+   data-img="usp-4"        — "Unique personalities & natural conversations"
+   data-img="cta-bottom"   — bottom CTA image (woman on bed)
+-->
+
+<style>
+:root {
+  --bg:          #0d0d0d;
+  --surface-2:   #1c1c1c;
+  --border-soft: rgba(255,255,255,0.10);
+  --text:        #ffffff;
+  --text-dim:    #aaaaaa;
+  --pink:        #f17bb6;
+  --pink-deep:   #fc33b3;
+  --pink-mid:    #fd5fc2;
+  --pink-light:  #fe98db;
+  --red:         #b00c0c;
+  --grey:        #aaaaaa;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Display font helpers (Owners-style fallback) ────────── */
+.cdy-display-narrow {
+  font-family: 'Barlow Condensed', 'Bebas Neue', Impact, system-ui, sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+.cdy-display-wide {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* ── Container ───────────────────────────────────────────── */
+.cdy {
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* ── Header / Nav ────────────────────────────────────────── */
+.cdy-header {
+  width: 100%;
+  max-width: 1280px;
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cdy-logo { display: inline-block; width: 220px; }
+.cdy-logo img { width: 100%; height: auto; display: block; }
+
+/* ── Hero ────────────────────────────────────────────────── */
+.cdy-hero {
+  position: relative;
+  width: 100%;
+  height: 560px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 24px 64px;
+}
+.cdy-hero-bg {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  background-color: #2a1620;
+}
+.cdy-hero-inner {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  max-width: 900px;
+}
+.cdy-hero h1 {
+  font-family: 'Barlow Condensed', 'Bebas Neue', Impact, sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 88px;
+  line-height: 1;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.cdy-hero-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.15;
+  margin: 0;
+  max-width: 780px;
+}
+.cdy-hero-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.92);
+  margin: 4px 0 0;
+  max-width: 700px;
+}
+.cdy-hero .cdy-cta { margin-top: 20px; }
+
+/* ── Pink CTA Button (used throughout) ───────────────────── */
+.cdy-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 18px 26px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(0deg, var(--pink-deep) 0%, var(--pink-mid) 50%, var(--pink-light) 100%);
+  box-shadow: inset 0 -4px 0 rgba(0,0,0,0.25);
+  color: #fff;
+  font-family: 'Barlow Condensed', 'Bebas Neue', Impact, sans-serif;
+  font-weight: 800;
+  font-style: italic;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: transform 0.12s ease, filter 0.12s ease;
+  text-decoration: none;
+}
+.cdy-cta:hover { transform: translateY(-1px); filter: brightness(1.05); }
+.cdy-cta:active { transform: translateY(0); }
+.cdy-cta-lg { padding: 22px 32px; font-size: 20px; }
+.cdy-cta-icon {
+  width: 16px; height: 16px;
+  display: inline-block;
+}
+
+/* ── Hero email capture (Promptbox) ──────────────────────── */
+.cdy-email-form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 497px;
+  max-width: 800px;
+}
+.cdy-email-form-inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 11px;
+  background: rgba(36,36,36,0.9);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 32px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+.cdy-email-icon {
+  flex: 0 0 auto;
+  width: 40px; height: 40px;
+  border-radius: 9999px;
+  background: #353536;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.cdy-email-icon svg { width: 16px; height: 16px; }
+.cdy-email-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 40px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  padding: 0 4px;
+}
+.cdy-email-input::placeholder { color: #aaaaaa; }
+.cdy-email-submit {
+  flex: 0 0 auto;
+  width: 137px;
+  height: 40px;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 100px;
+  background: linear-gradient(0deg, #ff1cac 0%, #fd5fc2 50%, #ff79d1 100%);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
+  cursor: pointer;
+  transition: transform 0.12s ease, filter 0.12s ease;
+}
+.cdy-email-submit:hover { transform: translateY(-1px); filter: brightness(1.05); }
+.cdy-email-submit:active { transform: translateY(0); }
+.cdy-email-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; filter: none; }
+.cdy-email-error {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #ffb4b4;
+  background: rgba(176,12,12,0.25);
+  border: 1px solid rgba(176,12,12,0.5);
+  border-radius: 8px;
+  padding: 6px 12px;
+}
+
+/* ── Section: Why Choose ─────────────────────────────────── */
+.cdy-why {
+  width: 100%;
+  max-width: 1280px;
+  padding: 16px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.cdy-section-title {
+  font-family: 'Barlow Condensed', 'Bebas Neue', Impact, sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 52px;
+  line-height: 1;
+  margin: 0;
+  text-align: center;
+  color: var(--text);
+  letter-spacing: -0.005em;
+}
+.cdy-usps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  width: 100%;
+}
+.cdy-usp {
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  padding: 5px 5px 9px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.cdy-usp-img {
+  width: 100%;
+  height: 230px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #2a2a2a;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+.cdy-usp-text {
+  padding: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--text);
+}
+
+/* ── Pink Stats Banner ───────────────────────────────────── */
+.cdy-stats {
+  width: 100%;
+  background: var(--pink);
+  display: flex;
+  justify-content: center;
+  padding: 18px 16px;
+}
+.cdy-stats-inner {
+  display: flex;
+  gap: 60px;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 720px;
+  width: 100%;
+  color: #fff;
+}
+.cdy-stat { display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 180px; }
+.cdy-stat-num {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1.05;
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+.cdy-stat-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 13px;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+
+/* ── Compare Table ───────────────────────────────────────── */
+.cdy-compare {
+  width: 100%;
+  max-width: 1280px;
+  padding: 24px 40px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+.cdy-table {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 500px; /* 150 + 200 + 150 */
+  border-radius: 20px;
+  overflow: hidden;
+}
+.cdy-row { display: grid; grid-template-columns: 150px 200px 150px; }
+.cdy-cell {
+  background: var(--grey);
+  color: #000;
+  border-bottom: 1px solid #000;
+  min-height: 73px;
+  height: 73px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px;
+  text-align: center;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+.cdy-cell:first-child {
+  background: #ffffff;
+}
+.cdy-cell-mid { background: var(--pink); font-size: 16px; }
+
+/* Header row: side cells stay 71px, middle cell pops UP to 101px,
+   all three anchored to the bottom (which is the top of body rows). */
+.cdy-row-head { align-items: end; }
+.cdy-row-head .cdy-cell {
+  min-height: 71px;
+  height: 71px;
+  font-size: 16px;
+}
+.cdy-row-head .cdy-cell:first-child {
+  border-top-left-radius: 15px;
+}
+.cdy-row-head .cdy-cell:last-child {
+  border-top-right-radius: 15px;
+}
+.cdy-row-head .cdy-cell-mid {
+  min-height: 101px;
+  height: 101px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 35px 10px;
+}
+.cdy-table .cdy-row:last-child .cdy-cell:first-child { border-bottom-left-radius: 20px; }
+.cdy-table .cdy-row:last-child .cdy-cell:last-child { border-bottom-right-radius: 20px; }
+.cdy-table .cdy-row:last-child .cdy-cell { border-bottom: none; }
+
+.cdy-brand-wordmark {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-style: italic;
+  font-size: 32px;
+  line-height: 1;
+  color: #000;
+  letter-spacing: -0.01em;
+  text-transform: lowercase;
+}
+.cdy-brand-wordmark .cdy-brand-tld { color: #000; opacity: 0.55; }
+
+.cdy-icon-check {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: #16a34a;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: #fff;
+}
+.cdy-icon-check svg { width: 14px; height: 14px; }
+.cdy-icon-x {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--red);
+  color: #fff;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.cdy-icon-x svg { width: 9px; height: 9px; }
+
+.cdy-compare .cdy-cta { white-space: nowrap; }
+
+/* ── Ready to taste section ──────────────────────────────── */
+.cdy-ready {
+  width: 100%;
+  max-width: 1280px;
+  padding: 0 40px;
+}
+.cdy-ready-inner {
+  background: var(--surface-2);
+  border-radius: 20px;
+  padding: 32px;
+  display: grid;
+  grid-template-columns: 1fr 712px;
+  gap: 60px;
+  align-items: center;
+  min-height: 400px;
+}
+.cdy-ready-text { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+.cdy-ready-text h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 48px;
+  line-height: 1.02;
+  text-transform: uppercase;
+  margin: 0;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+.cdy-ready-text p {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-dim);
+  margin: 0;
+}
+.cdy-ready-img {
+  width: 100%;
+  height: 400px;
+  border-radius: 20px;
+  overflow: hidden;
+  object-fit: cover;
+  object-position: center;
+  background-color: #3a2230;
+  display: block;
+}
+
+/* ── FAQ ─────────────────────────────────────────────────── */
+.cdy-faq {
+  width: 800px;
+  max-width: 100%;
+  padding: 16px 0 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+.cdy-faq-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 48px;
+  text-transform: uppercase;
+  margin: 0;
+  text-align: center;
+  letter-spacing: -0.005em;
+}
+.cdy-faq-list { width: 100%; display: flex; flex-direction: column; gap: 2px; }
+.cdy-faq-item {
+  border-bottom: 1px solid var(--border-soft);
+  padding-top: 8px;
+}
+.cdy-faq-item > summary {
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px;
+  padding: 16px 0;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--text);
+}
+.cdy-faq-item > summary::-webkit-details-marker { display: none; }
+.cdy-faq-item > summary::after {
+  content: '';
+  width: 16px; height: 16px;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'><path d='M3.55 5.78 8 10.22l4.45-4.44.94.94L8 12.09 2.61 6.72z'/></svg>") no-repeat center / contain;
+  transition: transform 0.2s ease;
+  flex: 0 0 auto;
+}
+.cdy-faq-item[open] > summary::after { transform: rotate(180deg); }
+.cdy-faq-body {
+  padding: 0 0 18px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text-dim);
+}
+
+/* ── Footer ──────────────────────────────────────────────── */
+.cdy-footer {
+  width: 100%;
+  padding: 24px 40px 32px;
+  text-align: center;
+  border-top: 1px solid var(--border-soft);
+}
+.cdy-footer a {
+  color: var(--text-dim);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 0 14px;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+}
+.cdy-footer a:hover { color: var(--text); }
+
+.cdy-wordmark { display: block; width: 167px; height: 17px; }
+
+/* ── Offer modal (CTAs other than hero) ──────────────────── */
+.cdy-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 24px;
+}
+.cdy-modal[hidden] { display: none; }
+.cdy-modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  background: #1c1c1c;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 32px 28px 24px;
+  color: #fff;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  text-align: center;
+}
+.cdy-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px; height: 32px;
+  border: none;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  border-radius: 9999px;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+.cdy-modal-close:hover { background: rgba(255,255,255,0.18); }
+.cdy-modal-badge {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: linear-gradient(0deg, #fc33b3 0%, #fd5fc2 50%, #fe98db 100%);
+  padding: 6px 12px;
+  border-radius: 9999px;
+  margin-bottom: 12px;
+  color: #fff;
+}
+.cdy-modal-title {
+  font-family: 'Barlow Condensed', 'Bebas Neue', Impact, sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 36px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin: 0 0 6px;
+}
+.cdy-modal-title .cdy-modal-title-accent {
+  background: linear-gradient(0deg, #fc33b3 0%, #fd5fc2 50%, #fe98db 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.cdy-modal-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-dim);
+  margin: 0 0 20px;
+}
+.cdy-modal-form { display: flex; flex-direction: column; gap: 10px; }
+.cdy-modal-input {
+  width: 100%;
+  height: 48px;
+  background: rgba(36,36,36,0.9);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  padding: 0 16px;
+  outline: none;
+}
+.cdy-modal-input:focus { border-color: var(--pink-mid); }
+.cdy-modal-input::placeholder { color: #aaa; }
+.cdy-modal-submit {
+  width: 100%;
+  padding: 14px 18px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(0deg, #fc33b3 0%, #fd5fc2 50%, #fe98db 100%);
+  box-shadow: inset 0 -4px 0 rgba(0,0,0,0.25);
+  color: #fff;
+  font-family: 'Barlow Condensed', 'Bebas Neue', Impact, sans-serif;
+  font-weight: 800;
+  font-style: italic;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: transform 0.12s ease, filter 0.12s ease;
+}
+.cdy-modal-submit:hover { transform: translateY(-1px); filter: brightness(1.05); }
+.cdy-modal-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; filter: none; }
+.cdy-modal-error {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #ffb4b4;
+  text-align: left;
+}
+.cdy-modal-error[hidden] { display: none; }
+.cdy-modal-legal {
+  margin-top: 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: #777;
+  line-height: 1.4;
+}
+.cdy-modal-legal a { color: #aaa; }
+
+/* ── Responsive: mobile pass (≤ 767px) ───────────────────── */
+@media (max-width: 767px) {
+  /* Container */
+  .cdy { gap: 16px; }
+
+  /* Header */
+  .cdy-header { padding: 14px 16px; max-width: 100%; width: 100%; }
+  .cdy-logo { width: 160px; }
+
+  /* Hero */
+  .cdy-hero {
+    height: auto;
+    min-height: 0;
+    padding: 64px 16px 24px;
+  }
+  /* Keep the girl on the right side of the bg image in frame on narrow viewports */
+  .cdy-hero-bg { object-position: 78% top; }
+  .cdy-hero-inner { gap: 10px; max-width: 100%; }
+  /* Longer H1 ("Escape From Lovescape To A New Era Of AI Roleplay") wraps to ~2 lines on mobile. */
+  .cdy-hero h1 { font-size: clamp(24px, 8vw, 36px); line-height: 1.05; }
+  .cdy-hero-sub { font-size: 17px; max-width: 100%; line-height: 1.2; }
+  .cdy-hero-desc { font-size: 14px; max-width: 100%; line-height: 1.45; }
+
+  /* Hero email form */
+  .cdy-email-form { width: 100%; max-width: 100%; margin-top: 12px; }
+  .cdy-email-form-inner { padding: 6px; gap: 6px; border-radius: 28px; }
+  .cdy-email-icon { width: 36px; height: 36px; }
+  .cdy-email-input { font-size: 14px; height: 36px; padding: 0 2px; }
+  .cdy-email-submit {
+    width: auto;
+    min-width: 86px;
+    padding: 10px 14px;
+    font-size: 13px;
+    height: 36px;
+  }
+
+  /* Section titles */
+  .cdy-section-title { font-size: 34px; line-height: 1; }
+
+  /* Why Choose */
+  .cdy-why { padding: 0 16px; gap: 14px; }
+  .cdy-usps { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .cdy-usp-img { height: 150px; }
+  .cdy-usp-text { font-size: 15px; line-height: 1.2; padding: 6px 4px 4px; }
+
+  /* Stats banner */
+  .cdy-stats { padding: 14px 12px; }
+  .cdy-stats-inner {
+    gap: 10px;
+    max-width: 100%;
+    align-items: flex-start;
+  }
+  .cdy-stat { max-width: 32%; min-width: 0; flex: 1 1 0; }
+  .cdy-stat-num { font-size: 24px; margin-bottom: 4px; }
+  .cdy-stat-label { font-size: 10px; }
+
+  /* Compare section */
+  .cdy-compare { padding: 16px 12px 4px; gap: 18px; }
+  .cdy-table {
+    width: 100%;
+    max-width: 360px;
+    border-radius: 16px;
+  }
+  .cdy-row { grid-template-columns: 1fr 1.3fr 1fr; }
+  .cdy-cell {
+    min-height: 56px;
+    height: 56px;
+    font-size: 11px;
+    padding: 6px 6px;
+    letter-spacing: 0.01em;
+  }
+  .cdy-cell-mid { font-size: 12px; }
+  .cdy-row-head .cdy-cell {
+    min-height: 56px;
+    height: 56px;
+    font-size: 12px;
+  }
+  .cdy-row-head .cdy-cell:first-child { border-top-left-radius: 12px; }
+  .cdy-row-head .cdy-cell:last-child { border-top-right-radius: 12px; }
+  .cdy-row-head .cdy-cell-mid {
+    min-height: 80px;
+    height: 80px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    padding: 26px 6px;
+  }
+  .cdy-table .cdy-row:last-child .cdy-cell:first-child { border-bottom-left-radius: 12px; }
+  .cdy-table .cdy-row:last-child .cdy-cell:last-child { border-bottom-right-radius: 12px; }
+  .cdy-wordmark { width: 96px; height: 10px; }
+  .cdy-icon-check { width: 18px; height: 18px; }
+  .cdy-icon-check svg { width: 12px; height: 12px; }
+  .cdy-icon-x { width: 16px; height: 16px; }
+  .cdy-icon-x svg { width: 8px; height: 8px; }
+  .cdy-cta-lg { padding: 16px 22px; font-size: 15px; }
+
+  /* Ready section */
+  .cdy-ready { padding: 0 16px; }
+  .cdy-ready-inner {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 20px;
+    min-height: 0;
+  }
+  .cdy-ready-text h2 { font-size: 28px; line-height: 1.05; }
+  .cdy-ready-text p { font-size: 14px; }
+  .cdy-ready-img { height: 240px; }
+
+  /* FAQ */
+  .cdy-faq { width: 100%; padding: 4px 16px 32px; gap: 24px; }
+  .cdy-faq-title { font-size: 34px; }
+  .cdy-faq-item > summary { font-size: 15px; padding: 14px 0; }
+
+  /* Footer */
+  .cdy-footer { padding: 18px 16px 28px; }
+  .cdy-footer a { margin: 0 8px; font-size: 10px; }
+
+  /* Modal */
+  .cdy-modal { padding: 16px; }
+  .cdy-modal-card { padding: 28px 20px 20px; border-radius: 16px; }
+  .cdy-modal-title { font-size: 28px; }
+  .cdy-modal-sub { font-size: 14px; margin-bottom: 16px; }
+  .cdy-modal-input { height: 44px; font-size: 15px; }
+  .cdy-modal-submit { font-size: 16px; padding: 12px 16px; }
+}
+</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5VRS8QPJ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div class="cdy">
+
+  <!-- ── Hero ─────────────────────────────────────────────── -->
+  <section class="cdy-hero">
+    <img class="cdy-hero-bg" data-img="hero-bg"
+         src="https://static.ourdream.ai/blog-assets/frame-1028949106.webp"
+         alt="" aria-hidden="true"
+         width="1920" height="800"
+         fetchpriority="high" decoding="async">
+
+    <header class="cdy-header" style="position:absolute; top:0; left:50%; transform:translateX(-50%); z-index:2;">
+      <a href="/" class="cdy-logo" aria-label="ourdream network">
+        <img src="/ourdreamnetworklogo.svg" alt="ourdream network" />
+      </a>
+      <span></span>
+    </header>
+
+    <div class="cdy-hero-inner">
+      <h1>Escape From Lovescape To A New Era Of AI Roleplay</h1>
+      <p class="cdy-hero-sub">See why so many users are switching to ourdream</p>
+      <p class="cdy-hero-desc">Don't settle for boring bots. Switch over from Lovescape and get 1000 bonus dreamcoins.</p>
+      <form class="cdy-email-form" id="lovescape-email-form" novalidate>
+        <div class="cdy-email-form-inner">
+          <span class="cdy-email-icon" aria-hidden="true">
+            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+              <path fill="currentColor" d="M8 0l1.4 4.2L13.6 5l-3.4 2.6L11.2 12 8 9.6 4.8 12l1-4.4L2.4 5l4.2-.8z"/>
+              <path fill="currentColor" d="M13 10l.7 1.9L15.6 12l-1.9.7L13 14.6l-.7-1.9L10.4 12l1.9-.1z" opacity="0.85"/>
+            </svg>
+          </span>
+          <input
+            id="lovescape-email-input"
+            class="cdy-email-input"
+            type="email"
+            name="email"
+            autocomplete="email"
+            placeholder="Enter your email"
+            required
+            aria-label="Email address"
+          >
+          <button type="submit" class="cdy-email-submit" id="lovescape-email-submit">Submit</button>
+        </div>
+        <div class="cdy-email-error" id="lovescape-email-error" hidden></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ── Why Choose ───────────────────────────────────────── -->
+  <section class="cdy-why">
+    <h2 class="cdy-section-title">Why Choose ourdream?</h2>
+    <div class="cdy-usps">
+      <div class="cdy-usp">
+        <img class="cdy-usp-img" data-img="usp-1" src="https://static.ourdream.ai/blog-assets/rectangle-1.webp" alt="" width="287" height="230" loading="lazy" decoding="async">
+        <div class="cdy-usp-text">Over 120k public characters to choose from</div>
+      </div>
+      <div class="cdy-usp">
+        <img class="cdy-usp-img" data-img="usp-2" src="https://static.ourdream.ai/blog-assets/rectangle-2.webp" alt="" width="287" height="230" loading="lazy" decoding="async">
+        <div class="cdy-usp-text">Ultra-realistic images &amp; videos</div>
+      </div>
+      <div class="cdy-usp">
+        <img class="cdy-usp-img" data-img="usp-3" src="https://static.ourdream.ai/blog-assets/rectangle-3.webp" alt="" width="287" height="230" loading="lazy" decoding="async">
+        <div class="cdy-usp-text">Create 10 AI characters for free</div>
+      </div>
+      <div class="cdy-usp">
+        <img class="cdy-usp-img" data-img="usp-4" src="https://static.ourdream.ai/blog-assets/rectangle-4.webp" alt="" width="287" height="230" loading="lazy" decoding="async">
+        <div class="cdy-usp-text">Unique personalities &amp; natural conversations</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Stats Banner ─────────────────────────────────────── -->
+  <section class="cdy-stats">
+    <div class="cdy-stats-inner">
+      <div class="cdy-stat">
+        <div class="cdy-stat-num">92%</div>
+        <div class="cdy-stat-label">of people who tried both platforms say ourdream is way better*</div>
+      </div>
+      <div class="cdy-stat">
+        <div class="cdy-stat-num">6.3x</div>
+        <div class="cdy-stat-label">more public characters to choose from. All with varying personalities and styles</div>
+      </div>
+      <div class="cdy-stat">
+        <div class="cdy-stat-num">Top 25</div>
+        <div class="cdy-stat-label">biggest Gen AI web product in the world**</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Compare Table ────────────────────────────────────── -->
+  <section class="cdy-compare">
+    <h2 class="cdy-section-title">How We Compare</h2>
+
+    <div class="cdy-table">
+      <!-- Header row -->
+      <div class="cdy-row cdy-row-head">
+        <div class="cdy-cell">Features</div>
+        <div class="cdy-cell cdy-cell-mid">
+          <img class="cdy-wordmark" src="https://static.ourdream.ai/blog-assets/ourdream-ai.webp" alt="ourdream.ai" width="167" height="17" loading="lazy" decoding="async" data-img="wordmark">
+        </div>
+        <div class="cdy-cell">Lovescape</div>
+      </div>
+
+      <!-- Ratings -->
+      <div class="cdy-row">
+        <div class="cdy-cell">Ratings</div>
+        <div class="cdy-cell cdy-cell-mid">4.0+ on Trustpilot</div>
+        <div class="cdy-cell">3.6 on Trustpilot</div>
+      </div>
+
+      <!-- 4k Video Resolution -->
+      <div class="cdy-row">
+        <div class="cdy-cell">4k Video Resolution</div>
+        <div class="cdy-cell cdy-cell-mid">
+          <span class="cdy-icon-check" aria-label="yes">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M9 16.2l-3.5-3.5-1.4 1.4L9 19 20 8l-1.4-1.4z"/></svg>
+          </span>
+        </div>
+        <div class="cdy-cell">
+          <span class="cdy-icon-x" aria-label="no">
+            <svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M13 1.7L12.3 1 7 6.3 1.7 1 1 1.7 6.3 7 1 12.3l.7.7L7 7.7 12.3 13l.7-.7L7.7 7z"/></svg>
+          </span>
+        </div>
+      </div>
+
+      <!-- Video with audio & sound FX -->
+      <div class="cdy-row">
+        <div class="cdy-cell">Video with audio &amp; sound FX</div>
+        <div class="cdy-cell cdy-cell-mid">
+          <span class="cdy-icon-check"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M9 16.2l-3.5-3.5-1.4 1.4L9 19 20 8l-1.4-1.4z"/></svg></span>
+        </div>
+        <div class="cdy-cell">
+          <span class="cdy-icon-x"><svg viewBox="0 0 14 14"><path fill="currentColor" d="M13 1.7L12.3 1 7 6.3 1.7 1 1 1.7 6.3 7 1 12.3l.7.7L7 7.7 12.3 13l.7-.7L7.7 7z"/></svg></span>
+        </div>
+      </div>
+
+      <!-- Video cutscenes -->
+      <div class="cdy-row">
+        <div class="cdy-cell">Video cutscenes</div>
+        <div class="cdy-cell cdy-cell-mid">
+          <span class="cdy-icon-check"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M9 16.2l-3.5-3.5-1.4 1.4L9 19 20 8l-1.4-1.4z"/></svg></span>
+        </div>
+        <div class="cdy-cell">
+          <span class="cdy-icon-x"><svg viewBox="0 0 14 14"><path fill="currentColor" d="M13 1.7L12.3 1 7 6.3 1.7 1 1 1.7 6.3 7 1 12.3l.7.7L7 7.7 12.3 13l.7-.7L7.7 7z"/></svg></span>
+        </div>
+      </div>
+
+      <!-- Group Chats -->
+      <div class="cdy-row">
+        <div class="cdy-cell">Group Chats</div>
+        <div class="cdy-cell cdy-cell-mid">
+          <span class="cdy-icon-check"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M9 16.2l-3.5-3.5-1.4 1.4L9 19 20 8l-1.4-1.4z"/></svg></span>
+        </div>
+        <div class="cdy-cell">
+          <span class="cdy-icon-x"><svg viewBox="0 0 14 14"><path fill="currentColor" d="M13 1.7L12.3 1 7 6.3 1.7 1 1 1.7 6.3 7 1 12.3l.7.7L7 7.7 12.3 13l.7-.7L7.7 7z"/></svg></span>
+        </div>
+      </div>
+
+      <!-- Romance Fantasy -->
+      <div class="cdy-row">
+        <div class="cdy-cell">Romance Fantasy</div>
+        <div class="cdy-cell cdy-cell-mid">
+          <span class="cdy-icon-check"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M9 16.2l-3.5-3.5-1.4 1.4L9 19 20 8l-1.4-1.4z"/></svg></span>
+        </div>
+        <div class="cdy-cell">
+          <span class="cdy-icon-check"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M9 16.2l-3.5-3.5-1.4 1.4L9 19 20 8l-1.4-1.4z"/></svg></span>
+        </div>
+      </div>
+
+      <!-- Any fantasy -->
+      <div class="cdy-row">
+        <div class="cdy-cell">Any fantasy</div>
+        <div class="cdy-cell cdy-cell-mid">
+          <span class="cdy-icon-check"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M9 16.2l-3.5-3.5-1.4 1.4L9 19 20 8l-1.4-1.4z"/></svg></span>
+        </div>
+        <div class="cdy-cell">
+          <span class="cdy-icon-x"><svg viewBox="0 0 14 14"><path fill="currentColor" d="M13 1.7L12.3 1 7 6.3 1.7 1 1 1.7 6.3 7 1 12.3l.7.7L7 7.7 12.3 13l.7-.7L7.7 7z"/></svg></span>
+        </div>
+      </div>
+
+      <!-- Supportive Discord community -->
+      <div class="cdy-row">
+        <div class="cdy-cell">Supportive Discord community</div>
+        <div class="cdy-cell cdy-cell-mid">
+          <span class="cdy-icon-check"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M9 16.2l-3.5-3.5-1.4 1.4L9 19 20 8l-1.4-1.4z"/></svg></span>
+        </div>
+        <div class="cdy-cell">
+          <span class="cdy-icon-x"><svg viewBox="0 0 14 14"><path fill="currentColor" d="M13 1.7L12.3 1 7 6.3 1.7 1 1 1.7 6.3 7 1 12.3l.7.7L7 7.7 12.3 13l.7-.7L7.7 7z"/></svg></span>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" class="cdy-cta cdy-cta-lg" data-cta="compare">Start Creating Your Own AI</button>
+  </section>
+
+  <!-- ── Ready to taste ───────────────────────────────────── -->
+  <section class="cdy-ready">
+    <div class="cdy-ready-inner">
+      <div class="cdy-ready-text">
+        <h2>Ready to escape the Lovescape nightmare?</h2>
+        <p>If you're ready to explore what a real AI platform feels like with the top-tier image &amp; video generation models, switch to ourdream.</p>
+        <p>Sign up and you can create 10 images for free. No payment details needed.</p>
+        <button type="button" class="cdy-cta" data-cta="ready">Start Creating your own AI</button>
+      </div>
+      <img class="cdy-ready-img" data-img="cta-bottom" src="https://static.ourdream.ai/blog-assets/hybrid-workflow.webp" alt="" width="712" height="400" loading="lazy" decoding="async">
+    </div>
+  </section>
+
+  <!-- ── FAQ ──────────────────────────────────────────────── -->
+  <section class="cdy-faq">
+    <h2 class="cdy-faq-title">Frequently Asked Questions</h2>
+    <div class="cdy-faq-list">
+      <details class="cdy-faq-item">
+        <summary>What makes ourdream ai different from Lovescape?</summary>
+        <div class="cdy-faq-body">ourdream gives you total creative control — design your own characters from scratch, generate ultra-realistic video with audio, and chat without the guardrails that other platforms put in front of you.</div>
+      </details>
+      <details class="cdy-faq-item">
+        <summary>Can I use ourdream ai for free without signing up?</summary>
+        <div class="cdy-faq-body">You can browse the public character library without signing up. To create your own AI and start chatting, sign up for a free account — you get 10 free character generations, no payment required.</div>
+      </details>
+      <details class="cdy-faq-item">
+        <summary>How long can you make videos on ourdream?</summary>
+        <div class="cdy-faq-body">Videos can be generated up to several minutes long, with audio, sound effects, and 4K resolution on supported tiers.</div>
+      </details>
+      <details class="cdy-faq-item">
+        <summary>How do I get support on using ourdream?</summary>
+        <div class="cdy-faq-body">Unlike Lovescape, we have a very active Discord community with over 53,000 members. There's a lot of mods ready to help you with your creation and people who share their generations and prompts.</div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ── Special Offer Modal ─────────────────────────────── -->
+  <div class="cdy-modal" id="cdy-modal" role="dialog" aria-modal="true" aria-labelledby="cdy-modal-title" hidden>
+    <div class="cdy-modal-card">
+      <button type="button" class="cdy-modal-close" id="cdy-modal-close" aria-label="Close">×</button>
+      <span class="cdy-modal-badge">Special Offer</span>
+      <h2 id="cdy-modal-title" class="cdy-modal-title">
+        <span class="cdy-modal-title-accent">75% Off</span> ourdream
+      </h2>
+      <p class="cdy-modal-sub">Enter your email to claim your discount.</p>
+      <form class="cdy-modal-form" id="cdy-modal-form" novalidate>
+        <input
+          type="email"
+          id="cdy-modal-email"
+          class="cdy-modal-input"
+          placeholder="you@example.com"
+          autocomplete="email"
+          required>
+        <div class="cdy-modal-error" id="cdy-modal-error" hidden></div>
+        <button type="submit" class="cdy-modal-submit" id="cdy-modal-submit">Claim 75% Off →</button>
+      </form>
+      <div class="cdy-modal-legal">
+        By continuing you agree to our <a href="/terms.html">Terms</a> and <a href="/privacy.html">Privacy</a>.
+      </div>
+    </div>
+  </div>
+
+  <footer class="cdy-footer">
+    <a href="/terms.html">Terms</a>
+    <a href="/privacy.html">Privacy</a>
+  </footer>
+</div>
+
+<script>
+'use strict';
+
+// CTAs point to "/" (homepage quiz). Preserve inbound query params
+// (utm_*, gclid, fbclid, etc.) so attribution flows into the quiz.
+const PAGE_ID = 'lovescape';
+const search = location.search || '';
+const SAVE_EMAIL_TIMEOUT_MS = 1500;
+
+// Mirrors the quiz redirect (public/index.html → redirectToRedtrack), minus the
+// sub12–sub18 quiz-answer pre-fill since this page has no quiz state.
+//   PAID  (rtkclickid-store cookie present): clk.ourdreamnetwork.com/click/1
+//     with sub11=googlecpc + sub19=_gl + clickid + inbound params.
+//   ORGANIC (no cookie): direct ourdream.ai/create with ref=googlecpc + inbound
+//     params, decorated with GTM's _gl linker.
+const REDTRACK_BASE_B64 = 'aHR0cHM6Ly9jbGsub3VyZHJlYW1uZXR3b3JrLmNvbS9jbGljay8x'; // clk.ourdreamnetwork.com/click/1
+
+async function buildRedirectUrl() {
+  const cookieMatch = document.cookie.match(/(?:^|;\s*)rtkclickid-store=([^;]+)/);
+  const params = new URLSearchParams();
+  // Inbound URL params (utm_*, gclid, fbclid, etc.) ride along either path.
+  new URLSearchParams(location.search).forEach((v, k) => {
+    if (!params.has(k)) params.set(k, v);
+  });
+
+  let url;
+  if (cookieMatch) {
+    const gl = await getGlValue();
+    params.set('sub11', 'googlecpc');
+    if (gl) params.set('sub19', gl);
+    params.set('clickid', decodeURIComponent(cookieMatch[1]));
+    url = atob(REDTRACK_BASE_B64) + '?' + params.toString();
+  } else {
+    params.set('ref', 'googlecpc'); // override any inbound ref; keep paid attribution consistent
+    url = 'https://ourdream.ai/create?' + params.toString();
+  }
+
+  // Paid path already carries _gl via sub19; only organic needs GTM linker decoration.
+  return cookieMatch ? url : await getDecoratedUrl(url);
+}
+
+function getDecoratedUrl(baseUrl) {
+  return new Promise((resolve) => {
+    const a = document.createElement('a');
+    a.href = baseUrl;
+    a.style.cssText = 'position:fixed;left:-9999px;';
+    document.body.appendChild(a);
+    a.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    setTimeout(() => {
+      const decoratedUrl = a.href;
+      document.body.removeChild(a);
+      resolve(decoratedUrl);
+    }, 100);
+  });
+}
+
+// Decorate a dummy ourdream.ai link, then extract just the _gl payload — used
+// as sub19 on the paid path so the value survives RedTrack's /click/1 hop.
+function getGlValue() {
+  return new Promise((resolve) => {
+    const a = document.createElement('a');
+    a.href = 'https://ourdream.ai/';
+    a.style.cssText = 'position:fixed;left:-9999px;';
+    document.body.appendChild(a);
+    a.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    setTimeout(() => {
+      const match = a.href.match(/[?&]_gl=([^&]+)/);
+      document.body.removeChild(a);
+      resolve(match ? decodeURIComponent(match[1]) : '');
+    }, 100);
+  });
+}
+
+window.dataLayer = window.dataLayer || [];
+
+function isValidEmail(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((value || '').trim());
+}
+function saveEmail(email, source) {
+  return fetch('/api/save-email', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email: email,
+      mode: 'lovescape',
+      answers: [source || PAGE_ID],
+      marketingConsent: false,
+    }),
+  });
+}
+function withTimeout(promise, ms) {
+  return new Promise((resolve) => {
+    let done = false;
+    const timer = setTimeout(() => { if (!done) { done = true; resolve(); } }, ms);
+    promise.then(
+      () => { if (!done) { done = true; clearTimeout(timer); resolve(); } },
+      () => { if (!done) { done = true; clearTimeout(timer); resolve(); } }
+    );
+  });
+}
+
+// ── Special-offer modal (compare + ready CTAs) ─────────────
+(function initOfferModal() {
+  const modal = document.getElementById('cdy-modal');
+  const closeBtn = document.getElementById('cdy-modal-close');
+  const form = document.getElementById('cdy-modal-form');
+  const input = document.getElementById('cdy-modal-email');
+  const submitBtn = document.getElementById('cdy-modal-submit');
+  const errorEl = document.getElementById('cdy-modal-error');
+  let currentSource = null;
+  let lastFocus = null;
+
+  function showError(msg) { errorEl.textContent = msg; errorEl.hidden = false; }
+  function clearError() { errorEl.textContent = ''; errorEl.hidden = true; }
+
+  function open(source, trigger) {
+    currentSource = source;
+    lastFocus = trigger || null;
+    clearError();
+    input.value = '';
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Claim 75% Off →';
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => input.focus(), 50);
+    window.dataLayer.push({
+      event: 'lovescape_cta_clicked',
+      page: PAGE_ID,
+      source: source,
+    });
+  }
+  function close() {
+    modal.hidden = true;
+    document.body.style.overflow = '';
+    if (lastFocus) lastFocus.focus();
+  }
+
+  document.querySelectorAll('[data-cta="compare"], [data-cta="ready"]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      open(btn.dataset.cta, btn);
+    });
+  });
+  closeBtn.addEventListener('click', close);
+  modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.hidden) close();
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = (input.value || '').trim();
+    if (!isValidEmail(email)) {
+      showError('Please enter a valid email address.');
+      input.focus();
+      return;
+    }
+    clearError();
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Unlocking…';
+    window.dataLayer.push({
+      event: 'lovescape_email_submitted',
+      page: PAGE_ID,
+      source: currentSource || 'modal',
+    });
+    withTimeout(
+      saveEmail(email, currentSource).catch((err) => console.warn('[save-email] failed:', err)),
+      SAVE_EMAIL_TIMEOUT_MS
+    ).then(async () => {
+      window.location.href = await buildRedirectUrl();
+    });
+  });
+})();
+
+(function initEmailForm() {
+  const form = document.getElementById('lovescape-email-form');
+  if (!form) return;
+  const input = document.getElementById('lovescape-email-input');
+  const submitBtn = document.getElementById('lovescape-email-submit');
+  const errorEl = document.getElementById('lovescape-email-error');
+
+  function showError(message) { errorEl.textContent = message; errorEl.hidden = false; }
+  function clearError() { errorEl.textContent = ''; errorEl.hidden = true; }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = (input.value || '').trim();
+    if (!isValidEmail(email)) {
+      showError('Please enter a valid email address.');
+      input.focus();
+      return;
+    }
+    clearError();
+    submitBtn.disabled = true;
+
+    window.dataLayer.push({
+      event: 'lovescape_email_submitted',
+      page: PAGE_ID,
+      source: 'hero',
+    });
+
+    withTimeout(
+      saveEmail(email, 'hero').catch((err) => console.warn('[save-email] failed:', err)),
+      SAVE_EMAIL_TIMEOUT_MS
+    ).then(async () => {
+      window.location.href = await buildRedirectUrl();
+    });
+  });
+})();
+</script>
+</body>
+</html>

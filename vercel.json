@@ -1,15 +1,13 @@
 {
-  "buildCommand": "",
-  "installCommand": "npm install",
   "framework": null,
   "rewrites": [
-    { "source": "/api/save-email", "destination": "/api/save-email" },
     { "source": "/male-quiz", "destination": "/male.html" },
     { "source": "/top-sites", "destination": "/top-sites.html" },
     { "source": "/top-gay-ai-sites", "destination": "/top-gay-ai-sites.html" },
     { "source": "/top-ai-bf-sites", "destination": "/top-ai-bf-sites.html" },
     { "source": "/candy", "destination": "/candy.html" },
     { "source": "/joi", "destination": "/joi.html" },
+    { "source": "/lovescape", "destination": "/lovescape.html" },
     { "source": "/login", "destination": "/login.html" }
   ]
 }

@@ -15,6 +15,7 @@ app.get('/top-gay-ai-sites', (_req, res) => res.sendFile(path.join(__dirname, 'p
 app.get('/top-ai-bf-sites',  (_req, res) => res.sendFile(path.join(__dirname, 'public', 'top-ai-bf-sites.html')));
 app.get('/candy',            (_req, res) => res.sendFile(path.join(__dirname, 'public', 'candy.html')));
 app.get('/joi',              (_req, res) => res.sendFile(path.join(__dirname, 'public', 'joi.html')));
+app.get('/lovescape',        (_req, res) => res.sendFile(path.join(__dirname, 'public', 'lovescape.html')));
 
 // public/ takes precedence over root so the latest versions of files that
 // exist in both places (e.g. top-sites.html) are served locally.
@@ -53,6 +54,5 @@ app.post('/api/save-email', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
-  console.log(`Quiz: http://localhost:${PORT}/arcade-quiz.html`);
   console.log(`Emails saved to: ${CSV_FILE}`);
 });
