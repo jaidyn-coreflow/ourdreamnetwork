@@ -436,7 +436,6 @@ function renderStep1() {
     const video = card.querySelector('video');
     video.play().catch(() => {});
     card.addEventListener('click', () => {
-      track('quiz_step_complete', { step: 1, style: styleKey });
       setState({ style: styleKey, currentStep: 2 });
     });
 
@@ -511,6 +510,11 @@ function maybeAutoAdvance() {
   state.autoAdvanceTimer = setTimeout(() => {
     state.autoAdvanceTimer = null;
     if (state.currentStep === 2) {
+      track('quiz_step_2_complete', {
+        ethnicity: state.ethnicity,
+        hair_style: state.hairStyle,
+        physique: state.physique && state.physique.value,
+      });
       setState({ currentStep: 3 });
     }
   }, 350);
@@ -544,7 +548,7 @@ function renderStep3() {
     card.addEventListener('click', () => {
       const id = card.dataset.personality;
       track('quiz_pick', { step: 3, key: 'personality', value: id });
-      track('quiz_step_complete', { step: 3, personality: id });
+      track('quiz_step_3_complete', { personality: id });
       state.personality = id;
       state.qParams = buildQParams();
       setState({ currentStep: 'email' });
@@ -765,6 +769,7 @@ function getGlValue() {
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('[init] state ready (male)', state);
+  track('quiz_start', { quiz: 'male' });
   render();
 });
 </script>

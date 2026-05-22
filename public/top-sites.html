@@ -1181,6 +1181,9 @@ const BRAND_LABELS = {
 document.querySelectorAll('[data-cta]').forEach((btn) => {
   btn.addEventListener('click', (e) => {
     e.preventDefault();
+    if (btn.classList.contains('ts-card-cta')) {
+      track('visit_site_clicked', { cta: btn.dataset.cta });
+    }
     openEmailGate(btn.dataset.cta);
   });
 });
