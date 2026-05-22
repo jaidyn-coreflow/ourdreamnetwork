@@ -9,6 +9,7 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
 <link rel="preconnect" href="https://vid.ourdream.ai">
+<link rel="preload" as="video" href="https://vid.ourdream.ai/heartcloudsmall7.webm" type="video/webm" fetchpriority="high">
 <link rel="dns-prefetch" href="https://clk.ourdreamnetwork.com">
 
 <!-- Google Tag Manager (deferred to window load; events queued pre-load) -->
@@ -76,8 +77,18 @@ body {
   .lp-card { padding: 40px 36px; }
 }
 
-.lp-logo { display: block; width: 200px; max-width: 70%; height: auto; margin: 0 auto 24px; }
-@media (min-width: 768px) { .lp-logo { width: 240px; margin-bottom: 28px; } }
+.lp-logo {
+  display: block;
+  text-align: center;
+  font-weight: 800;
+  font-size: 36px;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: #fff;
+  margin: 0 auto 24px;
+}
+.lp-logo-accent { color: #F17BB6; }
+@media (min-width: 768px) { .lp-logo { font-size: 44px; margin-bottom: 28px; } }
 
 .lp-h1 {
   font-size: 22px;
@@ -142,14 +153,14 @@ body {
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5VRS8QPJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-<video class="lp-bg-video" autoplay muted loop playsinline preload="auto" disablepictureinpicture aria-hidden="true">
+<video class="lp-bg-video" autoplay muted loop playsinline preload="auto" disablepictureinpicture fetchpriority="high" aria-hidden="true">
   <source src="https://vid.ourdream.ai/heartcloudsmall7.webm" type="video/webm">
 </video>
 <div class="lp-bg-scrim" aria-hidden="true"></div>
 
 <main class="lp-card">
-  <img class="lp-logo" src="/ourdreamnetworklogo.svg" alt="ourdreamnetwork">
-  <h1 class="lp-h1">Enter Your Email For <span class="lp-h1-accent">50 bonus dreamcoins</span> on ourdream</h1>
+  <div class="lp-logo" role="img" aria-label="ourdream.ai">ourdream<span class="lp-logo-accent">.ai</span></div>
+  <h1 class="lp-h1">Bonus <span class="lp-h1-accent">50 dreamcoins</span>. Enter your email</h1>
 
   <form id="login-form" novalidate>
     <div class="lp-field">
