@@ -16,11 +16,9 @@ app.get('/top-ai-bf-sites',  (_req, res) => res.sendFile(path.join(__dirname, 'p
 app.get('/candy',            (_req, res) => res.sendFile(path.join(__dirname, 'public', 'candy.html')));
 app.get('/joi',              (_req, res) => res.sendFile(path.join(__dirname, 'public', 'joi.html')));
 app.get('/lovescape',        (_req, res) => res.sendFile(path.join(__dirname, 'public', 'lovescape.html')));
+app.get('/girlfriendgpt',    (_req, res) => res.sendFile(path.join(__dirname, 'public', 'girlfriendgpt.html')));
 
-// public/ takes precedence over root so the latest versions of files that
-// exist in both places (e.g. top-sites.html) are served locally.
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(__dirname));
 
 // Create CSV with headers if it doesn't exist
 if (!fs.existsSync(CSV_FILE)) {

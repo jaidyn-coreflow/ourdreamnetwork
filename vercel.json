@@ -8,6 +8,7 @@
     { "source": "/candy", "destination": "/candy.html" },
     { "source": "/joi", "destination": "/joi.html" },
     { "source": "/lovescape", "destination": "/lovescape.html" },
+    { "source": "/girlfriendgpt", "destination": "/girlfriendgpt.html" },
     { "source": "/login", "destination": "/login.html" }
   ]
 }
