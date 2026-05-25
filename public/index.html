@@ -474,6 +474,7 @@ function renderStep1() {
     if (document.readyState === 'complete') startVideo();
     else addEventListener('load', startVideo, { once: true });
     card.addEventListener('click', () => {
+      track('quiz_start', { quiz: 'female', style: styleKey.toLowerCase() });
       setState({ style: styleKey, currentStep: 2 });
     });
 
@@ -777,7 +778,7 @@ async function redirectToRedtrack() {
 }
 
 // ══════════════════════════════════════════════
-//  TRACKING (verbatim port from quiz-old.html lines 610-636)
+//  TRACKING
 // ══════════════════════════════════════════════
 
 window.dataLayer = window.dataLayer || [];
@@ -828,7 +829,6 @@ function getGlValue() {
 // ══════════════════════════════════════════════
 
 document.addEventListener('DOMContentLoaded', () => {
-  track('quiz_start', { quiz: 'female' });
   render();
 });
 </script>

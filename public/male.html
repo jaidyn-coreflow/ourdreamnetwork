@@ -436,6 +436,7 @@ function renderStep1() {
     const video = card.querySelector('video');
     video.play().catch(() => {});
     card.addEventListener('click', () => {
+      track('quiz_start', { quiz: 'male', style: styleKey.toLowerCase() });
       setState({ style: styleKey, currentStep: 2 });
     });
 
@@ -769,7 +770,6 @@ function getGlValue() {
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('[init] state ready (male)', state);
-  track('quiz_start', { quiz: 'male' });
   render();
 });
 </script>
