@@ -216,23 +216,46 @@ body {
     errorEl.style.display = 'none';
   }
 
-  function buildRedirectUrl() {
-    var base = atob(REDTRACK_BASE_B64);
-    var url = new URL(base);
-    url.searchParams.set('sub11', 'login');
+  // Decorate a dummy ourdream.ai link via GTM's cross-domain linker, then extract
+  // the _gl payload. Mirrors getGlValue() in index.html so sub19 survives the
+  // RedTrack hop into ourdream.ai/signup as a valid GA4 linker value (not "undefined").
+  function getGlValue() {
+    return new Promise(function (resolve) {
+      var a = document.createElement('a');
+      a.href = 'https://ourdream.ai/';
+      a.style.cssText = 'position:fixed;left:-9999px;';
+      document.body.appendChild(a);
+      a.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+      setTimeout(function () {
+        var match = a.href.match(/[?&]_gl=([^&]+)/);
+        document.body.removeChild(a);
+        resolve(match ? decodeURIComponent(match[1]) : '');
+      }, 100);
+    });
+  }
 
+  function buildRedirectUrl(glValue) {
     var cookieMatch = document.cookie.match(/(?:^|;\s*)rtkclickid-store=([^;]+)/);
+
     if (cookieMatch) {
+      // PAID path — RedTrack /click/1 remaps subs and appends clickid before redirecting.
+      var url = new URL(atob(REDTRACK_BASE_B64));
+      url.searchParams.set('sub11', 'login');
       url.searchParams.set('clickid', decodeURIComponent(cookieMatch[1]));
+      if (glValue) url.searchParams.set('sub19', glValue);
+      return url.toString();
     }
 
-    var pageParams = new URLSearchParams(window.location.search);
-    var gl = pageParams.get('_gl');
-    if (gl) {
-      url.searchParams.set('sub19', gl);
-    }
-
-    return url.toString();
+    // ORGANIC path — no rtkclickid-store cookie yet (RedTrack tag fires via GTM, which is
+    // deferred to window.load; fast submitters beat it). Sending these to /click anyway
+    // gets {"status":0,"message":"empty clickid value"}, so skip RedTrack — mirror index.html
+    // and go direct to ourdream.ai/signup, forwarding inbound attribution + GA4 linker _gl.
+    var dest = new URL('https://ourdream.ai/signup');
+    new URLSearchParams(window.location.search).forEach(function (v, k) {
+      if (!dest.searchParams.has(k)) dest.searchParams.set(k, v);
+    });
+    if (glValue) dest.searchParams.set('_gl', glValue);
+    return dest.toString();
   }
 
   function track(event, payload) {
@@ -278,19 +301,21 @@ body {
 
     track('quiz_email_captured', { email_provided: true, source: 'login' });
 
-    var redirectUrl = buildRedirectUrl();
-    var hasClickId = /(?:^|;\s*)rtkclickid-store=/.test(document.cookie);
+    getGlValue().then(function (glValue) {
+      var redirectUrl = buildRedirectUrl(glValue);
+      var hasClickId = /(?:^|;\s*)rtkclickid-store=/.test(document.cookie);
 
-    track('quiz_redirect', {
-      redirect_url: redirectUrl,
-      has_clickid: hasClickId,
-      source: 'login',
-    });
-
-    withTimeout(saveEmail(email).catch(function () { /* swallow — must not block redirect */ }), SAVE_EMAIL_TIMEOUT_MS)
-      .then(function () {
-        window.location.href = redirectUrl;
+      track('quiz_redirect', {
+        redirect_url: redirectUrl,
+        has_clickid: hasClickId,
+        source: 'login',
       });
+
+      withTimeout(saveEmail(email).catch(function () { /* swallow — must not block redirect */ }), SAVE_EMAIL_TIMEOUT_MS)
+        .then(function () {
+          window.location.href = redirectUrl;
+        });
+    });
   });
 })();
 </script>
