@@ -33,9 +33,11 @@ Deployed on Vercel. No framework — plain HTML/CSS/JS in `/public`, one tiny Ve
 
 When the user adds a new LP, update both this table and `vercel.json`.
 
-## The redirect funnel — how every LP must work
+**Competitor-comparison pages (`/candy`, `/joi`, `/lovescape`, `/girlfriendgpt`) do NOT capture email or use the redirect funnel below.** Their CTAs are plain `<a href="/?…">` links into the same-domain quiz at `/`, which owns the offer redirect. On load they only rewrite each `[data-quiz-cta]` anchor's href to forward inbound query params (`utm_*`, `gclid`, `cmpid`, …) and fire a `quiz_cta_clicked` dataLayer event. No email form, no modal, no `getGlValue`/RedTrack on these pages — the `rtkclickid-store` cookie (set on `cookiedomain=ourdreamnetwork.com`) persists same-domain to the quiz, which handles the cross-domain `_gl`/RedTrack hop. See `public/candy.html` (all four share identical markup, differing only in copy).
 
-Every LP submits the user into the same pipeline:
+## The redirect funnel — how every email-capturing LP must work
+
+Every email-capturing LP (quiz, listicles, login) submits the user into the same pipeline:
 
 ```
 LP submit  →  clk.ourdreamnetwork.com/click/N?sub11=<source>&sub19=<_gl>&clickid=<...>
