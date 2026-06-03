@@ -115,20 +115,6 @@ export default function CharactersPage({
           shape the plot, the romance, and the ending. Pick a story below
           and start with a free 60-second preview before you commit.
         </p>
-        <p className="mt-3 text-sm text-parchment-300/60">
-          Want to author your own world instead?{" "}
-          <Link
-            href="/character-builder-academy"
-            className="text-gold-400 underline hover:text-gold-300"
-          >
-            Try the Character Builder Academy
-          </Link>{" "}
-          or jump into the{" "}
-          <Link href="/create" className="text-gold-400 underline hover:text-gold-300">
-            3-step wizard
-          </Link>
-          .
-        </p>
       </div>
 
       {/* ── Gender filter tabs ────────────────────────────────── */}
@@ -219,64 +205,6 @@ export default function CharactersPage({
       {/* ── FAQ (ChatGPT / Google indexing) ──────────────────── */}
       <FaqBlock items={FAQ} />
 
-      {/* ── Horizontal discovery: the other pillars ─────────── */}
-      <section className="mx-auto max-w-4xl space-y-4">
-        <h2 className="heading-2 text-center">Or take a different path</h2>
-        <p className="mx-auto max-w-xl text-center text-sm text-parchment-300/60">
-          Stories aren&rsquo;t the only thing here. The other two pathways
-          are one click away.
-        </p>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Link
-            href="/character-builder-academy"
-            className="group rounded-xl border border-white/5 bg-card-gradient p-5 transition-all hover:border-gold-500/30"
-          >
-            <p className="text-xs uppercase tracking-[0.2em] text-gold-400/80">
-              Build
-            </p>
-            <h3 className="mt-2 font-display text-lg font-semibold text-parchment-100 group-hover:text-gold-400">
-              Author your own world
-            </h3>
-            <p className="mt-2 text-sm leading-relaxed text-parchment-300/70">
-              Eight craft lessons that teach you how to write a brief
-              good enough to power a 30-chapter campaign. Your dragon-bonded
-              heir, your fae court, your story.
-            </p>
-            <p className="mt-3 text-sm font-medium text-gold-400">
-              Open the Academy&nbsp;&rarr;
-            </p>
-          </Link>
-          <Link
-            href="/prompt-studio"
-            className="group rounded-xl border border-white/5 bg-card-gradient p-5 transition-all hover:border-gold-500/30"
-          >
-            <p className="text-xs uppercase tracking-[0.2em] text-gold-400/80">
-              Studio
-            </p>
-            <h3 className="mt-2 font-display text-lg font-semibold text-parchment-100 group-hover:text-gold-400">
-              Make scenes for your story
-            </h3>
-            <p className="mt-2 text-sm leading-relaxed text-parchment-300/70">
-              Compose cinematic stills and 60-second video clips for any
-              scene in any story. Stitch into feature-length sequences,
-              or make standalone fan art.
-            </p>
-            <p className="mt-3 text-sm font-medium text-gold-400">
-              Open Prompt Studio&nbsp;&rarr;
-            </p>
-          </Link>
-        </div>
-        <p className="text-center text-xs text-parchment-300/50">
-          Or jump straight to{" "}
-          <Link href="/books" className="text-gold-400 hover:underline">
-            book-inspired worlds
-          </Link>{" "}
-          &middot;{" "}
-          <Link href="/create" className="text-gold-400 hover:underline">
-            the 3-step wizard
-          </Link>
-        </p>
-      </section>
     </div>
   );
 }

@@ -170,47 +170,6 @@ export default function TagPage({ params }: { params: { tag: string } }) {
         </section>
       )}
 
-      {/* ── Horizontal discovery: the other pillars ─────────── */}
-      <section className="mx-auto max-w-3xl space-y-3 border-t border-white/5 pt-8">
-        <p className="text-center text-xs uppercase tracking-[0.2em] text-parchment-300/50">
-          Or take a different path
-        </p>
-        <div className="grid gap-3 sm:grid-cols-3">
-          <Link
-            href="/character-builder-academy"
-            className="group rounded-lg border border-white/5 bg-card-gradient p-4 text-center transition-colors hover:border-gold-500/30"
-          >
-            <p className="text-[10px] uppercase tracking-wider text-gold-400/80">
-              Build
-            </p>
-            <p className="mt-1 text-sm font-medium text-parchment-100 group-hover:text-gold-400">
-              Author your own {meta.label.toLowerCase()} story
-            </p>
-          </Link>
-          <Link
-            href="/prompt-studio"
-            className="group rounded-lg border border-white/5 bg-card-gradient p-4 text-center transition-colors hover:border-gold-500/30"
-          >
-            <p className="text-[10px] uppercase tracking-wider text-gold-400/80">
-              Studio
-            </p>
-            <p className="mt-1 text-sm font-medium text-parchment-100 group-hover:text-gold-400">
-              Generate imagery for these scenes
-            </p>
-          </Link>
-          <Link
-            href="/"
-            className="group rounded-lg border border-white/5 bg-card-gradient p-4 text-center transition-colors hover:border-gold-500/30"
-          >
-            <p className="text-[10px] uppercase tracking-wider text-gold-400/80">
-              Stories
-            </p>
-            <p className="mt-1 text-sm font-medium text-parchment-100 group-hover:text-gold-400">
-              Browse the full catalogue
-            </p>
-          </Link>
-        </div>
-      </section>
     </div>
   );
 }

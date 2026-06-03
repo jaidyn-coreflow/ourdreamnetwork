@@ -24,11 +24,7 @@ export default function TermsPage() {
         <h2 className="heading-2">Prohibited Content</h2>
         <p>
           You may not create, request, or share prompts that depict minors,
-          non-consenting individuals, or illegal activity. See our{" "}
-          <a href="/prompt-studio" className="text-gold-400 underline hover:text-gold-300">
-            Prompt Studio rules
-          </a>{" "}
-          for the full prohibited-terms list.
+          non-consenting individuals, or illegal activity.
         </p>
       </section>
 

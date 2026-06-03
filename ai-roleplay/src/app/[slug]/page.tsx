@@ -10,17 +10,13 @@ import {
 } from "@/components/ChatPreviewSeoSurface";
 import { Disclaimer } from "@/components/Disclaimer";
 import { ChatNowButton } from "@/components/ChatNowButton";
-import { OutboundLink } from "@/components/OutboundLink";
 import { getChatPreview } from "@/data/chat-previews";
 import { FEATURED_CHARACTERS, type Series } from "@/data/characters";
 import { getTagMeta } from "@/lib/tags";
 
 const SERIES_META: Record<Series, { label: string; href: string }> = {
-  "crown-and-thorn": { label: "Crown & Thorn", href: "/books/crown-and-thorn" },
-  "the-crossing-series": {
-    label: "The Crossing Series",
-    href: "/books/the-crossing-series",
-  },
+  "crown-and-thorn": { label: "Crown & Thorn", href: "/" },
+  "the-crossing-series": { label: "The Crossing Series", href: "/" },
 };
 
 export function generateStaticParams() {
@@ -263,14 +259,9 @@ export default function CharacterPage({
                 </ChatNowButton>
               </>
             ) : (
-              <>
-                <ChatNowButton chatUrl={character.chatUrl} className="btn-primary">
-                  {series || character.storyline ? "Play this story" : "Start chatting"}&nbsp;&rarr;
-                </ChatNowButton>
-                <OutboundLink path="/romantasy" className="btn-secondary">
-                  Browse Romantasy&nbsp;&rarr;
-                </OutboundLink>
-              </>
+              <ChatNowButton chatUrl={character.chatUrl} className="btn-primary">
+                {series || character.storyline ? "Play this story" : "Start chatting"}&nbsp;&rarr;
+              </ChatNowButton>
             )}
           </div>
         </div>
@@ -445,47 +436,6 @@ export default function CharacterPage({
         </section>
       )}
 
-      {/* ── Horizontal discovery: the other pillars ─────────── */}
-      <section className="mx-auto max-w-3xl space-y-3 border-t border-white/5 pt-8">
-        <p className="text-center text-xs uppercase tracking-[0.2em] text-parchment-300/50">
-          Or take a different path
-        </p>
-        <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
-          <Link
-            href="/character-builder-academy"
-            className="group rounded-lg border border-white/5 bg-card-gradient p-4 text-center transition-colors hover:border-gold-500/30"
-          >
-            <p className="text-[10px] uppercase tracking-wider text-gold-400/80">
-              Build
-            </p>
-            <p className="mt-1 text-sm font-medium text-parchment-100 group-hover:text-gold-400">
-              Author your own version of this archetype
-            </p>
-          </Link>
-          <Link
-            href="/prompt-studio"
-            className="group rounded-lg border border-white/5 bg-card-gradient p-4 text-center transition-colors hover:border-gold-500/30"
-          >
-            <p className="text-[10px] uppercase tracking-wider text-gold-400/80">
-              Studio
-            </p>
-            <p className="mt-1 text-sm font-medium text-parchment-100 group-hover:text-gold-400">
-              Generate imagery for these scenes
-            </p>
-          </Link>
-          <Link
-            href="/"
-            className="group rounded-lg border border-white/5 bg-card-gradient p-4 text-center transition-colors hover:border-gold-500/30"
-          >
-            <p className="text-[10px] uppercase tracking-wider text-gold-400/80">
-              Stories
-            </p>
-            <p className="mt-1 text-sm font-medium text-parchment-100 group-hover:text-gold-400">
-              Browse the full catalogue
-            </p>
-          </Link>
-        </div>
-      </section>
     </div>
   );
 }
