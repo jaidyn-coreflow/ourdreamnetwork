@@ -8,7 +8,7 @@ const OG_IMAGE = {
   url: "/og.jpg",
   width: 1200,
   height: 630,
-  alt: "RomantasyAI \u2014 Cinematic Romantic Fantasy",
+  alt: "OurDream Network \u2014 AI Roleplay Characters",
 } as const;
 
 /**

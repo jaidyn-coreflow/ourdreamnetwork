@@ -79,7 +79,7 @@ export default function CharacterPage({
         (c) => c.slug !== character.slug && c.gender === character.gender,
       ).slice(0, 6);
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.romantasyai.com";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://ourdreamnetwork.com/ai-roleplay";
   const isStory = !!(series || character.storyline);
   const pageUrl = `${siteUrl}/${character.slug}`;
 

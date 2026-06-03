@@ -13,7 +13,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { OutboundLink } from "./OutboundLink";
+import { ChatNowButton } from "./ChatNowButton";
 import { hasChatPreview } from "@/data/chat-previews";
 import type { Character } from "@/data/characters";
 
@@ -31,10 +31,9 @@ export function CharacterCardCompact({
   eager = false,
 }: Props) {
   const showsPreview = hasChatPreview(c.slug);
-  const ourdreamPath = new URL(c.chatUrl).pathname;
   const detailHref = showsPreview
-    ? `/characters/${c.slug}#chat-preview`
-    : `/characters/${c.slug}`;
+    ? `/${c.slug}#chat-preview`
+    : `/${c.slug}`;
 
   return (
     <article className="group flex items-start gap-4 rounded-xl border border-white/5 bg-card-gradient p-4 transition-colors hover:border-gold-500/20">
@@ -63,7 +62,7 @@ export function CharacterCardCompact({
       </Link>
 
       <div className="min-w-0 flex-1">
-        <Link href={`/characters/${c.slug}`}>
+        <Link href={`/${c.slug}`}>
           <h3 className="font-display text-base font-semibold text-gold-400 group-hover:text-gold-300">
             {c.name}
             {showAge && (
@@ -79,15 +78,12 @@ export function CharacterCardCompact({
 
         {/* Inline action row \u2014 keep it tight; this surface is a teaser. */}
         <div className="mt-2 flex items-center gap-3 text-xs font-semibold">
-          <OutboundLink
-            path={ourdreamPath}
-            className="text-gold-400 hover:text-gold-300"
-          >
+          <ChatNowButton chatUrl={c.chatUrl} className="text-gold-400 hover:text-gold-300">
             Chat now&nbsp;&rarr;
-          </OutboundLink>
+          </ChatNowButton>
           {showsPreview && (
             <Link
-              href={`/characters/${c.slug}#chat-preview`}
+              href={`/${c.slug}#chat-preview`}
               className="text-parchment-300/70 hover:text-gold-300"
             >
               60-sec preview&nbsp;&rarr;

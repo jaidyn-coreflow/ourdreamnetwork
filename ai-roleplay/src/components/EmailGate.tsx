@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 import { captureAndRedirect } from "@/lib/funnel-client";
 
 interface GateCtx {
@@ -26,6 +26,15 @@ export function EmailGateProvider({ children }: { children: ReactNode }) {
     setError(false);
     setSlug(chatSlug);
   }, []);
+
+  useEffect(() => {
+    if (!slug) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && !submitting) setSlug(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [slug, submitting]);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

@@ -74,7 +74,7 @@ export default function TagPage({ params }: { params: { tag: string } }) {
 
   const characters = charactersForTag(meta.slug);
   const siteUrl =
-    process.env.NEXT_PUBLIC_SITE_URL || "https://www.romantasyai.com";
+    process.env.NEXT_PUBLIC_SITE_URL || "https://ourdreamnetwork.com/ai-roleplay";
   const pageUrl = `${siteUrl}/tag/${meta.slug}`;
 
   /* CollectionPage + ItemList: the Schema.org pattern Google uses for
