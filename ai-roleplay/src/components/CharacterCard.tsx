@@ -25,7 +25,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { OutboundLink } from "./OutboundLink";
+import { ChatNowButton } from "./ChatNowButton";
 import { hasChatPreview } from "@/data/chat-previews";
 import type { Character } from "@/data/characters";
 
@@ -40,7 +40,6 @@ interface Props {
 
 export function CharacterCard({ character: c, eager = false }: Props) {
   const showsPreview = hasChatPreview(c.slug);
-  const ourdreamPath = new URL(c.chatUrl).pathname;
 
   return (
     <article className="group flex flex-col overflow-hidden rounded-xl border border-white/5 bg-card-gradient transition-colors hover:border-gold-500/20">
@@ -48,8 +47,8 @@ export function CharacterCard({ character: c, eager = false }: Props) {
       <Link
         href={
           showsPreview
-            ? `/characters/${c.slug}#chat-preview`
-            : `/characters/${c.slug}`
+            ? `/${c.slug}#chat-preview`
+            : `/${c.slug}`
         }
         className="relative block"
       >
@@ -72,7 +71,7 @@ export function CharacterCard({ character: c, eager = false }: Props) {
 
       <div className="flex flex-1 flex-col justify-between p-5">
         <div>
-          <Link href={`/characters/${c.slug}`}>
+          <Link href={`/${c.slug}`}>
             <h3 className="font-display text-xl font-semibold text-gold-400 hover:text-gold-300">
               {c.name}
             </h3>
@@ -90,18 +89,15 @@ export function CharacterCard({ character: c, eager = false }: Props) {
         {/* ── Action row ─────────────────────────────────────── */}
         <div className="mt-5 space-y-2">
           {/* Primary CTA \u2014 always present, full-width to dominate the eye. */}
-          <OutboundLink
-            path={ourdreamPath}
-            className="btn-primary w-full justify-center text-sm"
-          >
+          <ChatNowButton chatUrl={c.chatUrl} className="btn-primary w-full justify-center text-sm">
             Chat now&nbsp;&rarr;
-          </OutboundLink>
+          </ChatNowButton>
 
           {/* Secondary row: preview chip (if available) + tiny details link. */}
           <div className="flex items-center justify-between gap-2">
             {showsPreview ? (
               <Link
-                href={`/characters/${c.slug}#chat-preview`}
+                href={`/${c.slug}#chat-preview`}
                 className="inline-flex items-center gap-1 rounded-full border border-gold-500/30 bg-plum-900/20 px-3 py-1 text-xs font-medium text-gold-400 transition-colors hover:border-gold-500/50 hover:bg-plum-900/40"
               >
                 60-sec preview&nbsp;&rarr;
@@ -113,7 +109,7 @@ export function CharacterCard({ character: c, eager = false }: Props) {
               <span aria-hidden className="block" />
             )}
             <Link
-              href={`/characters/${c.slug}`}
+              href={`/${c.slug}`}
               className="text-xs text-parchment-300/50 underline-offset-2 hover:text-gold-400 hover:underline"
             >
               Details

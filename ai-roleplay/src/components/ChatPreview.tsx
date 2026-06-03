@@ -22,7 +22,7 @@
 
 import Image from "next/image";
 import { useCallback, useMemo, useState, type ReactNode } from "react";
-import { OutboundLink } from "./OutboundLink";
+import { useEmailGate } from "./EmailGate";
 import type {
   ChatPreview,
   ChatPreviewChoice,
@@ -55,6 +55,10 @@ export function ChatPreview({
   characterImageUrl,
   ourdreamChatPath,
 }: Props) {
+  const { openGate } = useEmailGate();
+  /* Derive the chat slug from the path: `/chat/<slug>` → `<slug>` */
+  const chatSlug = ourdreamChatPath.replace(/^\/chat\//, "");
+
   /* The played path: each entry is the chosen next NodeId. The current
    * visible node is the last id (or rootId when nothing chosen yet). */
   const [path, setPath] = useState<NodeId[]>([]);
@@ -156,12 +160,13 @@ export function ChatPreview({
             Want to keep going? The full story continues in the chat
             experience \u2014 your choices, your pace, your romance.
           </p>
-          <OutboundLink
-            path={ourdreamChatPath}
+          <button
+            type="button"
             className="btn-primary text-base"
+            onClick={() => openGate(chatSlug)}
           >
             Continue this story&nbsp;&rarr;
-          </OutboundLink>
+          </button>
           <p className="text-[11px] text-parchment-300/40">
             Adults only (18+) \u00b7 Suggestive, never explicit
           </p>

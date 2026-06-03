@@ -9,6 +9,7 @@ import {
   buildChatPreviewJsonLd,
 } from "@/components/ChatPreviewSeoSurface";
 import { Disclaimer } from "@/components/Disclaimer";
+import { ChatNowButton } from "@/components/ChatNowButton";
 import { OutboundLink } from "@/components/OutboundLink";
 import { getChatPreview } from "@/data/chat-previews";
 import { FEATURED_CHARACTERS, type Series } from "@/data/characters";
@@ -257,21 +258,15 @@ export default function CharacterPage({
                 <a href="#chat-preview" className="btn-primary">
                   Try a 60-second preview&nbsp;&darr;
                 </a>
-                <OutboundLink
-                  path={ourdreamChatPath}
-                  className="btn-secondary"
-                >
+                <ChatNowButton chatUrl={character.chatUrl} className="btn-secondary">
                   Continue this story&nbsp;&rarr;
-                </OutboundLink>
+                </ChatNowButton>
               </>
             ) : (
               <>
-                <OutboundLink
-                  path={ourdreamChatPath}
-                  className="btn-primary"
-                >
+                <ChatNowButton chatUrl={character.chatUrl} className="btn-primary">
                   {series || character.storyline ? "Play this story" : "Start chatting"}&nbsp;&rarr;
-                </OutboundLink>
+                </ChatNowButton>
                 <OutboundLink path="/romantasy" className="btn-secondary">
                   Browse Romantasy&nbsp;&rarr;
                 </OutboundLink>
