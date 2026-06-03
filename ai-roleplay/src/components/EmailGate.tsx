@@ -49,12 +49,12 @@ export function EmailGateProvider({ children }: { children: ReactNode }) {
           aria-modal="true"
           aria-labelledby="gate-title"
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-5 backdrop-blur-md"
-          onClick={(e) => { if (e.target === e.currentTarget) setSlug(null); }}
+          onClick={(e) => { if (!submitting && e.target === e.currentTarget) setSlug(null); }}
         >
           <div className="relative w-full max-w-[420px] rounded-2xl border border-[#F17BB6]/25 bg-[#141414]/95 px-6 pb-14 pt-7 shadow-2xl">
-            <h1 id="gate-title" className="mb-1.5 text-center text-[22px] font-bold">
+            <h2 id="gate-title" className="mb-1.5 text-center text-[22px] font-bold">
               Free Trial Offer
-            </h1>
+            </h2>
             <p className="mb-5 text-center text-sm text-white/60">
               Enter your email to get <span className="text-[#F17BB6]">5 messages free</span>
             </p>
@@ -65,7 +65,7 @@ export function EmailGateProvider({ children }: { children: ReactNode }) {
                 className="w-full rounded-[10px] border-[1.5px] border-white/10 bg-white/5 px-4 py-3.5 text-base text-white outline-none focus:border-[#F17BB6]"
               />
               {error && (
-                <div className="mt-2 text-[13px] text-red-500">
+                <div role="alert" className="mt-2 text-[13px] text-red-500">
                   Enter a valid email like name@example.com
                 </div>
               )}
