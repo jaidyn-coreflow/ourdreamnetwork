@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.romantasyai.com";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://ourdreamnetwork.com/ai-roleplay";
 
 /** Shared OG image — 1200x630 painterly cover (mozjpeg q=75, ~248 KB). */
 const OG_IMAGE = {
@@ -18,16 +18,15 @@ const OG_IMAGE = {
 export const siteMetadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "RomantasyAI \u2014 18+ Romantic Fantasy Prompt Studio",
-    template: "%s | RomantasyAI",
+    default: "AI Roleplay Characters | OurDream Network",
+    template: "%s | OurDream Network",
   },
   description:
-    "Cinematic, AI-powered romantic fantasy imagery for adults. " +
-    "Write your own scene, choose a style, and create on ourdream.ai.",
+    "Chat with AI roleplay characters. Pick a character and start with 5 free messages.",
   openGraph: {
     type: "website",
     locale: "en_US",
-    siteName: "RomantasyAI",
+    siteName: "OurDream Network",
     url: SITE_URL,
     images: [OG_IMAGE],
   },
@@ -36,8 +35,8 @@ export const siteMetadata: Metadata = {
     images: [OG_IMAGE.url],
   },
   robots: {
-    index: process.env.NOINDEX !== "true",
-    follow: process.env.NOINDEX !== "true",
+    index: false,
+    follow: false,
   },
 };
 
@@ -48,6 +47,6 @@ export const siteMetadata: Metadata = {
 export const siteViewport: Viewport = {
   /* night-900 — matches Tailwind token; eliminates white flash on dark
    * mobile UAs and tints the iOS / Android URL bar. */
-  themeColor: "#0a0a14",
+  themeColor: "#0a0a0a",
   colorScheme: "dark",
 };
