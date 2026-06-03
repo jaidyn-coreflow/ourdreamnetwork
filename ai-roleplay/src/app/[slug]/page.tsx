@@ -35,10 +35,10 @@ export function generateMetadata({
    * starts with it (e.g. "Crown & Thorn: Courts of Starlight"). */
   const title =
     seriesLabel && !c.name.startsWith(seriesLabel)
-      ? `${c.name} \u2014 ${seriesLabel} Romantasy`
+      ? `${c.name} \u2014 ${seriesLabel} AI Roleplay`
       : c.name;
   const desc = isStory
-    ? `Play ${c.name} \u2014 an AI choose-your-adventure romantasy. ${c.description || c.vibe}`
+    ? `Play ${c.name} \u2014 an AI choose-your-adventure roleplay. ${c.description || c.vibe}`
     : c.description || c.vibe;
   return {
     title,
@@ -124,7 +124,7 @@ export default function CharacterPage({
               name: character.name,
               description: character.description || character.vibe,
               image: character.imageUrl,
-              genre: "Romantic Fantasy",
+              genre: "AI Roleplay",
               interactivityType: "active",
               ...(series && {
                 isPartOf: {
@@ -285,7 +285,7 @@ export default function CharacterPage({
       <section className="mx-auto max-w-3xl space-y-5">
         <h2 className="heading-2">
           {series || character.storyline
-            ? "Choose Your Own Romantasy Adventure"
+            ? "Choose Your Own AI Roleplay Adventure"
             : `About ${character.name}`}
         </h2>
 
@@ -293,7 +293,7 @@ export default function CharacterPage({
           <>
             <p className="text-sm leading-relaxed text-parchment-300/70">
               <strong className="text-parchment-200">{character.name}</strong> is
-              an AI-powered choose-your-own-adventure romantasy story. You
+              an AI-powered choose-your-own-adventure AI roleplay story. You
               don&rsquo;t just read &mdash; you{" "}
               <em>play as the main character</em>. Every choice you make shapes
               the plot, the alliances, and the romance. No two playthroughs are
@@ -368,7 +368,7 @@ export default function CharacterPage({
             {character.gender === "male" ? (
               <>
                 Chat with <strong className="text-parchment-200">{character.name}</strong> in
-                an AI-powered romantic fantasy conversation. You play as the
+                an AI-powered roleplay conversation. You play as the
                 woman in this story &mdash; guide the conversation, build the
                 connection, and let the slow burn unfold at your pace. If
                 you&rsquo;d prefer to play as the man, browse our{" "}
@@ -383,7 +383,7 @@ export default function CharacterPage({
             ) : (
               <>
                 Chat with <strong className="text-parchment-200">{character.name}</strong> in
-                an AI-powered romantic fantasy conversation. You play as the
+                an AI-powered roleplay conversation. You play as the
                 man in this story &mdash; guide the conversation, build the
                 connection, and let the slow burn unfold at your pace. If
                 you&rsquo;d prefer to play as the woman, browse our{" "}
@@ -408,7 +408,7 @@ export default function CharacterPage({
           </h2>
           <p className="mx-auto mt-2 max-w-lg text-sm text-parchment-300/60">
             This story belongs to a larger collection of interconnected
-            romantasy adventures. Explore the full series to discover new
+            AI roleplay adventures. Explore the full series to discover new
             characters, settings, and storylines.
           </p>
           <Link

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Terms of Use",
-  description: "RomantasyAI terms of use — 18+, consenting adults only.",
+  description: "OurDream Network — terms of use.",
   alternates: { canonical: "/terms" },
 };
 

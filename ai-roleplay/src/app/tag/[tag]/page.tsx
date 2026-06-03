@@ -3,7 +3,7 @@
  *
  * SEO purpose:
  *   Each tag corresponds to a high-intent search term ("vampire AI
- *   chat", "dragon-rider romantasy"). A dedicated URL with a unique H1,
+ *   chat", "dragon-rider AI roleplay"). A dedicated URL with a unique H1,
  *   intro, and JSON-LD CollectionPage gives Google a clean target to
  *   rank \u2014 better than `?tag=…` query-string filtering, which crawlers
  *   tend to consolidate into the canonical `/characters` URL.
@@ -45,7 +45,7 @@ export function generateMetadata({
   const ogImage = topChar?.imageUrl;
 
   return {
-    title: { absolute: `${meta.seoTitle} | RomantasyAI` },
+    title: { absolute: `${meta.seoTitle} | OurDream Network` },
     description: meta.seoDescription,
     alternates: { canonical: `/tag/${meta.slug}` },
     openGraph: {
@@ -85,7 +85,7 @@ export default function TagPage({ params }: { params: { tag: string } }) {
     url: pageUrl,
     name: meta.seoTitle,
     description: meta.seoDescription,
-    isPartOf: { "@type": "WebSite", url: siteUrl, name: "RomantasyAI" },
+    isPartOf: { "@type": "WebSite", url: siteUrl, name: "OurDream Network" },
     breadcrumb: {
       "@type": "BreadcrumbList",
       itemListElement: [
@@ -129,7 +129,7 @@ export default function TagPage({ params }: { params: { tag: string } }) {
       {/* ── Header ────────────────────────────────────────────── */}
       <header className="mx-auto max-w-3xl space-y-5 text-center">
         <p className="text-xs uppercase tracking-[0.2em] text-gold-400/70">
-          Romantasy by Trope
+          AI Roleplay by Trope
         </p>
         <h1 className="heading-1">{meta.label} Characters</h1>
         <p className="text-lg leading-relaxed text-parchment-300/80">

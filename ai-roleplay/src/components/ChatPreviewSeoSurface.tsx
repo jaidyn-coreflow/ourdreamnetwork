@@ -114,7 +114,7 @@ export function buildChatPreviewJsonLd(
     "@type": "Conversation",
     url: pageUrl,
     name: `Chat preview: ${characterName}`,
-    description: `An interactive choose-your-own-adventure preview of a romantasy chat with ${characterName}. ${messages.length} character beats across ${paths.length} story paths.`,
+    description: `An interactive choose-your-own-adventure preview of an AI roleplay chat with ${characterName}. ${messages.length} character beats across ${paths.length} story paths.`,
     inLanguage: "en-US",
     isPartOf: {
       "@type": "WebPage",

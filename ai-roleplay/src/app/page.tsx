@@ -43,7 +43,7 @@ export function generateMetadata({
   searchParams: { tag?: string };
 }): Metadata {
   const base: Metadata = {
-    title: "Stories You Can Play \u2014 Romantic Fantasy CYOA Catalogue",
+    title: "Stories You Can Play \u2014 AI Roleplay CYOA Catalogue",
     description:
       "Sixty-plus original AI roleplay characters with choose-your-own-adventure depth. Free 60-second interactive previews on the top characters, then 5 free messages to start chatting.",
     alternates: { canonical: "/" },
@@ -108,7 +108,7 @@ export default function CharactersPage({
         </p>
         <h1 className="heading-1 mt-2">AI Roleplay: Stories That You Can Play</h1>
         <p className="mt-4 text-lg text-parchment-300/80">
-          Netflix-meets-video-game romantasy. Sixty-plus original story
+          Netflix-meets-video-game AI roleplay. Sixty-plus original story
           worlds with choose-your-own-adventure depth &mdash; your choices
           shape the plot, the romance, and the ending. Pick a story below
           and start with a free 60-second preview before you commit.
