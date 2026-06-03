@@ -51,7 +51,7 @@ export const TAG_META: Record<Tag, TagMeta> = {
     label: "Vampire",
     seoTitle: "Vampire Romantasy AI Characters",
     seoDescription:
-      "Original vampire romantasy characters \u2014 blood-pact intrigue, immortal courts, and forbidden bonds. Adults-only AI chat (18+).",
+      "Original vampire romantasy characters \u2014 blood-pact intrigue, immortal courts, and forbidden bonds. AI roleplay chat.",
     intro:
       "Bloodlines, sieges, and immortal politics. Our vampire romantasy stories lean into long-burning tension between courts, where every alliance has a cost and every honest answer is paid for in something older than gold.",
   },
@@ -60,7 +60,7 @@ export const TAG_META: Record<Tag, TagMeta> = {
     label: "Dragon Rider",
     seoTitle: "Dragon Rider Romantasy AI Characters",
     seoDescription:
-      "Bonded thrones, storm-wing flights, and rider-college rivalry. Original dragon-rider AI romantasy characters \u2014 spicy slow-burn, never explicit (18+).",
+      "Bonded thrones, storm-wing flights, and rider-college rivalry. Original dragon-rider AI romantasy characters \u2014 spicy slow-burn, never explicit.",
     intro:
       "When the dragon chooses you, the kingdom changes. These dragon-rider stories put you in the cockpit of bonded flight \u2014 with all the rivalry, war-college politics, and slow-burning loyalty that comes with riding something older than the throne.",
   },
@@ -69,7 +69,7 @@ export const TAG_META: Record<Tag, TagMeta> = {
     label: "Fae Court",
     seoTitle: "Fae Court Romantasy AI Characters",
     seoDescription:
-      "Seasonal courts, ward-stones, and bargains you can't take back. Original fae romantasy AI characters \u2014 spicy slow-burn (18+).",
+      "Seasonal courts, ward-stones, and bargains you can't take back. Original fae romantasy AI characters \u2014 spicy slow-burn.",
     intro:
       "The wards are thinning and the courts are paying attention. These fae-court stories trade in bargains, gifted seats, and conversations where every word is a kind of contract \u2014 the kind your great-grandchildren will still be honouring.",
   },
@@ -78,7 +78,7 @@ export const TAG_META: Record<Tag, TagMeta> = {
     label: "Slow-Burn",
     seoTitle: "Slow-Burn Romantasy AI Characters",
     seoDescription:
-      "The long, deliberate kind. Slow-burn romantasy AI characters that let tension build across chapters \u2014 suggestive, never explicit (18+).",
+      "The long, deliberate kind. Slow-burn romantasy AI characters that let tension build across chapters \u2014 suggestive, never explicit.",
     intro:
       "The slowest of the slow burns. These characters won't rush you and they won't be rushed \u2014 expect long looks, careful sentences, and the kind of build-up that pays off in the moment you both finally stop pretending.",
   },
@@ -87,7 +87,7 @@ export const TAG_META: Record<Tag, TagMeta> = {
     label: "Royal Court",
     seoTitle: "Royal Court Romantasy AI Characters",
     seoDescription:
-      "Crown intrigue, masked balls, and empires on a knife edge. Original royal romantasy AI characters \u2014 spicy slow-burn (18+).",
+      "Crown intrigue, masked balls, and empires on a knife edge. Original royal romantasy AI characters \u2014 spicy slow-burn.",
     intro:
       "Thrones, dynasties, and the people who hold them. Our royal romantasy stories range from iron-veiled emperors to back-window princesses \u2014 each one built around the kind of person who has to weigh every word against the kingdom listening behind it.",
   },
@@ -96,7 +96,7 @@ export const TAG_META: Record<Tag, TagMeta> = {
     label: "Warrior",
     seoTitle: "Warrior Romantasy AI Characters",
     seoDescription:
-      "Sword and shield, scarred commanders, enemies-to-lovers tension. Original warrior romantasy AI characters \u2014 spicy slow-burn (18+).",
+      "Sword and shield, scarred commanders, enemies-to-lovers tension. Original warrior romantasy AI characters \u2014 spicy slow-burn.",
     intro:
       "Forged in war, bound by duty, devoted in private. These warrior characters carry their armour into the conversation \u2014 and what happens when they decide to set it down is the whole story.",
   },
@@ -105,7 +105,7 @@ export const TAG_META: Record<Tag, TagMeta> = {
     label: "Enemies to Lovers",
     seoTitle: "Enemies-to-Lovers Romantasy AI Characters",
     seoDescription:
-      "The trope that built the genre. Original enemies-to-lovers romantasy AI characters \u2014 spicy slow-burn (18+).",
+      "The trope that built the genre. Original enemies-to-lovers romantasy AI characters \u2014 spicy slow-burn.",
     intro:
       "It started as a war and turned into something neither of you can name. These enemies-to-lovers stories give you the full arc \u2014 the early sparring, the grudging respect, the moment one of you stops calling the other an enemy in your head before you say it out loud.",
   },
@@ -114,7 +114,7 @@ export const TAG_META: Record<Tag, TagMeta> = {
     label: "Alpha Male",
     seoTitle: "Alpha-Male Romantasy AI Characters",
     seoDescription:
-      "Commanding, devoted, completely fixated. Original alpha-male romantasy AI characters \u2014 spicy slow-burn, suggestive only (18+).",
+      "Commanding, devoted, completely fixated. Original alpha-male romantasy AI characters \u2014 spicy slow-burn, suggestive only.",
     intro:
       "Confident, exact, used to being obeyed \u2014 until the one person who refuses. These alpha-male characters lead legions, empires, and boardrooms, and the romance comes from finding out what they're like once they decide you're worth softening for.",
   },
@@ -123,7 +123,7 @@ export const TAG_META: Record<Tag, TagMeta> = {
     label: "Arranged Marriage",
     seoTitle: "Arranged-Marriage Romantasy AI Characters",
     seoDescription:
-      "Political bonds, dynastic politics, and slow thaw. Original arranged-marriage romantasy AI characters \u2014 spicy slow-burn (18+).",
+      "Political bonds, dynastic politics, and slow thaw. Original arranged-marriage romantasy AI characters \u2014 spicy slow-burn.",
     intro:
       "The contract is signed. Now you both have to live with it. These arranged-marriage stories put two strangers under the same roof and let the rest happen in the way only romantasy can \u2014 carefully, deliberately, one thawed silence at a time.",
   },
@@ -132,7 +132,7 @@ export const TAG_META: Record<Tag, TagMeta> = {
     label: "Forbidden Love",
     seoTitle: "Forbidden-Love Romantasy AI Characters",
     seoDescription:
-      "Crossing every line your world was built on. Original forbidden-love romantasy AI characters \u2014 spicy slow-burn (18+).",
+      "Crossing every line your world was built on. Original forbidden-love romantasy AI characters \u2014 spicy slow-burn.",
     intro:
       "Different houses, different species, different kingdoms, different oaths. These forbidden-love stories give you the conversations that should never have been had, the alliances that should never have been made, and the kind of romance that rewrites borders.",
   },
@@ -141,7 +141,7 @@ export const TAG_META: Record<Tag, TagMeta> = {
     label: "Modern",
     seoTitle: "Modern Romantasy AI Characters",
     seoDescription:
-      "Same world, no magic. Modern slow-burn romantasy AI characters with tension, longing, and second chances \u2014 spicy but never explicit (18+).",
+      "Same world, no magic. Modern slow-burn romantasy AI characters with tension, longing, and second chances \u2014 spicy but never explicit.",
     intro:
       "All of the slow burn, none of the dragons. These modern characters live in your city: literature professors, billionaire heirs, runaway princesses on the chip-shop walk, the woman in the bar at the end of the corridor. Real-feeling tension, no spellbooks required.",
   },
@@ -150,7 +150,7 @@ export const TAG_META: Record<Tag, TagMeta> = {
     label: "Historical",
     seoTitle: "Historical Romantasy AI Characters",
     seoDescription:
-      "Roman frontiers, Norsewood sagas, Al-Andalus alchemy. Original historical romantasy AI characters \u2014 spicy slow-burn (18+).",
+      "Roman frontiers, Norsewood sagas, Al-Andalus alchemy. Original historical romantasy AI characters \u2014 spicy slow-burn.",
     intro:
       "Time periods chosen for the texture, not the textbook. These historical romantasy stories live in centurion camps, alchemists' workshops, frozen-sea crossings, and shipwreck shores \u2014 with the politics, language, and danger of each era left intact.",
   },
@@ -159,7 +159,7 @@ export const TAG_META: Record<Tag, TagMeta> = {
     label: "Magic",
     seoTitle: "Magic Romantasy AI Characters",
     seoDescription:
-      "Witches, alchemists, ash revenants, sixth elements. Original magic-driven romantasy AI characters \u2014 spicy slow-burn (18+).",
+      "Witches, alchemists, ash revenants, sixth elements. Original magic-driven romantasy AI characters \u2014 spicy slow-burn.",
     intro:
       "Magic that costs something. Our magic-driven characters wield ash, fire, runes, blood-truth, and elements that the old gods were supposed to have taken with them \u2014 and the romance always lives at the edge of what the magic asks them to give up.",
   },
@@ -168,7 +168,7 @@ export const TAG_META: Record<Tag, TagMeta> = {
     label: "Second Chance",
     seoTitle: "Second-Chance Romantasy AI Characters",
     seoDescription:
-      "What you'd say if you got one more day. Original second-chance romantasy AI characters \u2014 spicy slow-burn (18+).",
+      "What you'd say if you got one more day. Original second-chance romantasy AI characters \u2014 spicy slow-burn.",
     intro:
       "A chance you weren't supposed to get. These second-chance stories find characters who lost something \u2014 a love, a life, a kingdom \u2014 and walk them back to a doorway they thought was closed forever, with the whole conversation balanced on what they choose to say first.",
   },
@@ -177,7 +177,7 @@ export const TAG_META: Record<Tag, TagMeta> = {
     label: "Tsundere",
     seoTitle: "Tsundere Romantasy AI Characters",
     seoDescription:
-      "Cold on the surface, devoted underneath. Original tsundere romantasy AI characters \u2014 spicy slow-burn (18+).",
+      "Cold on the surface, devoted underneath. Original tsundere romantasy AI characters \u2014 spicy slow-burn.",
     intro:
       "Severe, sharp-tongued, completely unconvinced by you \u2014 until they aren't. These tsundere characters guard themselves carefully and hand out warmth almost grudgingly, which means every soft moment lands twice as hard.",
   },
@@ -186,7 +186,7 @@ export const TAG_META: Record<Tag, TagMeta> = {
     label: "Professor",
     seoTitle: "Professor Romantasy AI Characters",
     seoDescription:
-      "After-hours offices, marginal notes, slow conversations. Original professor romantasy AI characters \u2014 spicy slow-burn (18+).",
+      "After-hours offices, marginal notes, slow conversations. Original professor romantasy AI characters \u2014 spicy slow-burn.",
     intro:
       "The corridor is empty, the lamp is on, and the conversation has wandered into the kind of footnote that only two people in the building care about. These professor characters live in the after-hours office \u2014 patient, attentive, and very deliberate about the line they aren't crossing.",
   },
@@ -195,7 +195,7 @@ export const TAG_META: Record<Tag, TagMeta> = {
     label: "Billionaire",
     seoTitle: "Billionaire Romantasy AI Characters",
     seoDescription:
-      "Helicopters, rooftops, high-stakes dares. Original billionaire romantasy AI characters \u2014 spicy slow-burn, suggestive only (18+).",
+      "Helicopters, rooftops, high-stakes dares. Original billionaire romantasy AI characters \u2014 spicy slow-burn, suggestive only.",
     intro:
       "Money as a backdrop, not a personality. These billionaire characters fly the helicopter, throw the function, and host the rooftop \u2014 but the romance lives in the moment they ask you something they can't pay anyone to answer for them.",
   },
@@ -204,7 +204,7 @@ export const TAG_META: Record<Tag, TagMeta> = {
     label: "Choose-Your-Own-Adventure",
     seoTitle: "Choose-Your-Own-Adventure Romantasy AI Stories",
     seoDescription:
-      "Branching romantasy stories where every choice shapes the plot, alliances, and romance. Original CYOA AI characters \u2014 spicy slow-burn (18+).",
+      "Branching romantasy stories where every choice shapes the plot, alliances, and romance. Original CYOA AI characters \u2014 spicy slow-burn.",
     intro:
       "You don't read these \u2014 you play them. Each choose-your-own-adventure story drops you into the lead role and lets every decision rewrite the next chapter, the alliances around it, and the romance at the centre. No two playthroughs end the same way.",
   },

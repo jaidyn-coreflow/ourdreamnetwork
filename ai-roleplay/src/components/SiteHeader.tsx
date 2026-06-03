@@ -12,7 +12,7 @@ export function SiteHeader() {
         </Link>
         <span className="flex items-center gap-2 text-[13px] text-white/55">
           <span className="h-2 w-2 rounded-full bg-[#F17BB6] shadow-[0_0_6px_rgba(241,123,182,0.7)]" />
-          <span className="font-semibold text-white">2,300+</span> chatting now
+          <span className="font-semibold text-white">248,123</span> chatting now
         </span>
       </nav>
     </header>

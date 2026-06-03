@@ -167,9 +167,6 @@ export function ChatPreview({
           >
             Continue this story&nbsp;&rarr;
           </button>
-          <p className="text-[11px] text-parchment-300/40">
-            Adults only (18+) \u00b7 Suggestive, never explicit
-          </p>
         </div>
       )}
     </section>

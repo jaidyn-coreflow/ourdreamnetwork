@@ -8,7 +8,6 @@ import {
   ChatPreviewSeoSurface,
   buildChatPreviewJsonLd,
 } from "@/components/ChatPreviewSeoSurface";
-import { Disclaimer } from "@/components/Disclaimer";
 import { ChatNowButton } from "@/components/ChatNowButton";
 import { getChatPreview } from "@/data/chat-previews";
 import { FEATURED_CHARACTERS, type Series } from "@/data/characters";
@@ -162,7 +161,6 @@ export default function CharacterPage({
           }}
         />
       )}
-      <Disclaimer />
 
       {/* ── Breadcrumb ────────────────────────────────────────── */}
       <nav className="text-xs text-parchment-300/50">
@@ -343,8 +341,8 @@ export default function CharacterPage({
                   text: "Forge alliances, defy kings, or surrender to the slow burn. The AI adapts to every decision.",
                 },
                 {
-                  title: "Spicy Slow-Burn Romance",
-                  text: "Tension that builds across chapters. Suggestive, never explicit \u2014 adults-only (18+).",
+                  title: "Slow-Burn Tension",
+                  text: "Tension that builds across chapters, with the AI matching your pace every step of the way.",
                 },
                 {
                   title: "Infinite Replayability",
@@ -380,7 +378,7 @@ export default function CharacterPage({
                 >
                   female characters
                 </Link>{" "}
-                instead. Adults-only (18+), suggestive, never explicit.
+                instead.
               </>
             ) : (
               <>
@@ -395,7 +393,7 @@ export default function CharacterPage({
                 >
                   male characters
                 </Link>{" "}
-                instead. Adults-only (18+), suggestive, never explicit.
+                instead.
               </>
             )}
           </p>

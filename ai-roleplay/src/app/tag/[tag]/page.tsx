@@ -24,7 +24,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CharacterCard } from "@/components/CharacterCard";
-import { Disclaimer } from "@/components/Disclaimer";
 import { ACTIVE_TAGS, charactersForTag, getTagMeta } from "@/lib/tags";
 
 export function generateStaticParams() {
@@ -107,10 +106,9 @@ export default function TagPage({ params }: { params: { tag: string } }) {
     },
   };
 
-  /* Other tags this character set commonly co-occurs with \u2014 powers
-   * the "explore related tropes" footer. Computed by frequency so the
-   * recommendations are always live data, not a hardcoded list. */
-  const cooccurringTags = computeCooccurringTags(meta.slug, characters);
+  /* Every other active trope \u2014 the footer links straight to each
+   * dedicated trope page so users can jump to any category. */
+  const otherTropes = ACTIVE_TAGS.filter((t) => t.slug !== meta.slug);
 
   return (
     <div className="page-section space-y-14">
@@ -118,7 +116,6 @@ export default function TagPage({ params }: { params: { tag: string } }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Disclaimer />
 
       {/* ── Breadcrumb ────────────────────────────────────────── */}
       <nav className="text-xs text-parchment-300/50">
@@ -140,8 +137,7 @@ export default function TagPage({ params }: { params: { tag: string } }) {
         </p>
         <p className="text-xs text-parchment-300/50">
           {characters.length}{" "}
-          {characters.length === 1 ? "character" : "characters"} \u00b7
-          Adults only (18+) \u00b7 Suggestive, never explicit
+          {characters.length === 1 ? "character" : "characters"}
         </p>
       </header>
 
@@ -152,12 +148,12 @@ export default function TagPage({ params }: { params: { tag: string } }) {
         ))}
       </div>
 
-      {/* ── Related tropes ────────────────────────────────────── */}
-      {cooccurringTags.length > 0 && (
+      {/* ── All other tropes ──────────────────────────────────── */}
+      {otherTropes.length > 0 && (
         <section className="mx-auto max-w-3xl space-y-4 text-center">
-          <h2 className="heading-2">Explore related tropes</h2>
+          <h2 className="heading-2">Explore All Other Tropes</h2>
           <div className="flex flex-wrap justify-center gap-2">
-            {cooccurringTags.map((t) => (
+            {otherTropes.map((t) => (
               <Link
                 key={t.slug}
                 href={`/tag/${t.slug}`}
@@ -174,26 +170,3 @@ export default function TagPage({ params }: { params: { tag: string } }) {
   );
 }
 
-/* ── Helpers ──────────────────────────────────────────────────────── */
-
-/**
- * Find the tags that most commonly co-occur with the current tag in
- * the character pool. Excludes the current tag itself and limits to the
- * top 6 by frequency. Always pulls from `ACTIVE_TAGS` so we never
- * recommend a dead-end link.
- */
-function computeCooccurringTags(
-  currentTag: string,
-  characters: ReadonlyArray<{ tags?: string[] }>,
-) {
-  const counts = new Map<string, number>();
-  for (const c of characters) {
-    for (const t of c.tags ?? []) {
-      if (t === currentTag) continue;
-      counts.set(t, (counts.get(t) ?? 0) + 1);
-    }
-  }
-  return ACTIVE_TAGS.filter((meta) => counts.has(meta.slug))
-    .sort((a, b) => (counts.get(b.slug) ?? 0) - (counts.get(a.slug) ?? 0))
-    .slice(0, 6);
-}

@@ -90,7 +90,7 @@ export function EmailGateProvider({ children }: { children: ReactNode }) {
               ← back
             </button>
             <p className="mt-4 text-center text-[11px] text-white/40">
-              18+. By continuing you agree to our{" "}
+              By continuing you agree to our{" "}
               <a href="https://ourdreamnetwork.com/terms" className="text-white/60 underline">Terms</a> &{" "}
               <a href="https://ourdreamnetwork.com/privacy" className="text-white/60 underline">Privacy</a>.
             </p>

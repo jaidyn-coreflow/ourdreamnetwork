@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CharacterCard } from "@/components/CharacterCard";
-import { Disclaimer } from "@/components/Disclaimer";
 import { FaqBlock } from "@/components/FaqBlock";
 import { _allPreviews } from "@/data/chat-previews";
 import { FEATURED_CHARACTERS, type Tag } from "@/data/characters";
@@ -9,20 +8,20 @@ import { ACTIVE_TAGS, getTagMeta } from "@/lib/tags";
 
 const FAQ = [
   {
-    q: "What are RomantasyAI characters?",
-    a: "They are original romantic fantasy personas designed for consenting adults only \u2014 slow-burn romance that\u2019s suggestive and spicy, never explicit. The top characters ship with a free 60-second interactive story preview you can play right here.",
+    q: "What are OurDream AI roleplay characters?",
+    a: "Original AI roleplay personas you can chat with \u2014 each with its own personality, world, and story. The top characters include a free 60-second interactive preview you can play right here before you start chatting.",
   },
   {
     q: "Are these characters based on copyrighted books?",
     a: "No. Every character is entirely original. We do not reproduce copyrighted names, likenesses, or plot details from any published work.",
   },
   {
-    q: "Is the chat experience appropriate for all ages?",
-    a: "No. RomantasyAI is an adults-only (18+) community. All characters and conversations are intended for consenting adults only. Content is suggestive, slow-burn romance \u2014 spicy but never explicit.",
+    q: "How much does it cost to start?",
+    a: "Enter your email and you\u2019ll get 5 free messages with any character \u2014 no upfront payment to try it.",
   },
   {
     q: "How do I start chatting with a character?",
-    a: "Try the free 60-second preview on any character marked with the gold pill, then continue the story on our partner chat platform. No account on RomantasyAI is required.",
+    a: "Pick any character and tap \u201cChat now\u201d, or play the free 60-second preview first. Enter your email to unlock 5 free messages and continue the story on ourdream.",
   },
 ];
 
@@ -46,7 +45,7 @@ export function generateMetadata({
   const base: Metadata = {
     title: "Stories You Can Play \u2014 Romantic Fantasy CYOA Catalogue",
     description:
-      "Sixty-plus original romantic fantasy stories with choose-your-own-adventure depth. Free 60-second interactive previews on the top characters. Adults-only, spicy slow-burn \u2014 suggestive, never explicit.",
+      "Sixty-plus original AI roleplay characters with choose-your-own-adventure depth. Free 60-second interactive previews on the top characters, then 5 free messages to start chatting.",
     alternates: { canonical: "/" },
   };
 
@@ -104,11 +103,10 @@ export default function CharactersPage({
     <div className="page-section space-y-14">
       {/* ── Header ──────────────────────────────────────────── */}
       <div className="mx-auto max-w-3xl text-center">
-        <Disclaimer />
-        <p className="mt-6 text-sm uppercase tracking-[0.25em] text-gold-400/80">
+        <p className="text-sm uppercase tracking-[0.25em] text-gold-400/80">
           Stories
         </p>
-        <h1 className="heading-1 mt-2">Stories You Can Play</h1>
+        <h1 className="heading-1 mt-2">AI Roleplay: Stories That You Can Play</h1>
         <p className="mt-4 text-lg text-parchment-300/80">
           Netflix-meets-video-game romantasy. Sixty-plus original story
           worlds with choose-your-own-adventure depth &mdash; your choices
@@ -164,7 +162,7 @@ export default function CharactersPage({
           return (
             <Link
               key={t.slug}
-              href={buildQuery({ tag: t.slug })}
+              href={`/tag/${t.slug}`}
               className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
                 isActive
                   ? "border-gold-500/40 bg-gold-500/15 text-gold-400"
