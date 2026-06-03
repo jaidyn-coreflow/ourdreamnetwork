@@ -47,7 +47,7 @@ export function generateMetadata({
   return {
     title,
     description: desc,
-    alternates: { canonical: `/characters/${c.slug}` },
+    alternates: { canonical: `/${c.slug}` },
     openGraph: {
       title,
       description: desc,
@@ -84,7 +84,7 @@ export default function CharacterPage({
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.romantasyai.com";
   const isStory = !!(series || character.storyline);
-  const pageUrl = `${siteUrl}/characters/${character.slug}`;
+  const pageUrl = `${siteUrl}/${character.slug}`;
 
   /* Two nodes in a @graph instead of one object: previously a conditional
    * spread set "@type": "CreativeWork" AFTER "@type": "WebPage", clobbering
@@ -94,7 +94,7 @@ export default function CharacterPage({
   const breadcrumb = {
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Characters", item: `${siteUrl}/characters` },
+      { "@type": "ListItem", position: 1, name: "Characters", item: `${siteUrl}/` },
       ...(series
         ? [{ "@type": "ListItem", position: 2, name: series.label, item: `${siteUrl}${series.href}` }]
         : []),
@@ -147,7 +147,7 @@ export default function CharacterPage({
     ? buildChatPreviewJsonLd(
         chatPreview,
         character.name,
-        `${siteUrl}/characters/${character.slug}`,
+        `${siteUrl}/${character.slug}`,
       )
     : null;
 
@@ -169,7 +169,7 @@ export default function CharacterPage({
 
       {/* ── Breadcrumb ────────────────────────────────────────── */}
       <nav className="text-xs text-parchment-300/50">
-        <Link href="/characters" className="hover:text-gold-400">
+        <Link href="/" className="hover:text-gold-400">
           Characters
         </Link>
         {series && (
@@ -242,7 +242,7 @@ export default function CharacterPage({
                 .map((tagMeta) => (
                   <Link
                     key={tagMeta.slug}
-                    href={`/characters/tag/${tagMeta.slug}`}
+                    href={`/tag/${tagMeta.slug}`}
                     className="rounded-full border border-white/10 bg-night-800/60 px-2.5 py-0.5 text-xs text-parchment-300/60 transition-colors hover:border-gold-500/30 hover:text-gold-400"
                   >
                     {tagMeta.label}
@@ -328,7 +328,7 @@ export default function CharacterPage({
                   <strong className="text-parchment-200">the male lead</strong>.
                   If you&rsquo;d prefer to play as the woman, browse our{" "}
                   <Link
-                    href="/characters?gender=female"
+                    href="/?gender=female"
                     className="text-gold-400 underline hover:text-gold-300"
                   >
                     female characters
@@ -341,7 +341,7 @@ export default function CharacterPage({
                   <strong className="text-parchment-200">the female lead</strong>.
                   If you&rsquo;d prefer to play as the man, browse our{" "}
                   <Link
-                    href="/characters?gender=male"
+                    href="/?gender=male"
                     className="text-gold-400 underline hover:text-gold-300"
                   >
                     male characters
@@ -389,7 +389,7 @@ export default function CharacterPage({
                 connection, and let the slow burn unfold at your pace. If
                 you&rsquo;d prefer to play as the man, browse our{" "}
                 <Link
-                  href="/characters?gender=female"
+                  href="/?gender=female"
                   className="text-gold-400 underline hover:text-gold-300"
                 >
                   female characters
@@ -404,7 +404,7 @@ export default function CharacterPage({
                 connection, and let the slow burn unfold at your pace. If
                 you&rsquo;d prefer to play as the woman, browse our{" "}
                 <Link
-                  href="/characters?gender=male"
+                  href="/?gender=male"
                   className="text-gold-400 underline hover:text-gold-300"
                 >
                   male characters
@@ -479,7 +479,7 @@ export default function CharacterPage({
             </p>
           </Link>
           <Link
-            href="/characters"
+            href="/"
             className="group rounded-lg border border-white/5 bg-card-gradient p-4 text-center transition-colors hover:border-gold-500/30"
           >
             <p className="text-[10px] uppercase tracking-wider text-gold-400/80">

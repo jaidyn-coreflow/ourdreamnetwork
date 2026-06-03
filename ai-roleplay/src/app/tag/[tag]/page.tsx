@@ -48,11 +48,11 @@ export function generateMetadata({
   return {
     title: { absolute: `${meta.seoTitle} | RomantasyAI` },
     description: meta.seoDescription,
-    alternates: { canonical: `/characters/tag/${meta.slug}` },
+    alternates: { canonical: `/tag/${meta.slug}` },
     openGraph: {
       title: meta.seoTitle,
       description: meta.seoDescription,
-      url: `/characters/tag/${meta.slug}`,
+      url: `/tag/${meta.slug}`,
       ...(ogImage && {
         images: [{ url: ogImage, width: 512, height: 512, alt: meta.label }],
       }),
@@ -75,7 +75,7 @@ export default function TagPage({ params }: { params: { tag: string } }) {
   const characters = charactersForTag(meta.slug);
   const siteUrl =
     process.env.NEXT_PUBLIC_SITE_URL || "https://www.romantasyai.com";
-  const pageUrl = `${siteUrl}/characters/tag/${meta.slug}`;
+  const pageUrl = `${siteUrl}/tag/${meta.slug}`;
 
   /* CollectionPage + ItemList: the Schema.org pattern Google uses for
    * "list of things" pages. The numbered ItemList helps with grid-style
@@ -90,7 +90,7 @@ export default function TagPage({ params }: { params: { tag: string } }) {
     breadcrumb: {
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Characters", item: `${siteUrl}/characters` },
+        { "@type": "ListItem", position: 1, name: "Characters", item: `${siteUrl}/` },
         { "@type": "ListItem", position: 2, name: meta.label, item: pageUrl },
       ],
     },
@@ -101,7 +101,7 @@ export default function TagPage({ params }: { params: { tag: string } }) {
         "@type": "ListItem",
         position: i + 1,
         name: c.name,
-        url: `${siteUrl}/characters/${c.slug}`,
+        url: `${siteUrl}/${c.slug}`,
         image: c.imageUrl,
       })),
     },
@@ -122,7 +122,7 @@ export default function TagPage({ params }: { params: { tag: string } }) {
 
       {/* ── Breadcrumb ────────────────────────────────────────── */}
       <nav className="text-xs text-parchment-300/50">
-        <Link href="/characters" className="hover:text-gold-400">
+        <Link href="/" className="hover:text-gold-400">
           Characters
         </Link>
         <span className="mx-1.5">/</span>
@@ -160,7 +160,7 @@ export default function TagPage({ params }: { params: { tag: string } }) {
             {cooccurringTags.map((t) => (
               <Link
                 key={t.slug}
-                href={`/characters/tag/${t.slug}`}
+                href={`/tag/${t.slug}`}
                 className="inline-flex items-center rounded-full border border-white/10 bg-night-800/60 px-3 py-1 text-sm text-parchment-300/70 transition-colors hover:border-gold-500/30 hover:text-gold-400"
               >
                 {t.label}
@@ -199,7 +199,7 @@ export default function TagPage({ params }: { params: { tag: string } }) {
             </p>
           </Link>
           <Link
-            href="/characters"
+            href="/"
             className="group rounded-lg border border-white/5 bg-card-gradient p-4 text-center transition-colors hover:border-gold-500/30"
           >
             <p className="text-[10px] uppercase tracking-wider text-gold-400/80">
