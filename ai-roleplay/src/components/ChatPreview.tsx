@@ -163,7 +163,7 @@ export function ChatPreview({
           <button
             type="button"
             className="btn-primary text-base"
-            onClick={() => openGate(chatSlug)}
+            onClick={() => openGate(chatSlug, characterName)}
           >
             Continue this story&nbsp;&rarr;
           </button>

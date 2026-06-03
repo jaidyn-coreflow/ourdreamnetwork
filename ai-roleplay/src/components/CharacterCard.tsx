@@ -89,7 +89,7 @@ export function CharacterCard({ character: c, eager = false }: Props) {
         {/* ── Action row ─────────────────────────────────────── */}
         <div className="mt-5 space-y-2">
           {/* Primary CTA \u2014 always present, full-width to dominate the eye. */}
-          <ChatNowButton chatUrl={c.chatUrl} className="btn-primary w-full justify-center text-sm">
+          <ChatNowButton chatUrl={c.chatUrl} name={c.name} className="btn-primary w-full justify-center text-sm">
             Chat now&nbsp;&rarr;
           </ChatNowButton>
 

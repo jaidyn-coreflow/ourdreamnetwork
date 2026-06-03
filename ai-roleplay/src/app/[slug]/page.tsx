@@ -252,12 +252,12 @@ export default function CharacterPage({
                 <a href="#chat-preview" className="btn-primary">
                   Try a 60-second preview&nbsp;&darr;
                 </a>
-                <ChatNowButton chatUrl={character.chatUrl} className="btn-secondary">
+                <ChatNowButton chatUrl={character.chatUrl} name={character.name} className="btn-secondary">
                   Continue this story&nbsp;&rarr;
                 </ChatNowButton>
               </>
             ) : (
-              <ChatNowButton chatUrl={character.chatUrl} className="btn-primary">
+              <ChatNowButton chatUrl={character.chatUrl} name={character.name} className="btn-primary">
                 {series || character.storyline ? "Play this story" : "Start chatting"}&nbsp;&rarr;
               </ChatNowButton>
             )}

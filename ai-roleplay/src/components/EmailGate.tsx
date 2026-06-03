@@ -3,9 +3,15 @@
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 import { captureAndRedirect } from "@/lib/funnel-client";
 
+interface GateTarget {
+  chatSlug: string;
+  /** Character display name — used in the modal CTA copy. */
+  name: string;
+}
+
 interface GateCtx {
-  /** Open the modal for a given character chat slug. */
-  openGate: (chatSlug: string) => void;
+  /** Open the modal for a given character (chat slug + display name). */
+  openGate: (chatSlug: string, name: string) => void;
 }
 const Ctx = createContext<GateCtx | null>(null);
 
@@ -18,27 +24,27 @@ export function useEmailGate(): GateCtx {
 const isValidEmail = (s: string) => /.+@.+\..+/.test(s);
 
 export function EmailGateProvider({ children }: { children: ReactNode }) {
-  const [slug, setSlug] = useState<string | null>(null);
+  const [target, setTarget] = useState<GateTarget | null>(null);
   const [error, setError] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  const openGate = useCallback((chatSlug: string) => {
+  const openGate = useCallback((chatSlug: string, name: string) => {
     setError(false);
-    setSlug(chatSlug);
+    setTarget({ chatSlug, name });
   }, []);
 
   useEffect(() => {
-    if (!slug) return;
+    if (!target) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && !submitting) setSlug(null);
+      if (e.key === "Escape" && !submitting) setTarget(null);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [slug, submitting]);
+  }, [target, submitting]);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (submitting || !slug) return;
+    if (submitting || !target) return;
     const email = ((new FormData(e.currentTarget).get("email") as string) ?? "").trim();
     if (!isValidEmail(email)) {
       setError(true);
@@ -46,19 +52,19 @@ export function EmailGateProvider({ children }: { children: ReactNode }) {
     }
     setError(false);
     setSubmitting(true);
-    await captureAndRedirect(email, slug); // navigates away
+    await captureAndRedirect(email, target.chatSlug); // navigates away
   };
 
   return (
     <Ctx.Provider value={{ openGate }}>
       {children}
-      {slug && (
+      {target && (
         <div
           role="dialog"
           aria-modal="true"
           aria-labelledby="gate-title"
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-5 backdrop-blur-md"
-          onClick={(e) => { if (!submitting && e.target === e.currentTarget) setSlug(null); }}
+          onClick={(e) => { if (!submitting && e.target === e.currentTarget) setTarget(null); }}
         >
           <div className="relative w-full max-w-[420px] rounded-2xl border border-[#F17BB6]/25 bg-[#141414]/95 px-6 pb-14 pt-7 shadow-2xl">
             <h2 id="gate-title" className="mb-1.5 text-center text-[22px] font-bold">
@@ -82,10 +88,10 @@ export function EmailGateProvider({ children }: { children: ReactNode }) {
                 type="submit" disabled={submitting}
                 className="btn-primary mt-3.5 w-full justify-center text-sm disabled:opacity-70"
               >
-                {submitting ? "Submitting…" : "Get my 5 free messages →"}
+                {submitting ? "Submitting…" : `Start chatting to ${target.name} now`}
               </button>
             </form>
-            <button type="button" onClick={() => setSlug(null)}
+            <button type="button" onClick={() => setTarget(null)}
               className="mt-3.5 block w-full text-center text-[13px] text-white/50 hover:text-white/80">
               ← back
             </button>

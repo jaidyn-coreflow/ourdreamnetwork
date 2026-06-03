@@ -78,7 +78,7 @@ export function CharacterCardCompact({
 
         {/* Inline action row \u2014 keep it tight; this surface is a teaser. */}
         <div className="mt-2 flex items-center gap-3 text-xs font-semibold">
-          <ChatNowButton chatUrl={c.chatUrl} className="text-gold-400 hover:text-gold-300">
+          <ChatNowButton chatUrl={c.chatUrl} name={c.name} className="text-gold-400 hover:text-gold-300">
             Chat now&nbsp;&rarr;
           </ChatNowButton>
           {showsPreview && (
