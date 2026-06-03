@@ -12,7 +12,7 @@
     { "source": "/girlfriendgpt", "destination": "/girlfriendgpt.html" },
     { "source": "/login", "destination": "/login.html" },
 
-    { "source": "/ai-roleplay", "destination": "https://AI_ROLEPLAY_ZONE_URL/ai-roleplay" },
-    { "source": "/ai-roleplay/:path*", "destination": "https://AI_ROLEPLAY_ZONE_URL/ai-roleplay/:path*" }
+    { "source": "/ai-roleplay", "destination": "https://ai-roleplay-ten.vercel.app/ai-roleplay" },
+    { "source": "/ai-roleplay/:path*", "destination": "https://ai-roleplay-ten.vercel.app/ai-roleplay/:path*" }
   ]
 }
