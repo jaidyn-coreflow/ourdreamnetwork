@@ -25,13 +25,17 @@ Deployed on Vercel. No framework — plain HTML/CSS/JS in `/public`, one tiny Ve
 | `/top-sites` | `top-sites.html` | Listicle (top AI sites) | Yes |
 | `/top-gay-ai-sites` | `top-gay-ai-sites.html` | Listicle (gay AI sites) | Yes |
 | `/top-ai-bf-sites` | `top-ai-bf-sites.html` | Listicle (AI boyfriend sites) | Yes |
+| `/top-ai-companions` | `top-ai-companions.html` | Listicle (AI companion sites) | Yes |
 | `/candy` | `candy.html` | Competitor comparison (Candy AI) | Yes |
 | `/joi` | `joi.html` | Competitor comparison (Joi AI) | Yes |
 | `/lovescape` | `lovescape.html` | Competitor comparison (Lovescape) | Yes |
 | `/girlfriendgpt` | `girlfriendgpt.html` | Competitor comparison (GirlfriendGPT) | Yes |
+| `/ai-roleplay` | (separate Next.js zone — `ai-roleplay/`) | AI roleplay character catalogue + chat funnel | Yes |
 | `/privacy`, `/terms` | `privacy.html`, `terms.html` | Legal | No (no submit) |
 
 When the user adds a new LP, update both this table and `vercel.json`.
+
+**`/ai-roleplay` is NOT a `public/*.html` page.** It is a standalone Next.js app living in `ai-roleplay/` (App Router, `basePath: '/ai-roleplay'`), deployed as its **own Vercel project** and proxied in via two `vercel.json` rewrites (`/ai-roleplay` and `/ai-roleplay/:path*` → the zone's deployment URL). This is Vercel Multi-Zones — the existing static pages, the `/` quiz, and `/api/save-email.js` are untouched. The zone reuses romantasy's character components (reskinned to the `index.html` dark-pink theme). Its CTAs open an email-capture modal ("Free Trial Offer — 5 messages free") that reuses the SAME RedTrack/`getGlValue` funnel as the static LPs, but redirects to each character's `ourdream.ai/chat/<slug>` via a dedicated RedTrack slot `/click/2` (the quiz uses `/click/1`). Funnel events fire with `source: 'ai-roleplay'`. Edit the zone in `ai-roleplay/src/...`; it has its own build (`cd ai-roleplay && npm run build`).
 
 **Competitor-comparison pages (`/candy`, `/joi`, `/lovescape`, `/girlfriendgpt`) do NOT capture email or use the redirect funnel below.** Their CTAs are plain `<a href="/?…">` links into the same-domain quiz at `/`, which owns the offer redirect. On load they only rewrite each `[data-quiz-cta]` anchor's href to forward inbound query params (`utm_*`, `gclid`, `cmpid`, …) and fire a `quiz_cta_clicked` dataLayer event. No email form, no modal, no `getGlValue`/RedTrack on these pages — the `rtkclickid-store` cookie (set on `cookiedomain=ourdreamnetwork.com`) persists same-domain to the quiz, which handles the cross-domain `_gl`/RedTrack hop. See `public/candy.html` (all four share identical markup, differing only in copy).
 
