@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base resets ───────────────────────────────────────────── */
+@layer base {
+  html {
+    @apply scroll-smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-night-950 text-parchment-100 font-body;
+  }
+
+  ::selection {
+    @apply bg-gold-500/30 text-parchment-100;
+  }
+}
+
+/* ── Shared component classes ─────────────────────────────── */
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-2 rounded-lg
+           bg-gradient-to-r from-gold-600 to-gold-400
+           px-6 py-3 font-semibold text-night-950
+           shadow-lg shadow-gold-500/20
+           transition-all duration-200
+           hover:shadow-gold-500/40 hover:brightness-110
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 rounded-lg
+           border border-parchment-300/20 bg-night-800/60
+           px-6 py-3 font-semibold text-parchment-200
+           backdrop-blur-sm transition-all duration-200
+           hover:border-gold-500/40 hover:text-gold-400
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400;
+  }
+
+  .glass {
+    @apply border border-white/5 bg-night-800/40 backdrop-blur-md;
+  }
+
+  .page-section {
+    @apply mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8;
+  }
+
+  .heading-1 {
+    @apply font-display text-4xl font-bold tracking-tight
+           text-parchment-100 sm:text-5xl lg:text-6xl;
+  }
+
+  .heading-2 {
+    @apply font-display text-2xl font-bold tracking-tight
+           text-parchment-100 sm:text-3xl;
+  }
+}
+
+/* ── Subtle animated glow used behind hero ────────────────── */
+@keyframes ember-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.ember-glow {
+  animation: ember-pulse 6s ease-in-out infinite;
+}

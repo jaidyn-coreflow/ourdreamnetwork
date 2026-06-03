@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="6" fill="#0a0a14"/>
+  <!-- Dragon head profile facing left — two swept-back horns -->
+  <path d="M3 16 Q5 13 9 12 L12 11 13 9 16 5 15 10 18 8 22 4 20 11 Q23 13 25 16 Q26 20 25 24 Q22 28 17 28 Q12 27 8 23 Q5 20 3 18Z" fill="#f0c987"/>
+  <!-- Eye socket -->
+  <circle cx="12" cy="16" r="2.2" fill="#0a0a14"/>
+  <!-- Iris (rose accent) -->
+  <circle cx="12" cy="16" r="1.3" fill="#c2185b"/>
+  <!-- Slit pupil -->
+  <ellipse cx="12" cy="16" rx="0.4" ry="1.1" fill="#0a0a14"/>
+  <!-- Nostril -->
+  <circle cx="5" cy="15.5" r="0.8" fill="#0a0a14"/>
+  <!-- Jaw line -->
+  <path d="M3 17 Q7 18.5 11 19" stroke="#0a0a14" stroke-width="0.8" stroke-linecap="round" fill="none"/>
+  <!-- Neck scale accents -->
+  <path d="M23 17 L25 16.5 M22.5 19 L24.5 18.5 M22 21 L24 20.5" stroke="#b8864f" stroke-width="0.6"/>
+</svg>

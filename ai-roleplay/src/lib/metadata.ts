@@ -1,0 +1,53 @@
+import type { Metadata, Viewport } from "next";
+
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.romantasyai.com";
+
+/** Shared OG image — 1200x630 painterly cover (mozjpeg q=75, ~248 KB). */
+const OG_IMAGE = {
+  url: "/og.jpg",
+  width: 1200,
+  height: 630,
+  alt: "RomantasyAI \u2014 Cinematic Romantic Fantasy",
+} as const;
+
+/**
+ * Shared metadata defaults.
+ * Import and spread into each page's `export const metadata`.
+ */
+export const siteMetadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "RomantasyAI \u2014 18+ Romantic Fantasy Prompt Studio",
+    template: "%s | RomantasyAI",
+  },
+  description:
+    "Cinematic, AI-powered romantic fantasy imagery for adults. " +
+    "Write your own scene, choose a style, and create on ourdream.ai.",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "RomantasyAI",
+    url: SITE_URL,
+    images: [OG_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: [OG_IMAGE.url],
+  },
+  robots: {
+    index: process.env.NOINDEX !== "true",
+    follow: process.env.NOINDEX !== "true",
+  },
+};
+
+/**
+ * Shared viewport defaults. Next 14+ requires a separate `viewport` export
+ * for theme-color / color-scheme. Keep colours in sync with `tailwind.config`.
+ */
+export const siteViewport: Viewport = {
+  /* night-900 — matches Tailwind token; eliminates white flash on dark
+   * mobile UAs and tints the iOS / Android URL bar. */
+  themeColor: "#0a0a14",
+  colorScheme: "dark",
+};
