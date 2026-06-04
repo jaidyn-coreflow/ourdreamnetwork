@@ -2,14 +2,14 @@ import { describe, expect, it } from "vitest";
 import { buildRedirectUrl, REDTRACK_BASE } from "./redirect";
 
 describe("buildRedirectUrl", () => {
-  it("routes every click through clk/click with sub17=<chatSlug>, sub11, clickid, _gl, and inbound params", () => {
+  it("routes through the AI Roleplay campaign redirect link with sub17, sub11, clickid, _gl, and inbound params", () => {
     const url = buildRedirectUrl({
       chatSlug: "the-storm-rider-crown-thorn-nG3Q3Sdgvj",
       clickid: "abc123",
       gl: "1*glpayload",
       inbound: new URLSearchParams("gclid=G1&utm_source=google"),
     });
-    expect(REDTRACK_BASE).toBe("https://clk.ourdreamnetwork.com/click");
+    expect(REDTRACK_BASE).toBe("https://clk.ourdreamnetwork.com/6a20d8a94628b3bfe702b2c1");
     expect(url.startsWith(REDTRACK_BASE + "?")).toBe(true);
     const qs = new URL(url).searchParams;
     expect(qs.get("sub17")).toBe("the-storm-rider-crown-thorn-nG3Q3Sdgvj");
@@ -32,7 +32,7 @@ describe("buildRedirectUrl", () => {
     expect(draven).not.toBe(royal);
   });
 
-  it("organic (no clickid): still routes through clk/click, omits clickid and sub19", () => {
+  it("organic (no clickid): still routes through the campaign link, omits clickid and sub19", () => {
     const url = buildRedirectUrl({ chatSlug: "x", clickid: "", gl: "", inbound: new URLSearchParams() });
     expect(url.startsWith(REDTRACK_BASE + "?")).toBe(true);
     const qs = new URL(url).searchParams;

@@ -1,30 +1,24 @@
 /**
  * Build the outbound URL that the email gate redirects to after capture.
  *
- * EVERY click — paid and organic — routes through RedTrack's click router
- * at clk.ourdreamnetwork.com/click, carrying the character's chat slug in
- * `sub17` (unique per character; the RedTrack slot forwards it to
- * ourdream.ai/chat/<sub17>). Params:
+ * Every click — paid and organic — routes through the RedTrack REDIRECT
+ * tracking link for the "Google Ads - AI Roleplay" campaign, which forwards
+ * to the "Ourdream Character Chat" offer (ourdream.ai/chat/{sub17}). Params:
  *   - sub17   = <chatSlug>        the character to open (per-character)
  *   - sub11   = "ai-roleplay"     source label for RedTrack reports
  *   - clickid = <rtkclickid>      paid click linkage (omitted when absent)
  *   - sub19   = <_gl>             GA4 cross-domain linker (omitted when absent)
  *   - plus any inbound utm_, gclid, … params forwarded through
  *
- * The rtkclickid-store cookie is same-domain (cookiedomain=ourdreamnetwork.com),
- * so RedTrack also sees it on the request; we pass clickid explicitly to match
- * the proven index.html funnel. No-cookie visitors are attributed to the
- * uniclick `defaultcampaignid`.
+ * The campaign id lives in the URL PATH (this is RedTrack's redirect-link
+ * format). The `cmpid` query param is the *universal-script* mechanism (used
+ * in the Google Ads final-URL-suffix on the landing page) and is ignored by
+ * the /click redirect endpoint — hence the path-based link here.
  */
 
-// clk.ourdreamnetwork.com/click — RedTrack click router.
-export const REDTRACK_BASE = "https://clk.ourdreamnetwork.com/click";
-
-// RedTrack campaign "Google Ads - AI Roleplay" → offer "Ourdream Character
-// Chat" (destination ourdream.ai/chat/{sub17}?...&clickid={clickid}&_gl={sub19}).
-// Passed as cmpid so RedTrack routes to THIS campaign instead of the uniclick
-// defaultcampaignid (which is the /create quiz).
-const CAMPAIGN_ID = "6a20d8a94628b3bfe702b2c1";
+// RedTrack REDIRECT link for the "Google Ads - AI Roleplay" campaign
+// (campaign id 6a20d8a94628b3bfe702b2c1) → "Ourdream Character Chat" offer.
+export const REDTRACK_BASE = "https://clk.ourdreamnetwork.com/6a20d8a94628b3bfe702b2c1";
 
 export interface RedirectInputs {
   chatSlug: string;
@@ -35,7 +29,6 @@ export interface RedirectInputs {
 
 export function buildRedirectUrl({ chatSlug, clickid, gl, inbound }: RedirectInputs): string {
   const params = new URLSearchParams();
-  params.set("cmpid", CAMPAIGN_ID);
   inbound.forEach((v, k) => {
     if (!params.has(k)) params.set(k, v);
   });
