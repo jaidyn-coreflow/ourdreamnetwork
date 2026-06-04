@@ -7,7 +7,11 @@ function readClickid(): string {
   return m ? decodeURIComponent(m[1]) : "";
 }
 
-/** Decorate a dummy ourdream.ai link, extract the _gl payload (paid sub19). */
+/**
+ * Decorate a dummy ourdream.ai link via GTM's cross-domain linker, then
+ * extract the _gl payload. Carried to RedTrack as sub19 so the user's GA4
+ * session stitches from ourdreamnetwork.com to ourdream.ai across the hop.
+ */
 function getGlValue(): Promise<string> {
   return new Promise((resolve) => {
     const a = document.createElement("a");
@@ -19,22 +23,6 @@ function getGlValue(): Promise<string> {
       const match = a.href.match(/[?&]_gl=([^&]+)/);
       document.body.removeChild(a);
       resolve(match ? decodeURIComponent(match[1]) : "");
-    }, 100);
-  });
-}
-
-/** GTM-decorate a full URL (organic path needs _gl on the final chat URL). */
-function getDecoratedUrl(baseUrl: string): Promise<string> {
-  return new Promise((resolve) => {
-    const a = document.createElement("a");
-    a.href = baseUrl;
-    a.style.cssText = "position:fixed;left:-9999px;";
-    document.body.appendChild(a);
-    a.dispatchEvent(new MouseEvent("mousedown", { bubbles: true }));
-    setTimeout(() => {
-      const decorated = a.href;
-      document.body.removeChild(a);
-      resolve(decorated);
     }, 100);
   });
 }
@@ -54,9 +42,11 @@ function saveEmail(email: string): Promise<unknown> {
 }
 
 /**
- * Capture the email, then redirect to the character's chat URL through the
- * RedTrack funnel. The redirect NEVER awaits saveEmail (capture loss is
- * acceptable; redirect drop-off is not — see CLAUDE.md).
+ * Capture the email, then redirect the user to the chosen character through
+ * the RedTrack click router (clk.ourdreamnetwork.com/click?sub17=<chatSlug>).
+ * Every click routes through RedTrack; no-cookie visitors are attributed to
+ * the uniclick defaultcampaignid. The redirect NEVER awaits saveEmail
+ * (capture loss is acceptable; redirect drop-off is not — see CLAUDE.md).
  */
 export async function captureAndRedirect(email: string, chatSlug: string): Promise<void> {
   track("quiz_email_captured", { source: "ai-roleplay", email_provided: true });
@@ -64,12 +54,12 @@ export async function captureAndRedirect(email: string, chatSlug: string): Promi
 
   const clickid = readClickid();
   const inbound = new URLSearchParams(window.location.search);
-  const gl = clickid ? await getGlValue() : "";
+  // Always fetch _gl (sub19) — both paid and organic clicks hop to ourdream.ai
+  // through RedTrack, so GA4 session continuity needs the linker either way.
+  const gl = await getGlValue();
   const url = buildRedirectUrl({ chatSlug, clickid, gl, inbound });
 
   track("quiz_redirect", { source: "ai-roleplay", redirect_url: url, has_clickid: !!clickid });
 
-  // Paid path already carries _gl via sub19; only organic needs decoration.
-  const finalUrl = clickid ? url : await getDecoratedUrl(url);
-  window.location.href = finalUrl;
+  window.location.href = url;
 }

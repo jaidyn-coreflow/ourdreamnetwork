@@ -1,26 +1,26 @@
 /**
  * Build the outbound URL that the email gate redirects to after capture.
  *
- * Mirrors public/index.html's redirectToRedtrack(), but the destination is
- * a per-character ourdream.ai/chat/<slug> URL instead of /create.
+ * EVERY click — paid and organic — routes through RedTrack's click router
+ * at clk.ourdreamnetwork.com/click, carrying the character's chat slug in
+ * `sub17` (unique per character; the RedTrack slot forwards it to
+ * ourdream.ai/chat/<sub17>). Params:
+ *   - sub17   = <chatSlug>        the character to open (per-character)
+ *   - sub11   = "ai-roleplay"     source label for RedTrack reports
+ *   - clickid = <rtkclickid>      paid click linkage (omitted when absent)
+ *   - sub19   = <_gl>             GA4 cross-domain linker (omitted when absent)
+ *   - plus any inbound utm_, gclid, … params forwarded through
  *
- *   PAID   (clickid present): clk.ourdreamnetwork.com/click/<N> with
- *           sub11=ai-roleplay (source label), sub12=<chatSlug> (the chat
- *           path the RedTrack slot forwards to), sub19=<_gl> (GA4 linker),
- *           clickid=<cookie>. The RedTrack slot's destination must be
- *           configured as https://ourdream.ai/chat/{sub12}?...&clickid={clickid}
- *           &tracker=rt&_gl={sub19}. See spec "Open external dependency".
- *   ORGANIC (no clickid): RedTrack rejects empty clickid, so go direct to
- *           https://ourdream.ai/chat/<slug> with ref=googlecpc&tracker=rt.
- *           Caller GTM-decorates this URL for _gl (getDecoratedUrl).
+ * The rtkclickid-store cookie is same-domain (cookiedomain=ourdreamnetwork.com),
+ * so RedTrack also sees it on the request; we pass clickid explicitly to match
+ * the proven index.html funnel. No-cookie visitors are attributed to the
+ * uniclick `defaultcampaignid`.
  */
 
-// clk.ourdreamnetwork.com/click/2 — DEDICATED chat-redirect slot. Configure
-// this slot in the RedTrack dashboard before the paid path attributes.
-// (index.html uses /click/1 for the /create quiz; do not reuse it.)
-export const REDTRACK_BASE = "https://clk.ourdreamnetwork.com/click/2";
-
-const OURDREAM_CHAT_BASE = "https://ourdream.ai/chat/";
+// clk.ourdreamnetwork.com/click — RedTrack click router. Its destination
+// template forwards to https://ourdream.ai/chat/{sub17}?...&_gl={sub19}.
+// (index.html's quiz uses /click/1; this chat funnel uses the default /click.)
+export const REDTRACK_BASE = "https://clk.ourdreamnetwork.com/click";
 
 export interface RedirectInputs {
   chatSlug: string;
@@ -35,15 +35,10 @@ export function buildRedirectUrl({ chatSlug, clickid, gl, inbound }: RedirectInp
     if (!params.has(k)) params.set(k, v);
   });
 
-  if (clickid) {
-    params.set("sub11", "ai-roleplay");
-    params.set("sub12", chatSlug);
-    if (gl) params.set("sub19", gl);
-    params.set("clickid", clickid);
-    return REDTRACK_BASE + "?" + params.toString();
-  }
+  params.set("sub11", "ai-roleplay");
+  params.set("sub17", chatSlug);
+  if (gl) params.set("sub19", gl);
+  if (clickid) params.set("clickid", clickid);
 
-  params.set("ref", "googlecpc");
-  params.set("tracker", "rt");
-  return OURDREAM_CHAT_BASE + chatSlug + "?" + params.toString();
+  return REDTRACK_BASE + "?" + params.toString();
 }
