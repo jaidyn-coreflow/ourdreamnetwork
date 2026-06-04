@@ -17,10 +17,14 @@
  * uniclick `defaultcampaignid`.
  */
 
-// clk.ourdreamnetwork.com/click — RedTrack click router. Its destination
-// template forwards to https://ourdream.ai/chat/{sub17}?...&_gl={sub19}.
-// (index.html's quiz uses /click/1; this chat funnel uses the default /click.)
+// clk.ourdreamnetwork.com/click — RedTrack click router.
 export const REDTRACK_BASE = "https://clk.ourdreamnetwork.com/click";
+
+// RedTrack campaign "Google Ads - AI Roleplay" → offer "Ourdream Character
+// Chat" (destination ourdream.ai/chat/{sub17}?...&clickid={clickid}&_gl={sub19}).
+// Passed as cmpid so RedTrack routes to THIS campaign instead of the uniclick
+// defaultcampaignid (which is the /create quiz).
+const CAMPAIGN_ID = "6a20d8a94628b3bfe702b2c1";
 
 export interface RedirectInputs {
   chatSlug: string;
@@ -31,6 +35,7 @@ export interface RedirectInputs {
 
 export function buildRedirectUrl({ chatSlug, clickid, gl, inbound }: RedirectInputs): string {
   const params = new URLSearchParams();
+  params.set("cmpid", CAMPAIGN_ID);
   inbound.forEach((v, k) => {
     if (!params.has(k)) params.set(k, v);
   });

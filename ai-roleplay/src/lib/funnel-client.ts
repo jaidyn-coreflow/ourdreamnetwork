@@ -1,6 +1,7 @@
 "use client";
 
 import { buildRedirectUrl } from "@/lib/redirect";
+import { mergePersistedWithUrl } from "@/lib/tracking-storage";
 
 function readClickid(): string {
   const m = document.cookie.match(/(?:^|;\s*)rtkclickid-store=([^;]+)/);
@@ -53,7 +54,10 @@ export async function captureAndRedirect(email: string, chatSlug: string): Promi
   saveEmail(email).catch((e) => console.warn("[save-email] failed:", e));
 
   const clickid = readClickid();
-  const inbound = new URLSearchParams(window.location.search);
+  // Merge first-touch attribution that TrackingCapture persisted to
+  // localStorage on landing — so gclid/utm/etc. survive internal navigation
+  // (e.g. catalogue → character page → click), not just direct ad landings.
+  const inbound = mergePersistedWithUrl(new URLSearchParams(window.location.search));
   // Always fetch _gl (sub19) — both paid and organic clicks hop to ourdream.ai
   // through RedTrack, so GA4 session continuity needs the linker either way.
   const gl = await getGlValue();
