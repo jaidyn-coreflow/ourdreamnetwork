@@ -10,6 +10,7 @@
     { "source": "/joi", "destination": "/joi.html" },
     { "source": "/lovescape", "destination": "/lovescape.html" },
     { "source": "/girlfriendgpt", "destination": "/girlfriendgpt.html" },
+    { "source": "/secrets-ai", "destination": "/secrets-ai.html" },
     { "source": "/login", "destination": "/login.html" },
 
     { "source": "/ai-roleplay", "destination": "https://ai-roleplay-ten.vercel.app/ai-roleplay" },
