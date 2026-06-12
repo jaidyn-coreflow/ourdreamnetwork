@@ -370,7 +370,7 @@
             for (var pair of inbound.entries()) {
                 if (skip.indexOf(pair[0]) === -1) params.set(pair[0], pair[1]);
             }
-            if (!params.has('ref')) params.set('ref', 'fantasy');
+            if (!params.has('ref')) params.set('ref', 'googlecpc');
 
             var app = ETHNICITY_APPEARANCE[p.ethnicity] || ETHNICITY_APPEARANCE.White;
 
@@ -593,7 +593,7 @@
             var params = window.location.search || '';
             if (params.indexOf('ref=') === -1) {
                 var sep = params ? '&' : '?';
-                params = params + sep + 'ref=fantasy';
+                params = params + sep + 'ref=googlecpc';
             }
             if (params && params.charAt(0) !== '?') params = '?' + params;
             link.href = 'https://ourdream.ai' + params;
