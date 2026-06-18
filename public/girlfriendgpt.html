@@ -622,7 +622,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h1>Break-up With Your<br>Toxic GirlfriendGPT</h1>
       <p class="cdy-hero-sub">Switch over from GirlfriendGPT and get 50 bonus dreamcoins.</p>
       <p class="cdy-hero-desc">It's a situationship, not a relationship. Time to move on. See why so many users are switching to ourdream.</p>
-      <a href="/fantasy" class="cdy-cta cdy-cta-lg" data-quiz-cta="hero">Switch From GirlfriendGPT</a>
+      <a href="/" class="cdy-cta cdy-cta-lg" data-quiz-cta="hero">Switch From GirlfriendGPT</a>
     </div>
   </section>
 
@@ -770,7 +770,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </div>
 
-    <a href="/fantasy" class="cdy-cta cdy-cta-lg" data-quiz-cta="compare">Switch From GirlfriendGPT</a>
+    <a href="/" class="cdy-cta cdy-cta-lg" data-quiz-cta="compare">Switch From GirlfriendGPT</a>
   </section>
 
   <!-- ── Ready to taste ───────────────────────────────────── -->
@@ -780,7 +780,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <h2>GirlfriendGPT is your toxic ex, stop getting burnt</h2>
         <p>If you're ready to explore what a real AI platform feels like with the top-tier image &amp; video generation models, switch to ourdream.</p>
         <p>Sign up and you can create 10 images for free. No payment details needed.</p>
-        <a href="/fantasy" class="cdy-cta" data-quiz-cta="ready">Switch From GirlfriendGPT</a>
+        <a href="/" class="cdy-cta" data-quiz-cta="ready">Switch From GirlfriendGPT</a>
       </div>
       <img class="cdy-ready-img" data-img="cta-bottom" src="https://static.ourdream.ai/blog-assets/hybrid-workflow.webp" alt="" width="712" height="400" loading="lazy" decoding="async">
     </div>
@@ -818,7 +818,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>
 'use strict';
 
-// Every CTA routes to the /fantasy persona picker, carrying inbound attribution
+// Every CTA routes to the homepage quiz at "/", carrying inbound attribution
 // params (utm_*, gclid, fbclid, cmpid, etc.) so they reach the quiz's own
 // redirect logic. This is a same-domain hop: the rtkclickid-store cookie set on
 // cookiedomain=ourdreamnetwork.com persists to the quiz, and index.html owns the
@@ -827,7 +827,7 @@ const PAGE_ID = 'girlfriendgpt';
 window.dataLayer = window.dataLayer || [];
 
 (function initQuizCtas() {
-  const href = '/fantasy' + (location.search || '');
+  const href = '/' + (location.search || '');
   document.querySelectorAll('[data-quiz-cta]').forEach((el) => {
     el.setAttribute('href', href);
     el.addEventListener('click', () => {
