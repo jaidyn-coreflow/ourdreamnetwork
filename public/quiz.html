@@ -440,6 +440,7 @@
         document.querySelectorAll('#step-4 [data-age]').forEach(function (btn) {
             btn.addEventListener('click', function () {
                 answers.age = btn.getAttribute('data-age');
+                track('quiz_step_4_complete', { quiz: 'quiz', age: answers.age });
                 pickAndAdvance(btn);
             });
         });
@@ -448,6 +449,7 @@
         document.querySelectorAll('#step-5 [data-prefer]').forEach(function (card) {
             card.addEventListener('click', function () {
                 answers.visualStyle = card.getAttribute('data-prefer');
+                track('quiz_step_5_complete', { quiz: 'quiz', visual_style: answers.visualStyle });
                 pickAndAdvance(card);
             });
         });
@@ -476,7 +478,11 @@
             });
             chatContinue.disabled = answers.styles.length === 0;
         }
-        chatContinue.addEventListener('click', function () { if (answers.styles.length) goNext(); });
+        chatContinue.addEventListener('click', function () {
+            if (!answers.styles.length) return;
+            track('quiz_step_6_complete', { quiz: 'quiz', chat_styles: answers.styles.join(',') });
+            goNext();
+        });
 
         // ── STEP 7 — title + hero reflect the primary chosen style, in the chosen art set ──
         function primaryStyle() {
