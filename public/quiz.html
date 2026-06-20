@@ -166,16 +166,21 @@
 
         /* ── STEP 7: scene prompt ── */
         .prompt-box { display: flex; width: 100%; max-width: 740px; margin-top: 26px; border-radius: 12px; overflow: hidden; box-shadow: inset 0 -4px 0 0 rgba(0,0,0,0.25); }
-        .prompt-box input {
-            flex: 1; min-width: 0; height: 56px; border: none; outline: none;
+        .prompt-box textarea {
+            flex: 1; min-width: 0; height: 56px; border: none; outline: none; resize: none; overflow: auto;
             background: #1c1c1c; color: #fff; font-family: inherit; font-weight: 700; font-style: italic;
-            font-size: 16px; text-transform: uppercase; letter-spacing: .02em; padding: 0 24px;
+            font-size: 16px; text-transform: uppercase; letter-spacing: .02em; padding: 18px 24px; line-height: 20px;
         }
-        .prompt-box input::placeholder { color: #737373; }
+        .prompt-box textarea::placeholder { color: #737373; }
         .prompt-box .cta { border-radius: 0; flex-shrink: 0; box-shadow: none; }
         @media (max-width: 560px) {
+            /* tall rectangle so people see they can actually describe the scene */
             .prompt-box { flex-direction: column; box-shadow: none; gap: 12px; }
-            .prompt-box input { border-radius: 12px; box-shadow: inset 0 -4px 0 0 rgba(0,0,0,0.25); text-align: center; }
+            .prompt-box textarea {
+                height: auto; min-height: 140px; border-radius: 12px; box-shadow: inset 0 -4px 0 0 rgba(0,0,0,0.25);
+                text-align: left; text-transform: none; font-style: normal; font-weight: 500;
+                padding: 16px; line-height: 1.45;
+            }
             .prompt-box .cta { border-radius: 12px; box-shadow: inset 0 -4px 0 0 rgba(0,0,0,0.25); width: 100%; }
         }
         .hero { width: 100%; max-width: 597px; aspect-ratio: 597 / 720; border-radius: 20px; overflow: hidden; margin-top: 22px; }
@@ -322,7 +327,7 @@
             <h1 class="q-title" id="final-title">A dark romance awaits you</h1>
             <p class="q-sub">Describe the scene in detail</p>
             <div class="prompt-box">
-                <input id="scene-input" type="text" placeholder="Describe in detail" aria-label="Describe the scene" autocomplete="off">
+                <textarea id="scene-input" rows="1" placeholder="Describe in detail" aria-label="Describe the scene" autocomplete="off"></textarea>
                 <button class="cta" id="create-btn" type="button">Create my fantasy</button>
             </div>
             <div class="hero"><img id="final-hero" src="assets/quiz/hero-romance.webp" alt="" loading="lazy"></div>
@@ -601,7 +606,8 @@
                 setTimeout(function () { handoff('https://ourdream.ai/create?ref=googlecpc&s=6'); }, 600);
             });
         });
-        sceneInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') createBtn.click(); });
+        // Plain Enter inserts a newline (it's a describe box); Cmd/Ctrl+Enter submits.
+        sceneInput.addEventListener('keydown', function (e) { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) createBtn.click(); });
 
         // ══════════════════════════════════════════════
         //  INIT
