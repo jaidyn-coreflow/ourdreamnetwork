@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading…</title>
+    <meta name="robots" content="noindex,nofollow">
+    <style>
+        html, body { margin: 0; height: 100%; background: #fff; }
+    </style>
+</head>
+<body>
+    <script>
+    (function () {
+        // Intermediate hop in the funnel: /quiz → /go/ourdream → clk.ourdreamnetwork.com → ourdream.ai
+        // The quiz already built the full destination URL (clickid + _gl baked in) and passed it as ?to=.
+        // This page deliberately holds a blank white screen for ~2.5s, then forwards.
+        function param(name) {
+            var m = new RegExp('[?&]' + name + '=([^&]+)').exec(window.location.search);
+            return m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '';
+        }
+        // Open-redirect guard — only forward to hosts we own / the offer.
+        var ALLOWED = ['clk.ourdreamnetwork.com', 'ourdream.ai'];
+        function isAllowed(url) {
+            try {
+                var h = new URL(url).hostname.toLowerCase();
+                return ALLOWED.some(function (d) { return h === d || h.endsWith('.' + d); });
+            } catch (e) { return false; }
+        }
+        var dest = param('to');
+        if (!dest || !isAllowed(dest)) dest = 'https://ourdream.ai/create?ref=googlecpc&s=6';
+        setTimeout(function () { window.location.replace(dest); }, 2500);
+    })();
+    </script>
+</body>
+</html>
