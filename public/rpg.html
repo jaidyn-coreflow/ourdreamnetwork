@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Build Your RPG - ourdream.ai</title>
     <meta name="description" content="Pick a game, add your twist, and play your own AI RPG in seconds. 100% private, always available.">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta name="googlebot" content="noindex, nofollow">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <script src="constants.js"></script>
 
@@ -70,7 +72,7 @@
         .header {
             position: sticky; top: 0; z-index: 100;
             padding: 28px 20px 16px; display: flex; align-items: center; justify-content: center;
-            background: linear-gradient(to bottom, rgba(10,10,11,0.98) 0%, rgba(10,10,11,0.6) 60%, rgba(10,10,11,0) 100%);
+            background: #0a0a0b; box-shadow: 0 8px 20px rgba(10,10,11,0.9);
         }
         .header-logo { height: 18px; opacity: 0.9; transition: opacity 0.3s; }
         .header-logo:hover { opacity: 1; }
@@ -96,7 +98,7 @@
             .header-logo { height: 26px; }
             .content { padding: 20px 20px 18px; max-width: 1600px; }
             .cards { gap: 12px; }
-            .card { height: min(74vh, 820px); }
+            .card { height: min(80vh, 880px); }
             .card .overlay { padding: 16px 14px 15px; }
             .card .kicker { font-size: 11px; }
             .card .name { font-size: 22px; }
@@ -107,7 +109,7 @@
         .card {
             position: relative; border-radius: 14px; overflow: hidden; cursor: pointer;
             border: 2px solid rgba(255,255,255,0.06); transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-            height: min(60vh, 560px); background: #18181b; -webkit-tap-highlight-color: transparent;
+            height: min(64vh, 600px); background: #18181b; -webkit-tap-highlight-color: transparent;
         }
         .card:hover, .card:focus-visible { border-color: rgba(219,39,119,0.45); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(219,39,119,0.22); outline: none; }
         .card:active { transform: translateY(0); border-color: rgba(219,39,119,0.6); }
@@ -401,7 +403,6 @@
             for (var pair of inbound.entries()) {
                 if (skip.indexOf(pair[0]) === -1) params.set(pair[0], pair[1]);
             }
-            if (!params.has('ref')) params.set('ref', 'googlecpc');
 
             var twist = (document.getElementById('twist-input').value || '').trim();
             if (containsUnderage(twist)) twist = '';
@@ -570,13 +571,7 @@
         (function () {
             var link = document.getElementById('header-link');
             if (!link) return;
-            var params = window.location.search || '';
-            if (params.indexOf('ref=') === -1) {
-                var sep = params ? '&' : '?';
-                params = params + sep + 'ref=googlecpc';
-            }
-            if (params && params.charAt(0) !== '?') params = '?' + params;
-            link.href = 'https://ourdream.ai' + params;
+            link.href = 'https://ourdream.ai' + (window.location.search || '');
         })();
     </script>
 
