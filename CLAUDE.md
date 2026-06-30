@@ -32,6 +32,7 @@ Deployed on Vercel. No framework — plain HTML/CSS/JS in `/public`, one tiny Ve
 | `/girlfriendgpt` | `girlfriendgpt.html` | Competitor comparison (GirlfriendGPT) | Yes |
 | `/secrets-ai` | `secrets-ai.html` | Competitor comparison (Secrets AI) | Yes |
 | `/fantasy` | `fantasy.html` | Persona picker — tap a fantasy → direct to `ourdream.ai/create` with prefilled quiz answers | Yes |
+| `/rpg` | `rpg.html` | RPG game generator — choose character (M/F) + pick a game archetype + free-text twist → direct to `ourdream.ai/create` (anime, `s=6&Q18=true`, twist rides in `Q22`). **No email capture** (no `generate_lead`), like `/quiz`. Cookie-cutter sibling of `fantasy.html` | Yes |
 | `/quiz` | `quiz.html` | 6-step Figma quiz funnel (Owners Narrow theme). **No email capture** — final "Create my fantasy" builds the offer URL then multi-hops `/quiz → /go/ourdream → clk → ourdream.ai/create` | Yes |
 | `/go/ourdream` | `go-ourdream.html` | Internal bounce — blank white screen ~2.5s, then `location.replace` to the `?to=` URL `/quiz` built (host-allowlisted to `clk.ourdreamnetwork.com` / `ourdream.ai`). Not a standalone LP | No |
 | `/ai-roleplay` | (separate Next.js zone — `ai-roleplay/`) | AI roleplay character catalogue + chat funnel | Yes |

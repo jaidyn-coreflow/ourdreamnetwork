@@ -12,6 +12,7 @@
     { "source": "/girlfriendgpt", "destination": "/girlfriendgpt.html" },
     { "source": "/secrets-ai", "destination": "/secrets-ai.html" },
     { "source": "/fantasy", "destination": "/fantasy.html" },
+    { "source": "/rpg", "destination": "/rpg.html" },
     { "source": "/quiz", "destination": "/quiz.html" },
     { "source": "/go/ourdream", "destination": "/go-ourdream.html" },
     { "source": "/login", "destination": "/login.html" },

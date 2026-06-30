@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const CSV_FILE = path.join(__dirname, 'emails.csv');
 
 app.use(express.json());
@@ -17,6 +17,8 @@ app.get('/candy',            (_req, res) => res.sendFile(path.join(__dirname, 'p
 app.get('/joi',              (_req, res) => res.sendFile(path.join(__dirname, 'public', 'joi.html')));
 app.get('/lovescape',        (_req, res) => res.sendFile(path.join(__dirname, 'public', 'lovescape.html')));
 app.get('/girlfriendgpt',    (_req, res) => res.sendFile(path.join(__dirname, 'public', 'girlfriendgpt.html')));
+app.get('/fantasy',          (_req, res) => res.sendFile(path.join(__dirname, 'public', 'fantasy.html')));
+app.get('/rpg',              (_req, res) => res.sendFile(path.join(__dirname, 'public', 'rpg.html')));
 
 app.use(express.static(path.join(__dirname, 'public')));
 

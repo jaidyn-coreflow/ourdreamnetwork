@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Build Your RPG - ourdream.ai</title>
+    <meta name="description" content="Pick a game, add your twist, and play your own AI RPG in seconds. 100% private, always available.">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <script src="constants.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- RedTrack universal tag — loaded directly so the clickid cookie (rtkclickid-store) is written ASAP
+         (avoids the ~8s race that GTM-deferred loading caused). Keep the RT tag OUT of GTM to prevent double-firing. -->
+    <link rel="preconnect" href="https://clk.ourdreamnetwork.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <script async src="https://clk.ourdreamnetwork.com/uniclick.js?attribution=lastpaid&cookiedomain=ourdreamnetwork.com&cookieduration=30&defaultcampaignid=6a06af2165debd9009452848&regviewonce=false"></script>
+
+    <!-- Google Tag Manager (deferred to window load for faster LCP; events queued in dataLayer pre-load) -->
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    addEventListener('load', function () {
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-5VRS8QPJ');
+    });
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0b; color: #e4e4e7;
+            min-height: 100vh; min-height: 100dvh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+        }
+        a { color: inherit; text-decoration: none; }
+        img { display: block; max-width: 100%; }
+
+        .ambient { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+        .ambient::before {
+            content: ''; position: absolute; top: -20%; left: -10%; width: 60%; height: 60%;
+            background: radial-gradient(ellipse, rgba(219,39,119,0.08) 0%, transparent 70%);
+            animation: drift 20s ease-in-out infinite;
+        }
+        .ambient::after {
+            content: ''; position: absolute; bottom: -20%; right: -10%; width: 50%; height: 50%;
+            background: radial-gradient(ellipse, rgba(99,102,241,0.07) 0%, transparent 70%);
+            animation: drift 25s ease-in-out infinite reverse;
+        }
+        @keyframes drift {
+            0%, 100% { transform: translate(0,0); }
+            33% { transform: translate(5%,-3%); }
+            66% { transform: translate(-3%,5%); }
+        }
+
+        .page {
+            position: relative; z-index: 1;
+            min-height: 100vh; min-height: 100dvh;
+            display: flex; flex-direction: column;
+        }
+
+        .header {
+            position: sticky; top: 0; z-index: 100;
+            padding: 28px 20px 16px; display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(to bottom, rgba(10,10,11,0.98) 0%, rgba(10,10,11,0.6) 60%, rgba(10,10,11,0) 100%);
+        }
+        .header-logo { height: 18px; opacity: 0.9; transition: opacity 0.3s; }
+        .header-logo:hover { opacity: 1; }
+
+        .content {
+            flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+            padding: 24px 16px 16px; max-width: 1040px; margin: 0 auto; width: 100%;
+        }
+
+        .title { font-size: clamp(24px, 7vw, 38px); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; text-align: center; color: #fafafa; }
+        .title .warm { background: linear-gradient(135deg, #f472b6 0%, #ec4899 50%, #db2777 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .subtitle { font-size: 14px; color: rgba(255,255,255,0.45); text-align: center; line-height: 1.5; margin-top: 10px; margin-bottom: 20px; }
+
+        /* ── character (gender) toggle ── */
+        .gender-label { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.6); text-align: center; margin-bottom: 10px; }
+        .gender-toggle { display: flex; width: 100%; max-width: 360px; padding: 4px; gap: 4px; border-radius: 999px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); margin: 0 auto 24px; }
+        .gender-opt { flex: 1; border: none; background: none; color: rgba(255,255,255,0.55); font-family: inherit; font-size: 13px; font-weight: 600; padding: 10px 8px; border-radius: 999px; cursor: pointer; transition: all .2s; white-space: nowrap; -webkit-tap-highlight-color: transparent; }
+        .gender-opt[aria-pressed="true"] { background: linear-gradient(135deg,#ec4899,#db2777); color: #fff; box-shadow: 0 6px 18px rgba(219,39,119,0.3); }
+
+        .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; width: 100%; }
+        @media (min-width: 768px) {
+            .header { padding: 28px 32px 14px; }
+            .header-logo { height: 26px; }
+            .content { padding: 20px 20px 18px; max-width: 1600px; }
+            .cards { gap: 12px; }
+            .card { height: min(74vh, 820px); }
+            .card .overlay { padding: 16px 14px 15px; }
+            .card .kicker { font-size: 11px; }
+            .card .name { font-size: 22px; }
+            .card .vibe { display: block; font-size: 13px; }
+            .subtitle { font-size: 15px; }
+        }
+
+        .card {
+            position: relative; border-radius: 14px; overflow: hidden; cursor: pointer;
+            border: 2px solid rgba(255,255,255,0.06); transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+            height: min(60vh, 560px); background: #18181b; -webkit-tap-highlight-color: transparent;
+        }
+        .card:hover, .card:focus-visible { border-color: rgba(219,39,119,0.45); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(219,39,119,0.22); outline: none; }
+        .card:active { transform: translateY(0); border-color: rgba(219,39,119,0.6); }
+        .card-art { position: absolute; inset: 0; background-size: cover; background-position: top center; }
+        .card-art img, .card-art video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; pointer-events: none; user-select: none; transition: transform 0.4s ease; }
+        .card:hover .card-art img, .card:hover .card-art video { transform: scale(1.05); }
+        .card-tint { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+        .card-badge { position: absolute; top: 10px; left: 10px; width: 34px; height: 34px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 18px; background: rgba(10,10,11,0.5); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); z-index: 3; }
+        .card .overlay {
+            position: absolute; bottom: 0; left: 0; right: 0; padding: 12px 9px 12px;
+            background: linear-gradient(to top, rgba(10,10,11,0.97) 0%, rgba(10,10,11,0.6) 50%, transparent 100%);
+            z-index: 2; pointer-events: none;
+        }
+        .card .kicker { font-size: 9px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: rgba(255,255,255,0.62); margin-bottom: 2px; }
+        .card .name { font-size: 14px; font-weight: 700; color: #fff; line-height: 1.12; }
+        .card .vibe { display: none; font-size: 12px; color: rgba(255,255,255,0.66); line-height: 1.35; margin-top: 4px; }
+        .card .go {
+            position: absolute; top: 10px; right: 10px; width: 28px; height: 28px; border-radius: 50%;
+            background: rgba(236,72,153,0.95); display: flex; align-items: center; justify-content: center;
+            z-index: 3; opacity: 0; transform: scale(0.6); transition: all 0.2s ease; pointer-events: none;
+        }
+        .card:hover .go { opacity: 1; transform: scale(1); }
+        .card .go svg { width: 15px; height: 15px; stroke: #fff; }
+
+        /* ── step wrapper ── */
+        .step { width: 100%; display: flex; flex-direction: column; align-items: center; }
+        .step[hidden] { display: none; }
+        .back-btn { align-self: flex-start; background: none; border: none; color: rgba(255,255,255,0.5); font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; padding: 4px 2px; margin-bottom: 4px; transition: color .2s; }
+        .back-btn:hover { color: #ec4899; }
+
+        /* ── twist step ── */
+        .twist-wrap { width: 100%; max-width: 460px; display: flex; flex-direction: column; align-items: center; }
+        .twist-hero { display: flex; align-items: center; gap: 16px; width: 100%; margin: 8px 0 22px; }
+        .twist-art { width: 78px; height: 78px; border-radius: 16px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 38px; box-shadow: 0 8px 22px rgba(0,0,0,0.4); }
+        .twist-hero .meta .kicker { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #ec4899; }
+        .twist-hero .meta .h { font-size: 22px; font-weight: 700; color: #fff; line-height: 1.15; margin-top: 2px; }
+        .twist-hero .meta .v { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.4; margin-top: 5px; }
+        .twist-label { align-self: flex-start; font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.8); margin-bottom: 8px; }
+        .twist-label span { color: rgba(255,255,255,0.4); font-weight: 400; }
+        .twist-input {
+            width: 100%; padding: 15px 16px; border-radius: 14px; resize: none;
+            border: 1.5px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04);
+            color: #fff; font-size: 16px; font-family: inherit; line-height: 1.45; outline: none; transition: border-color .2s; min-height: 76px;
+        }
+        .twist-input:focus { border-color: rgba(236,72,153,0.6); }
+        .twist-input::placeholder { color: rgba(255,255,255,0.3); }
+        .chips { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; margin-top: 12px; }
+        .chip {
+            border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.7);
+            font-family: inherit; font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 999px; cursor: pointer; transition: all .18s; -webkit-tap-highlight-color: transparent;
+        }
+        .chip:hover { border-color: rgba(236,72,153,0.5); color: #fff; }
+        .chip[aria-pressed="true"] { background: rgba(236,72,153,0.16); border-color: rgba(236,72,153,0.7); color: #fff; }
+        .start-btn {
+            width: 100%; margin-top: 22px; padding: 16px; border-radius: 14px; border: none;
+            background: linear-gradient(135deg,#ec4899,#db2777); color: #fff; font-size: 16px; font-weight: 700;
+            font-family: inherit; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: transform .15s, box-shadow .2s; box-shadow: 0 8px 24px rgba(219,39,119,0.3);
+        }
+        .start-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 28px rgba(219,39,119,0.4); }
+        .start-btn:active { transform: translateY(0); }
+
+        .trust-footer { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 16px; margin-top: auto; }
+        .trust-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: rgba(255,255,255,0.3); }
+        .trust-item svg { width: 13px; height: 13px; opacity: 0.4; flex-shrink: 0; }
+        @media (min-width: 768px) {
+            .trust-footer { gap: 28px; }
+            .trust-item { font-size: 14px; }
+            .trust-item svg { width: 16px; height: 16px; }
+        }
+
+        .loading-overlay {
+            position: fixed; inset: 0; z-index: 500; background: rgba(10,10,11,0.96);
+            display: none; flex-direction: column; align-items: center; justify-content: center; gap: 20px; padding: 24px;
+        }
+        .loading-overlay.visible { display: flex; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .spinner { width: 40px; height: 40px; border: 3px solid rgba(219,39,119,0.2); border-top-color: #ec4899; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-overlay p { font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.7); }
+        .loading-overlay .sub { font-size: 12px; font-weight: 400; color: rgba(255,255,255,0.35); }
+
+        /* ── email-capture gate ── */
+        .gate {
+            position: fixed; inset: 0; z-index: 600;
+            background: rgba(10,10,11,0.82); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+            display: none; align-items: flex-end; justify-content: center;
+        }
+        .gate.visible { display: flex; animation: fadeIn 0.25s ease; }
+        .gate-card {
+            position: relative; width: 100%; max-width: 460px;
+            background: #141416; border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px 24px 0 0;
+            padding: 24px 22px calc(22px + env(safe-area-inset-bottom, 0px));
+            box-shadow: 0 -20px 60px rgba(0,0,0,0.6);
+            animation: slideUp 0.35s cubic-bezier(.16,1,.3,1);
+        }
+        @media (min-width: 768px) {
+            .gate { align-items: center; }
+            .gate-card { border-radius: 24px; animation: popIn 0.3s cubic-bezier(.16,1,.3,1); }
+        }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        @keyframes popIn { from { transform: scale(.94); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .gate-close {
+            position: absolute; top: 14px; right: 14px; width: 30px; height: 30px; border-radius: 50%;
+            border: none; background: rgba(255,255,255,0.08); color: #fff; font-size: 18px; line-height: 1;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+        .gate-hero { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+        .gate-art { width: 60px; height: 60px; border-radius: 14px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 30px; }
+        .gate-hero .eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: #ec4899; }
+        .gate-hero .gname { font-size: 18px; font-weight: 700; color: #fff; line-height: 1.2; margin-top: 2px; }
+        .gate-headline { font-size: 20px; font-weight: 700; color: #fafafa; line-height: 1.25; letter-spacing: -.01em; }
+        .gate-headline .warm { background: linear-gradient(135deg,#f472b6,#db2777); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .gate-sub { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 6px; line-height: 1.45; }
+        .gate-sub strong { color: rgba(255,255,255,0.75); font-weight: 600; }
+        .gate-form { margin-top: 18px; }
+        .gate-input {
+            width: 100%; padding: 15px 16px; border-radius: 12px;
+            border: 1.5px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04);
+            color: #fff; font-size: 16px; font-family: inherit; outline: none; transition: border-color .2s;
+        }
+        .gate-input:focus { border-color: rgba(236,72,153,0.6); }
+        .gate-input::placeholder { color: rgba(255,255,255,0.3); }
+        .gate-error { font-size: 12px; color: #f87171; margin-top: 8px; min-height: 14px; display: none; }
+        .gate-error.show { display: block; }
+        .gate-btn {
+            width: 100%; margin-top: 12px; padding: 16px; border-radius: 12px; border: none;
+            background: linear-gradient(135deg,#ec4899,#db2777); color: #fff; font-size: 16px; font-weight: 700;
+            font-family: inherit; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: transform .15s, box-shadow .2s; box-shadow: 0 8px 24px rgba(219,39,119,0.3);
+        }
+        .gate-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 28px rgba(219,39,119,0.4); }
+        .gate-btn:active { transform: translateY(0); }
+        .gate-btn:disabled { opacity: .7; cursor: default; }
+        .gate-btn .btn-spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; }
+        .gate-trust { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 14px; font-size: 11px; color: rgba(255,255,255,0.35); }
+        .gate-trust svg { width: 12px; height: 12px; opacity: .5; flex-shrink: 0; }
+    </style>
+</head>
+<body>
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5VRS8QPJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+    <div class="ambient"></div>
+
+    <div class="page">
+        <header class="header">
+            <a href="https://ourdream.ai" id="header-link">
+                <img data-logo alt="ourdream.ai" class="header-logo">
+            </a>
+        </header>
+
+        <div class="content">
+            <!-- Step 1 — pick archetype -->
+            <div class="step" id="step-archetype">
+                <h1 class="title">Build your own <span class="warm">RPG</span></h1>
+                <p class="subtitle">Pick a game, add your twist, and play in seconds.</p>
+                <div class="gender-label">Choose the character you want to build</div>
+                <div class="gender-toggle" id="gender-toggle" role="group" aria-label="Choose the character you want to build">
+                    <button type="button" class="gender-opt" data-gender="Female" aria-pressed="true">&#9792; Female character</button>
+                    <button type="button" class="gender-opt" data-gender="Male" aria-pressed="false">&#9794; Male character</button>
+                </div>
+                <div class="cards" id="cards"></div>
+            </div>
+
+            <!-- Step 2 — add twist -->
+            <div class="step" id="step-twist" hidden>
+                <div class="twist-wrap">
+                    <button class="back-btn" id="back-btn" type="button">&lsaquo; Back</button>
+                    <div class="twist-hero">
+                        <div class="twist-art" id="twist-art"></div>
+                        <div class="meta">
+                            <div class="kicker" id="twist-kicker"></div>
+                            <div class="h" id="twist-name"></div>
+                            <div class="v" id="twist-vibe"></div>
+                        </div>
+                    </div>
+                    <div class="twist-label">Add your twist <span>&mdash; optional</span></div>
+                    <textarea class="twist-input" id="twist-input" rows="2" maxlength="180" autocomplete="off"></textarea>
+                    <div class="chips" id="twist-chips"></div>
+                    <div class="gate-error" id="twist-error" style="align-self:flex-start;margin-top:10px">Please keep it 18+ — all characters must be adults. Try a different twist.</div>
+                    <button class="start-btn" id="start-btn" type="button">
+                        Start my game
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="trust-footer">
+            <div class="trust-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                <span>100% Private</span>
+            </div>
+            <div class="trust-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+                <span>Free to start</span>
+            </div>
+            <div class="trust-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                <span>Ready in 30s</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="spinner"></div>
+        <p>Building your game...</p>
+        <span class="sub">This takes about 10 seconds</span>
+    </div>
+
+    <script>
+        // ── archetypes: game-mechanic presets, anime style, gender-neutral.
+        // Genre-defining structured fields are set explicitly; appearance is left to
+        // the create flow's AI autocomplete (Q18=true). The scene seed + the player's
+        // twist ride in on Q22 (imageGuidance), which seeds the auto-generated scenario.
+        // Card art below is placeholder emoji+gradient. Real art must match the product's
+        // DEFAULT anime model (PrefectPony — clean cel-shaded modern anime); /rpg can't pick
+        // the anime sub-style via URL, so every visitor renders on PrefectPony. Do NOT reuse
+        // public/assets/quiz/*anime* posters (those are webtoon/manga, off-model).
+        var ARCHETYPES = [
+            {
+                id: 'crush', name: 'The Crush', kicker: 'Dating Sim',
+                vibe: 'Charm them date by date — every line moves the meter.',
+                emoji: '💘', grad: 'linear-gradient(150deg,#f9a8d4 0%,#db2777 65%,#831843 100%)',
+                poster: '/assets/rpg/crush.jpg', video: '/assets/rpg/crush.mp4',
+                age: 21, personality: 'Charming', occupation: 'None', relationship: 'Crush',
+                scene: 'A cozy corner cafe at golden hour, two coffee cups on a small table, warm afternoon light through the window, a captivating love interest leaning in with a shy smile, slice-of-life anime',
+                placeholder: 'e.g. but we start as bitter rivals',
+                chips: ['Enemies to lovers', '1920s Paris', 'Childhood friend']
+            },
+            {
+                id: 'system', name: 'The System', kicker: 'Level-Up RPG',
+                vibe: 'A status screen only you can see — level up, allocate stats, climb the ranks.',
+                emoji: '⚔️', grad: 'linear-gradient(150deg,#60a5fa 0%,#4f46e5 60%,#1e1b4b 100%)',
+                poster: '/assets/rpg/system.jpg', video: '/assets/rpg/system.mp4',
+                age: 22, personality: 'Confident', occupation: 'Warrior', relationship: 'Rival',
+                scene: 'A modern city street at night with a glowing magic portal tearing open, monsters emerging, a confident anime fighter in sleek battle gear, faint holographic blue status panels glowing in the air, dramatic neon light',
+                placeholder: 'e.g. but make it Greek gods',
+                chips: ['Greek gods', 'Cyberpunk', 'Glitched system']
+            },
+            {
+                id: 'quest', name: 'Epic Quest', kicker: 'Dungeon Crawler',
+                vibe: 'An AI dungeon master, branching choices, and a companion at your side.',
+                emoji: '🐉', grad: 'linear-gradient(150deg,#fbbf24 0%,#16a34a 68%,#14532d 100%)',
+                poster: '/assets/rpg/quest.jpg', video: '/assets/rpg/quest.mp4',
+                age: 24, personality: 'Adventurous', occupation: 'Knight', relationship: 'Stranger',
+                scene: 'A torchlit ancient dungeon entrance among mossy stone ruins, a brave anime adventurer companion holding a sword and a worn map, glowing runes, dramatic high-fantasy lighting',
+                placeholder: 'e.g. but make it alt-history 1956',
+                chips: ['Alt-history 1956', 'Post-apocalyptic', 'Pirate high seas']
+            },
+            {
+                id: 'coldcase', name: 'Cold Case', kicker: 'Detective Noir',
+                vibe: 'Crack an unsolved case beside a partner you can’t quite read.',
+                emoji: '🕵️', grad: 'linear-gradient(150deg,#94a3b8 0%,#334155 58%,#0f172a 100%)',
+                poster: '/assets/rpg/cold-case.jpg', video: '/assets/rpg/cold-case.mp4',
+                age: 27, personality: 'Mysterious', occupation: 'Detective', relationship: 'Colleague',
+                scene: 'A rain-slicked neon city at night, a sharp anime detective under a flickering streetlight, case files and cigarette smoke, moody noir shadows and reflections. Run it as a whodunit: secretly pick one suspect as the real culprit at the start, stay consistent, and reveal the truth only when the detective accuses the right one with solid evidence.',
+                placeholder: 'e.g. but it’s 1980s Tokyo',
+                chips: ['1980s Tokyo neon', 'Locked-room murder', 'Partner is a suspect']
+            }
+        ];
+
+        // ── state ──
+        var selectedGender = 'Female';
+        var activeArchetype = null;
+
+        // Hard rule: every character is an adult. Anchor the scene to 18+ and reject any
+        // twist that tries to introduce a minor (defense-in-depth; product also moderates).
+        var ADULT_SAFETY = ' All characters are adults aged 18 or older.';
+        function containsUnderage(text) {
+            if (!text) return false;
+            var t = String(text).toLowerCase();
+            if (/\b(teen|teens|teenage|teenager|preteen|pre-teen|underage|under-age|minor|minors|child|children|schoolgirl|school girl|schoolboy|school boy|high ?school|middle ?school|grade ?school|elementary|kindergarten|loli|shota|jailbait|toddler|infant|newborn)\b/.test(t)) return true;
+            if (/\b(?:1[0-7]|[1-9])\s*(?:yo|y\/o|years?\s*old|yrs?\s*old)\b/.test(t)) return true;
+            if (/\baged?\s*(?:1[0-7]|[1-9])\b/.test(t)) return true;
+            return false;
+        }
+
+        // ── tracking + attribution helpers ──────────────────────────
+        window.dataLayer = window.dataLayer || [];
+        function track(name, data) { window.dataLayer.push(Object.assign({ event: name }, data || {})); }
+
+        function buildCreateURL(a) {
+            var params = new URLSearchParams();
+
+            var inbound = new URLSearchParams(window.location.search);
+            var skip = ['Q1','Q2','Q3','Q4','Q5','Q6','Q7','Q8','Q9','Q10','Q11','Q12','Q13','Q14','Q15','Q16','Q17','Q18','Q19','Q20','Q21','Q22','s'];
+            for (var pair of inbound.entries()) {
+                if (skip.indexOf(pair[0]) === -1) params.set(pair[0], pair[1]);
+            }
+            if (!params.has('ref')) params.set('ref', 'googlecpc');
+
+            var twist = (document.getElementById('twist-input').value || '').trim();
+            if (containsUnderage(twist)) twist = '';
+            var scene = (twist ? (a.scene + ' — ' + twist) : a.scene) + ADULT_SAFETY;
+
+            params.set('Q1',  selectedGender);
+            params.set('Q2',  'Anime');
+            params.set('Q11', String(a.age));
+            params.set('Q13', a.personality);
+            params.set('Q14', a.occupation);
+            params.set('Q15', a.relationship);
+            params.set('Q18', 'true');
+            params.set('Q22', scene);
+            params.set('s',   '6');
+
+            return 'https://ourdream.ai/create?' + params.toString();
+        }
+
+        var loadingOverlay = document.getElementById('loading-overlay');
+
+        // Let GTM's cross-domain linker decorate the final ourdream.ai URL with _gl,
+        // so the GA4 session stitches into the offer page instead of starting fresh.
+        function getDecoratedUrl(baseUrl) {
+            return new Promise(function (resolve) {
+                var anchor = document.createElement('a');
+                anchor.href = baseUrl;
+                anchor.style.cssText = 'position:fixed;left:-9999px;';
+                document.body.appendChild(anchor);
+                anchor.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+                setTimeout(function () {
+                    var decorated = anchor.href;
+                    document.body.removeChild(anchor);
+                    resolve(decorated);
+                }, 100);
+            });
+        }
+
+        async function redirectToCreate(a) {
+            loadingOverlay.classList.add('visible');
+
+            var url = buildCreateURL(a);
+            var cookieMatch = document.cookie.match(/(?:^|;\s*)rtkclickid-store=([^;]+)/);
+            if (cookieMatch) {
+                var u = new URL(url);
+                u.searchParams.set('clickid', decodeURIComponent(cookieMatch[1]));
+                u.searchParams.set('tracker', 'rt');
+                url = u.toString();
+            }
+
+            track('visit_site_clicked', { cta: 'rpg-' + a.id, has_clickid: !!cookieMatch });
+
+            var finalUrl = await getDecoratedUrl(url);
+            setTimeout(function () { window.location.href = finalUrl; }, 600);
+        }
+
+        // ── step 1: character (gender) toggle ──
+        document.getElementById('gender-toggle').addEventListener('click', function (e) {
+            var btn = e.target.closest('.gender-opt');
+            if (!btn) return;
+            selectedGender = btn.getAttribute('data-gender');
+            this.querySelectorAll('.gender-opt').forEach(function (b) {
+                b.setAttribute('aria-pressed', String(b === btn));
+            });
+        });
+
+        // ── step 1: archetype cards ──
+        var goSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+
+        function renderCards() {
+            var grid = document.getElementById('cards');
+            grid.innerHTML = ARCHETYPES.map(function (a) {
+                var fstyle = a.mediaFilter ? ' style="filter:' + a.mediaFilter + '"' : '';
+                var media = a.video
+                    ? '<video src="' + a.video + '" poster="' + a.poster + '" muted loop playsinline autoplay preload="metadata"' + fstyle + '></video>'
+                    : '<img src="' + a.poster + '" alt="' + a.name + '" loading="eager" decoding="async"' + fstyle + '>';
+                var tint = a.tint ? '<div class="card-tint" style="background:' + a.tint + '"></div>' : '';
+                return '<div class="card" data-id="' + a.id + '" tabindex="0" role="button" aria-label="' + a.name + ' – ' + a.kicker + '">' +
+                    '<div class="card-art" style="background:' + a.grad + '">' + media + tint + '</div>' +
+                    '<div class="card-badge">' + a.emoji + '</div>' +
+                    '<div class="go">' + goSvg + '</div>' +
+                    '<div class="overlay">' +
+                        '<div class="kicker">' + a.kicker + '</div>' +
+                        '<div class="name">' + a.name + '</div>' +
+                        '<div class="vibe">' + a.vibe + '</div>' +
+                    '</div>' +
+                '</div>';
+            }).join('');
+
+            grid.querySelectorAll('.card').forEach(function (card) {
+                var a = ARCHETYPES.find(function (x) { return x.id === card.getAttribute('data-id'); });
+                card.addEventListener('click', function () { selectArchetype(a); });
+                card.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectArchetype(a); }
+                });
+            });
+        }
+
+        // ── step 2: twist ──
+        var stepArchetype = document.getElementById('step-archetype');
+        var stepTwist = document.getElementById('step-twist');
+        var twistInput = document.getElementById('twist-input');
+
+        function renderChips(a) {
+            var wrap = document.getElementById('twist-chips');
+            wrap.innerHTML = a.chips.map(function (c) {
+                return '<button type="button" class="chip" data-twist="' + c.replace(/"/g, '&quot;') + '" aria-pressed="false">' + c + '</button>';
+            }).join('');
+            wrap.querySelectorAll('.chip').forEach(function (chip) {
+                chip.addEventListener('click', function () {
+                    var val = chip.getAttribute('data-twist');
+                    var on = chip.getAttribute('aria-pressed') === 'true';
+                    wrap.querySelectorAll('.chip').forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
+                    if (on) { twistInput.value = ''; }
+                    else { chip.setAttribute('aria-pressed', 'true'); twistInput.value = val; }
+                });
+            });
+        }
+
+        function selectArchetype(a) {
+            activeArchetype = a;
+            track('quiz_start', { quiz: 'rpg', style: 'anime', archetype: a.id });
+            var art = document.getElementById('twist-art');
+            art.style.background = a.grad;
+            art.style.backgroundImage = 'url(' + a.poster + ')';
+            art.style.backgroundSize = 'cover';
+            art.style.backgroundPosition = 'top center';
+            art.style.filter = a.mediaFilter || 'none';
+            art.textContent = '';
+            document.getElementById('twist-kicker').textContent = a.kicker;
+            document.getElementById('twist-name').textContent = a.name;
+            document.getElementById('twist-vibe').textContent = a.vibe;
+            twistInput.value = '';
+            twistInput.setAttribute('placeholder', a.placeholder);
+            renderChips(a);
+            stepArchetype.hidden = true;
+            stepTwist.hidden = false;
+            window.scrollTo(0, 0);
+        }
+
+        // typing clears any active chip selection
+        twistInput.addEventListener('input', function () {
+            document.querySelectorAll('#twist-chips .chip').forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
+            document.getElementById('twist-error').classList.remove('show');
+        });
+
+        document.getElementById('start-btn').addEventListener('click', function () {
+            if (!activeArchetype) return;
+            if (containsUnderage(twistInput.value)) {
+                document.getElementById('twist-error').classList.add('show');
+                twistInput.focus();
+                return;
+            }
+            document.getElementById('twist-error').classList.remove('show');
+            track('quiz_step_2_complete', { quiz: 'rpg', archetype: activeArchetype.id });
+            redirectToCreate(activeArchetype);
+        });
+
+        document.getElementById('back-btn').addEventListener('click', function () {
+            stepTwist.hidden = true;
+            stepArchetype.hidden = false;
+            window.scrollTo(0, 0);
+        });
+
+        renderCards();
+
+        (function () {
+            var link = document.getElementById('header-link');
+            if (!link) return;
+            var params = window.location.search || '';
+            if (params.indexOf('ref=') === -1) {
+                var sep = params ? '&' : '?';
+                params = params + sep + 'ref=googlecpc';
+            }
+            if (params && params.charAt(0) !== '?') params = '?' + params;
+            link.href = 'https://ourdream.ai' + params;
+        })();
+    </script>
+
+</body>
+</html>
