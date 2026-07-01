@@ -8,7 +8,7 @@ const OG_IMAGE = {
   url: "/og.jpg",
   width: 1200,
   height: 630,
-  alt: "OurDream Network \u2014 AI Roleplay Characters",
+  alt: "OurDream Network \u2014 Pick Your Story",
 } as const;
 
 /**
@@ -18,11 +18,11 @@ const OG_IMAGE = {
 export const siteMetadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "AI Roleplay Characters | OurDream Network",
+    default: "Pick Your Story | OurDream Network",
     template: "%s | OurDream Network",
   },
   description:
-    "Chat with AI roleplay characters. Pick a character and start with 5 free messages.",
+    "Five original characters, one choice. Play the opening scene, then continue the story on ourdream.",
   openGraph: {
     type: "website",
     locale: "en_US",

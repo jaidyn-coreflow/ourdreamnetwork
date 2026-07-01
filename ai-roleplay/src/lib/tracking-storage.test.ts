@@ -42,7 +42,7 @@ beforeEach(() => {
   originalWindow = (globalThis as { window?: typeof globalThis.window }).window;
   /* Patch a window-shaped object onto globalThis. We only need
    * window.localStorage for the module under test. */
-  (globalThis as { window?: { localStorage: StorageStub } }).window = {
+  (globalThis as unknown as { window?: { localStorage: StorageStub } }).window = {
     localStorage: new Proxy(stub, {
       get(target, prop) {
         if (prop === "setItem" && target.failNextWrite) {
@@ -54,7 +54,7 @@ beforeEach(() => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return (target as any)[prop].bind(target);
       },
-    }) as unknown as Storage,
+    }) as unknown as StorageStub,
   };
 });
 

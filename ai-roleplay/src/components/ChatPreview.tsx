@@ -160,7 +160,7 @@ export function ChatPreview({
       {isFinished && (
         <div className="flex flex-col items-center gap-3 rounded-xl border border-gold-500/30 bg-plum-900/30 p-5 text-center">
           <p className="text-sm text-parchment-300/80">
-            The scene doesn't have to end here. Continue it \u2014 your choices,
+            The scene doesn&apos;t have to end here. Continue it \u2014 your choices,
             your pace.
           </p>
           <button
