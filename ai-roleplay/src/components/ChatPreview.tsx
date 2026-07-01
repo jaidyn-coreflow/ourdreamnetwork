@@ -10,9 +10,8 @@
  *
  * Why client-only:
  *   The component manages a path of visited choices in local state.
- *   The parent character page server-renders the full dialogue tree
- *   inside a <details> SEO surface, so crawlers see all text without
- *   running this component (see ChatPreviewSeoSurface).
+ *   This is the only rendering surface for the dialogue tree — there is
+ *   no separate server-rendered SEO surface.
  *
  * Italic stage direction:
  *   Authors write "*She turns from the balcony*" with single asterisks.

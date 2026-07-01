@@ -16,14 +16,11 @@
  * Why a flat `nodes: Record<id, node>` instead of a literal nested tree:
  *   - Lets choices reconverge cheaply (two options can both lead to the
  *     same response when the dialogue beats overlap).
- *   - Easier to validate, test, and walk in `walkAllPaths()`.
- *   - JSON-LD output enumerates nodes once, not per path.
+ *   - Easier to validate and test (see `assertPreviewValid`).
  *
- * SEO note:
- *   The renderer emits ALL node text as visible HTML up front (collapsed
- *   under a `<details>` for users, fully visible to crawlers). Bots see
- *   every line of dialogue without executing JS. The interactive UI sits
- *   on top.
+ * The interactive `ChatPreview` component is the only rendering surface.
+ * It manages visited-choice path state client-side; there is no separate
+ * server-rendered SEO surface.
  */
 
 export type NodeId = string;
@@ -132,38 +129,3 @@ export function assertPreviewValid(p: ChatPreview): void {
   }
 }
 
-/**
- * Enumerate every root-to-leaf path. Used for SEO surface (rendering all
- * dialogue) and for the JSON-LD `Conversation` enumeration.
- *
- * Each path is a sequence: [rootNode, choice1, node2, choice2, node3, ...]
- * where choice items are the player's reply labels.
- */
-export interface PreviewPathStep {
-  speaker: "character" | "player";
-  text: string;
-  /** Source node id (only for character steps; useful for keys). */
-  nodeId?: NodeId;
-}
-
-export function walkAllPaths(p: ChatPreview): PreviewPathStep[][] {
-  const paths: PreviewPathStep[][] = [];
-
-  const visit = (id: NodeId, acc: PreviewPathStep[]) => {
-    const node = p.nodes[id];
-    const next: PreviewPathStep[] = [
-      ...acc,
-      { speaker: "character", text: node.text, nodeId: id },
-    ];
-    if (node.endLine || !node.choices) {
-      paths.push(next);
-      return;
-    }
-    for (const ch of node.choices) {
-      visit(ch.next, [...next, { speaker: "player", text: ch.label }]);
-    }
-  };
-
-  visit(p.rootId, []);
-  return paths;
-}
