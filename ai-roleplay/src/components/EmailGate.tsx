@@ -2,16 +2,16 @@
 
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 import { captureAndRedirect } from "@/lib/funnel-client";
+import type { GateCopy } from "@/data/characters";
 
 interface GateTarget {
   chatSlug: string;
-  /** Character display name — used in the modal CTA copy. */
   name: string;
+  gate: GateCopy;
 }
 
 interface GateCtx {
-  /** Open the modal for a given character (chat slug + display name). */
-  openGate: (chatSlug: string, name: string) => void;
+  openGate: (chatSlug: string, name: string, gate: GateCopy) => void;
 }
 const Ctx = createContext<GateCtx | null>(null);
 
@@ -28,9 +28,9 @@ export function EmailGateProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  const openGate = useCallback((chatSlug: string, name: string) => {
+  const openGate = useCallback((chatSlug: string, name: string, gate: GateCopy) => {
     setError(false);
-    setTarget({ chatSlug, name });
+    setTarget({ chatSlug, name, gate });
   }, []);
 
   useEffect(() => {
@@ -68,10 +68,10 @@ export function EmailGateProvider({ children }: { children: ReactNode }) {
         >
           <div className="relative w-full max-w-[420px] rounded-2xl border border-[#F17BB6]/25 bg-[#141414]/95 px-6 pb-14 pt-7 shadow-2xl">
             <h2 id="gate-title" className="mb-1.5 text-center text-[22px] font-bold">
-              Free Trial Offer
+              {target.gate.headline}
             </h2>
             <p className="mb-5 text-center text-sm text-white/60">
-              Enter your email to get <span className="text-[#F17BB6]">5 messages free</span>
+              {target.gate.sub}
             </p>
             <form onSubmit={onSubmit} noValidate>
               <input
@@ -88,7 +88,7 @@ export function EmailGateProvider({ children }: { children: ReactNode }) {
                 type="submit" disabled={submitting}
                 className="btn-primary mt-3.5 w-full justify-center text-sm disabled:opacity-70"
               >
-                {submitting ? "Submitting…" : `Start chatting to ${target.name} now`}
+                {submitting ? "Submitting…" : target.gate.button}
               </button>
             </form>
             <button type="button" onClick={() => setTarget(null)}

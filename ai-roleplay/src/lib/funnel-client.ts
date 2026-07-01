@@ -33,12 +33,22 @@ function track(event: string, params: Record<string, unknown>) {
   (window as unknown as { dataLayer: unknown[] }).dataLayer.push({ event, ...params });
 }
 
+/** The Google Ads conversion payload. Fired on valid email submit. */
+export function buildLeadEvent(email: string) {
+  return {
+    event: "generate_lead" as const,
+    currency: "USD" as const,
+    value: 1.0,
+    user_data: { email },
+  };
+}
+
 /** Fire-and-forget save; never blocks the redirect. */
 function saveEmail(email: string): Promise<unknown> {
   return fetch("/api/save-email", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, mode: "ai-roleplay", marketingConsent: false }),
+    body: JSON.stringify({ email, mode: "experience", marketingConsent: false }),
   });
 }
 
@@ -50,20 +60,16 @@ function saveEmail(email: string): Promise<unknown> {
  * (capture loss is acceptable; redirect drop-off is not — see CLAUDE.md).
  */
 export async function captureAndRedirect(email: string, chatSlug: string): Promise<void> {
-  track("quiz_email_captured", { source: "ai-roleplay", email_provided: true });
+  // generate_lead is the primary Google Ads conversion — must fire on valid
+  // submit BEFORE the redirect (see CLAUDE.md). It is the only GTM-wired event
+  // in this funnel.
+  track("generate_lead", buildLeadEvent(email));
   saveEmail(email).catch((e) => console.warn("[save-email] failed:", e));
 
   const clickid = readClickid();
-  // Merge first-touch attribution that TrackingCapture persisted to
-  // localStorage on landing — so gclid/utm/etc. survive internal navigation
-  // (e.g. catalogue → character page → click), not just direct ad landings.
   const inbound = mergePersistedWithUrl(new URLSearchParams(window.location.search));
-  // Always fetch _gl (sub19) — both paid and organic clicks hop to ourdream.ai
-  // through RedTrack, so GA4 session continuity needs the linker either way.
   const gl = await getGlValue();
   const url = buildRedirectUrl({ chatSlug, clickid, gl, inbound });
-
-  track("quiz_redirect", { source: "ai-roleplay", redirect_url: url, has_clickid: !!clickid });
 
   window.location.href = url;
 }
