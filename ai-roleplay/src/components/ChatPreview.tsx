@@ -45,6 +45,8 @@ interface Props {
    * `/chat/<character-slug>-<8charsuffix>` from `Character.chatUrl`.
    */
   ourdreamChatPath: string;
+  /** Per-character email-gate copy, shown when the terminal CTA opens the modal. */
+  gate: import("@/data/characters").GateCopy;
 }
 
 /* ── Public ───────────────────────────────────────────────────────── */
@@ -54,6 +56,7 @@ export function ChatPreview({
   characterName,
   characterImageUrl,
   ourdreamChatPath,
+  gate,
 }: Props) {
   const { openGate } = useEmailGate();
   /* Derive the chat slug from the path: `/chat/<slug>` → `<slug>` */
@@ -89,9 +92,9 @@ export function ChatPreview({
       <header className="flex items-center justify-between gap-3">
         <h2
           id="chat-preview-heading"
-          className="font-display text-lg font-semibold text-gold-400 sm:text-xl"
+          className="font-display text-lg font-semibold text-[#F17BB6] sm:text-xl"
         >
-          A 60-second taste of {characterName}
+          Play the opening scene with {characterName}
         </h2>
         {path.length > 0 && (
           <button
@@ -157,15 +160,15 @@ export function ChatPreview({
       {isFinished && (
         <div className="flex flex-col items-center gap-3 rounded-xl border border-gold-500/30 bg-plum-900/30 p-5 text-center">
           <p className="text-sm text-parchment-300/80">
-            Want to keep going? The full story continues in the chat
-            experience \u2014 your choices, your pace, your romance.
+            The scene doesn't have to end here. Continue it \u2014 your choices,
+            your pace.
           </p>
           <button
             type="button"
             className="btn-primary text-base"
-            onClick={() => openGate(chatSlug, characterName)}
+            onClick={() => openGate(chatSlug, characterName, gate)}
           >
-            Continue this story&nbsp;&rarr;
+            Continue with {characterName}&nbsp;&rarr;
           </button>
         </div>
       )}
