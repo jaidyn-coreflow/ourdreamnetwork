@@ -15,6 +15,7 @@
     { "source": "/quiz", "destination": "/quiz.html" },
     { "source": "/go/ourdream", "destination": "/go-ourdream.html" },
     { "source": "/login", "destination": "/login.html" },
+    { "source": "/danbooru-tags", "destination": "/danbooru-tags/index.html" },
 
     { "source": "/ai-roleplay", "destination": "https://ai-roleplay-ten.vercel.app/ai-roleplay" },
     { "source": "/ai-roleplay/:path*", "destination": "https://ai-roleplay-ten.vercel.app/ai-roleplay/:path*" }
