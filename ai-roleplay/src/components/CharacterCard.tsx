@@ -61,10 +61,6 @@ export function CharacterCard({ character }: { character: Character }) {
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <span className="absolute left-4 top-4 h-[3px] w-6 rounded-full bg-white/80" />
         <span className="absolute right-4 top-4 h-[3px] w-6 rounded-full bg-white/80" />
-        <span className="absolute right-4 top-[26px] flex items-center gap-1.5 text-[10px] font-semibold tracking-wide text-white/85">
-          <span className="h-2 w-2 rounded-full bg-red-500 shadow-[0_0_6px_rgba(239,68,68,0.9)]" />
-          REC
-        </span>
       </div>
 
       {/* Bottom scrim + meta */}
