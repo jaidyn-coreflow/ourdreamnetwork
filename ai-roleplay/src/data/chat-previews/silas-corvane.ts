@@ -13,7 +13,7 @@ const CLIFF =
   `*One raven caws. His jaw tightens.* "There's a reason I let you this close — and a reason it could get you killed. You should hear it from me—"`;
 
 const preview: ChatPreview = {
-  characterSlug: "vaughn-crowe",
+  characterSlug: "silas-corvane",
   intro:
     "The most feared man in the quarter runs it from up here — and right now, every ounce of that attention is on you.",
   rootId: "b1",

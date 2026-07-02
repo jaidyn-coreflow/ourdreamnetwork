@@ -63,42 +63,50 @@ export function EmailGateProvider({ children }: { children: ReactNode }) {
           role="dialog"
           aria-modal="true"
           aria-labelledby="gate-title"
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-5 backdrop-blur-md"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#080609]/85 p-5 backdrop-blur-md"
           onClick={(e) => { if (!submitting && e.target === e.currentTarget) setTarget(null); }}
         >
-          <div className="relative w-full max-w-[420px] rounded-2xl border border-[#F17BB6]/25 bg-[#141414]/95 px-6 pb-14 pt-7 shadow-2xl">
-            <h2 id="gate-title" className="mb-1.5 text-center text-[22px] font-bold">
+          <div className="rise-in relative w-full max-w-[400px] rounded-3xl border border-[#F17BB6]/20 bg-[#161016]/95 px-7 pb-7 pt-8 shadow-[0_24px_80px_-24px_rgba(219,39,119,0.4)]">
+            <span aria-hidden className="mx-auto mb-4 grid h-11 w-11 place-items-center rounded-full bg-[#F17BB6]/12">
+              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="#F17BB6">
+                <path d="M12 21s-6.7-4.35-9.33-8.02C.9 10.42 1.4 7.1 3.9 5.7c1.9-1.06 4.2-.5 5.6 1.06L12 9.3l2.5-2.54c1.4-1.56 3.7-2.12 5.6-1.06 2.5 1.4 3 4.72 1.23 7.28C18.7 16.65 12 21 12 21z" />
+              </svg>
+            </span>
+            <h2 id="gate-title" className="text-center font-display text-2xl font-bold tracking-tight text-white">
               {target.gate.headline}
             </h2>
-            <p className="mb-5 text-center text-sm text-white/60">
+            <p className="mx-auto mt-2 max-w-[300px] text-center text-sm leading-relaxed text-white/55">
               {target.gate.sub}
             </p>
-            <form onSubmit={onSubmit} noValidate>
+            <form onSubmit={onSubmit} noValidate className="mt-6">
               <input
                 type="email" name="email" autoFocus required
                 placeholder="name@example.com"
-                className="w-full rounded-[10px] border-[1.5px] border-white/10 bg-white/5 px-4 py-3.5 text-base text-white outline-none focus:border-[#F17BB6]"
+                className="w-full rounded-xl border-[1.5px] border-white/10 bg-white/[0.04] px-4 py-3.5 text-base text-white outline-none transition-colors placeholder:text-white/35 focus:border-[#F17BB6]"
               />
               {error && (
-                <div role="alert" className="mt-2 text-[13px] text-red-500">
+                <div role="alert" className="mt-2 text-[13px] text-rose-400">
                   Enter a valid email like name@example.com
                 </div>
               )}
               <button
                 type="submit" disabled={submitting}
-                className="btn-primary mt-3.5 w-full justify-center text-sm disabled:opacity-70"
+                className="btn-primary mt-3 w-full justify-center disabled:opacity-70"
               >
                 {submitting ? "Submitting…" : target.gate.button}
               </button>
             </form>
+            <p className="mt-3 text-center text-[12px] text-white/45">
+              Free to start · pick up right where you left off
+            </p>
             <button type="button" onClick={() => setTarget(null)}
-              className="mt-3.5 block w-full text-center text-[13px] text-white/50 hover:text-white/80">
-              ← back
+              className="mt-4 block w-full text-center text-[13px] text-white/45 transition-colors hover:text-white/75">
+              ← back to the story
             </button>
-            <p className="mt-4 text-center text-[11px] text-white/40">
+            <p className="mt-4 text-center text-[11px] leading-relaxed text-white/35">
               By continuing you agree to our{" "}
-              <a href="https://ourdreamnetwork.com/terms" className="text-white/60 underline">Terms</a> &{" "}
-              <a href="https://ourdreamnetwork.com/privacy" className="text-white/60 underline">Privacy</a>.
+              <a href="https://ourdreamnetwork.com/terms" className="text-white/55 underline underline-offset-2">Terms</a> &{" "}
+              <a href="https://ourdreamnetwork.com/privacy" className="text-white/55 underline underline-offset-2">Privacy</a>.
             </p>
           </div>
         </div>

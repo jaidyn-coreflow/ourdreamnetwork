@@ -10,14 +10,14 @@ import { type ChatPreview, assertPreviewValid } from "./types";
 import aricVenn from "./aric-venn";
 import lucenAldair from "./lucen-aldair";
 import marloweVesper from "./marlowe-vesper";
-import vaughnCrowe from "./vaughn-crowe";
+import silasCorvane from "./silas-corvane";
 import rookCallahan from "./rook-callahan";
 
 const PREVIEWS: ReadonlyArray<ChatPreview> = [
   aricVenn,
   lucenAldair,
   marloweVesper,
-  vaughnCrowe,
+  silasCorvane,
   rookCallahan,
 ];
 

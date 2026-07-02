@@ -5,7 +5,7 @@ const EXPECTED_SLUGS = [
   "aric-venn",
   "lucen-aldair",
   "marlowe-vesper",
-  "vaughn-crowe",
+  "silas-corvane",
   "rook-callahan",
 ];
 

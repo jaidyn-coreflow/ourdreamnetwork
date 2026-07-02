@@ -11,25 +11,41 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <div className="page-section space-y-10">
-      <header className="mx-auto max-w-2xl text-center space-y-4">
-        <h1 className="font-display text-4xl font-bold leading-tight text-white md:text-5xl">
-          Who do you want to meet tonight?
+    <div className="page-section">
+      <header className="mb-12 max-w-3xl">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-gold-400">
+          OurDream Originals
+        </p>
+        <h1 className="mt-4 font-display text-[clamp(2.5rem,6.5vw,4.5rem)] font-bold leading-[0.95] tracking-tight text-white">
+          Five strangers.
+          <br />
+          <span className="text-white/40">One changes everything.</span>
         </h1>
-        <p className="text-lg leading-relaxed text-white/60">
-          Five originals, each with a secret. Pick one and play the opening
-          scene — every choice is yours.
+        <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/55">
+          Pick who you meet tonight and play the opening scene. Every reply is
+          yours — and he&rsquo;ll remember it.
         </p>
       </header>
 
-      <section
+      {/* Mobile: horizontal snap-scroll carousel (with a peek of the next
+          card). sm+ : responsive grid. */}
+      <ul
         aria-label="Choose a character"
-        className="mx-auto grid max-w-5xl gap-5 sm:grid-cols-2 lg:grid-cols-3"
+        className="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2
+                   [scrollbar-width:none] [&::-webkit-scrollbar]:hidden
+                   sm:mx-0 sm:grid sm:snap-none sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0
+                   lg:grid-cols-3"
       >
-        {FEATURED_CHARACTERS.map((c) => (
-          <CharacterCard key={c.slug} character={c} />
+        {FEATURED_CHARACTERS.map((c, i) => (
+          <li
+            key={c.slug}
+            className="rise-in w-[80%] shrink-0 snap-start sm:w-auto"
+            style={{ animationDelay: `${i * 70}ms` }}
+          >
+            <CharacterCard character={c} />
+          </li>
         ))}
-      </section>
+      </ul>
     </div>
   );
 }

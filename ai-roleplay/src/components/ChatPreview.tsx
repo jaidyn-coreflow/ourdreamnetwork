@@ -1,54 +1,42 @@
 "use client";
 
 /**
- * ChatPreview
+ * ChatPreview — immersive, iMessage-style story chat.
  *
- * Renders a per-character CYOA dialogue tree as an interactive chat
- * bubble experience. Each player click reveals the next character beat
- * and the next set of choices. Terminal nodes are followed by an
- * outbound CTA into ourdream's chat for that character.
+ * Plays a per-character CYOA dialogue tree as a full-height conversation:
+ * a sticky header (avatar + name), a scrolling bubble stream (character
+ * messages received on the left, the player's chosen replies sent on the
+ * right), and a docked reply area at the bottom that shows the current
+ * choices — or, at a terminal beat, the email-gate CTA.
  *
- * Why client-only:
- *   The component manages a path of visited choices in local state.
- *   This is the only rendering surface for the dialogue tree — there is
- *   no separate server-rendered SEO surface.
+ * Client-only: the component manages the path of visited choices in local
+ * state and auto-scrolls to the newest bubble on each pick.
  *
- * Italic stage direction:
- *   Authors write "*She turns from the balcony*" with single asterisks.
- *   `renderInline()` parses these into <em> spans without a markdown
- *   library \u2014 we only need this one transformation.
+ * Italic stage direction: authors write "*She turns from the balcony*" with
+ * single asterisks. `renderInline()` parses these into <em> spans.
  */
 
 import Image from "next/image";
-import { useCallback, useMemo, useState, type ReactNode } from "react";
+import Link from "next/link";
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useEmailGate } from "./EmailGate";
 import type {
-  ChatPreview,
+  ChatPreview as ChatPreviewData,
   ChatPreviewChoice,
   ChatPreviewNode,
   NodeId,
 } from "@/data/chat-previews/types";
+import type { GateCopy } from "@/data/characters";
 
 interface Props {
-  preview: ChatPreview;
-  /**
-   * Character display name. Shown above each character bubble so the
-   * conversation feels addressed (esp. valuable on mobile where the
-   * detail page hero scrolls off-screen).
-   */
+  preview: ChatPreviewData;
   characterName: string;
-  /** Avatar image URL. Same one used in the detail-page hero. */
   characterImageUrl: string;
-  /**
-   * Path on ourdream the terminal CTA links into \u2014 typically
-   * `/chat/<character-slug>-<8charsuffix>` from `Character.chatUrl`.
-   */
+  /** Path on ourdream the terminal CTA links into — `/chat/<slug>`. */
   ourdreamChatPath: string;
-  /** Per-character email-gate copy, shown when the terminal CTA opens the modal. */
-  gate: import("@/data/characters").GateCopy;
+  /** Per-character email-gate copy shown when the terminal CTA opens the modal. */
+  gate: GateCopy;
 }
-
-/* ── Public ───────────────────────────────────────────────────────── */
 
 export function ChatPreview({
   preview,
@@ -58,189 +46,206 @@ export function ChatPreview({
   gate,
 }: Props) {
   const { openGate } = useEmailGate();
-  /* Derive the chat slug from the path: `/chat/<slug>` → `<slug>` */
   const chatSlug = ourdreamChatPath.replace(/^\/chat\//, "");
 
-  /* The played path: each entry is the chosen next NodeId. The current
-   * visible node is the last id (or rootId when nothing chosen yet). */
-  const [path, setPath] = useState<NodeId[]>([]);
+  /* The "write your own" path opens the same gate as the terminal CTA but
+   * frames it as starting a free-form custom chat rather than continuing the
+   * scripted scene. Same redirect target (the real ourdream chat). */
+  const customGate: GateCopy = {
+    headline: "Say it your way",
+    sub: `Enter your email to start a custom chat with ${characterName} — reply however you like.`,
+    button: "Start my custom chat →",
+  };
 
+  const [path, setPath] = useState<NodeId[]>([]);
   const currentId = path.length === 0 ? preview.rootId : path[path.length - 1];
   const currentNode = preview.nodes[currentId];
-
-  /* Reconstruct the visible bubble stream from the path so we can
-   * re-render with smooth transitions on each choice. */
   const stream = useMemo(() => buildStream(preview, path), [preview, path]);
-
-  const onChoose = useCallback(
-    (choice: ChatPreviewChoice) => {
-      setPath((prev) => [...prev, choice.next]);
-    },
-    [],
-  );
-
-  const onRestart = useCallback(() => setPath([]), []);
-
   const isFinished = currentNode.endLine === true;
 
+  /* Briefly show a typing indicator before each incoming character line so
+   * the conversation feels live rather than instant. */
+  const [typing, setTyping] = useState(true);
+  useEffect(() => {
+    setTyping(true);
+    const t = setTimeout(() => setTyping(false), 750);
+    return () => clearTimeout(t);
+  }, [currentId]);
+
+  const onChoose = useCallback((choice: ChatPreviewChoice) => {
+    setPath((prev) => [...prev, choice.next]);
+  }, []);
+  const onRestart = useCallback(() => setPath([]), []);
+
+  /* While "typing", hold back the latest character bubble (always the last
+   * stream entry) and show the indicator in its place. */
+  const visible = typing ? stream.slice(0, -1) : stream;
+
+  /* Auto-scroll to the newest bubble as messages and the indicator change. */
+  const bottomRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [visible.length, typing]);
+
   return (
-    <section
-      aria-labelledby="chat-preview-heading"
-      className="space-y-5 rounded-2xl border border-white/10 bg-night-900/40 p-4 shadow-[0_0_40px_-20px_rgba(212,165,116,0.3)] sm:p-6"
-    >
-      <header className="flex items-center justify-between gap-3">
-        <h2
-          id="chat-preview-heading"
-          className="font-display text-lg font-semibold text-[#F17BB6] sm:text-xl"
+    <section className="mx-auto flex h-[calc(100dvh-4rem)] max-w-2xl flex-col border-white/10 sm:border-x">
+      {/* ── Conversation header ─────────────────────────────── */}
+      <header className="flex items-center gap-3 border-b border-white/10 bg-night-900/80 px-3 py-2.5 backdrop-blur">
+        <Link
+          href="/"
+          aria-label="Back to characters"
+          className="grid h-9 w-9 place-items-center rounded-full text-2xl leading-none text-[#F17BB6] transition-colors hover:bg-white/5"
         >
-          Play the opening scene with {characterName}
-        </h2>
+          &lsaquo;
+        </Link>
+        <span className="relative block h-9 w-9 overflow-hidden rounded-full border border-white/15">
+          <Image src={characterImageUrl} alt="" fill sizes="36px" className="object-cover" />
+        </span>
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-sm font-semibold text-white">{characterName}</p>
+          <p className="flex items-center gap-1.5 text-[11px] text-white/50">
+            <span className="h-1.5 w-1.5 rounded-full bg-green-400 shadow-[0_0_5px_rgba(74,222,128,0.9)]" />
+            online now
+          </p>
+        </div>
         {path.length > 0 && (
           <button
             type="button"
             onClick={onRestart}
-            className="rounded-full border border-white/10 px-3 py-1 text-[11px] uppercase tracking-wider text-parchment-300/60 transition-colors hover:border-gold-500/30 hover:text-gold-400"
+            className="rounded-full px-3 py-1 text-[11px] uppercase tracking-wider text-white/45 transition-colors hover:text-[#F17BB6]"
           >
             Restart
           </button>
         )}
       </header>
 
-      {preview.intro && (
-        <p className="rounded-lg border border-white/5 bg-night-800/60 p-3 text-sm italic leading-relaxed text-parchment-300/70">
-          {renderInline(preview.intro)}
-        </p>
-      )}
-
-      {/* ── Bubble stream ─────────────────────────────────────── */}
-      <ol
-        className="flex flex-col gap-3"
-        /* aria-live so screen readers announce new bubbles after each click */
+      {/* ── Bubble stream (anchored to the bottom) ──────────── */}
+      <div
+        className="flex flex-1 flex-col overflow-y-auto px-4 py-5"
         aria-live="polite"
         aria-atomic="false"
       >
-        {stream.map((entry, i) =>
-          entry.kind === "character" ? (
-            <CharacterBubble
-              key={`${entry.nodeId}-${i}`}
-              text={entry.text}
-              name={characterName}
-              imageUrl={characterImageUrl}
-            />
-          ) : (
-            <PlayerBubble key={`reply-${i}`} text={entry.text} />
-          ),
-        )}
-      </ol>
+        <div className="mt-auto space-y-2.5">
+          {preview.intro && (
+            <p className="mx-auto mb-2 max-w-md text-center text-[12px] italic leading-relaxed text-white/40">
+              {renderInline(preview.intro)}
+            </p>
+          )}
+          {visible.map((entry, i) =>
+            entry.kind === "character" ? (
+              <CharacterBubble
+                key={`${entry.nodeId}-${i}`}
+                text={entry.text}
+                imageUrl={characterImageUrl}
+              />
+            ) : (
+              <PlayerBubble key={`reply-${i}`} text={entry.text} />
+            ),
+          )}
+          {typing && <TypingBubble imageUrl={characterImageUrl} />}
+          <div ref={bottomRef} />
+        </div>
+      </div>
 
-      {/* ── Choice buttons (mid-tree) ─────────────────────────── */}
-      {!isFinished && currentNode.choices && (
-        <fieldset className="flex flex-col gap-2">
-          <legend className="mb-2 text-[11px] uppercase tracking-wider text-parchment-300/40">
-            Your reply
-          </legend>
-          {currentNode.choices.map((c) => (
+      {/* ── Reply dock: choices, or the terminal gate CTA ───── */}
+      <div className="border-t border-white/10 bg-night-900/80 px-3 py-3 backdrop-blur">
+        {typing ? (
+          <div className="h-[46px]" aria-hidden />
+        ) : !isFinished && currentNode.choices ? (
+          <div className="flex flex-col gap-2">
+            {currentNode.choices.slice(0, 2).map((c) => (
+              <button
+                key={c.next}
+                type="button"
+                onClick={() => onChoose(c)}
+                className="group rounded-full border border-[#F17BB6]/30 bg-[#F17BB6]/5 px-4 py-2.5 text-left text-sm text-white transition-all hover:border-[#F17BB6]/60 hover:bg-[#F17BB6]/15"
+              >
+                <span className="text-[#F17BB6]">&rarr;&nbsp;</span>
+                {c.label}
+              </button>
+            ))}
             <button
-              key={c.next}
               type="button"
-              onClick={() => onChoose(c)}
-              className="group rounded-xl border border-white/10 bg-card-gradient p-3 text-left text-sm text-parchment-200 transition-all hover:border-gold-500/40 hover:bg-plum-900/20"
+              onClick={() => openGate(chatSlug, characterName, customGate)}
+              className="group flex items-center gap-2 rounded-full border border-dashed border-[#F17BB6]/45 px-4 py-2.5 text-left text-sm font-medium text-[#F17BB6] transition-all hover:border-[#F17BB6]/80 hover:bg-[#F17BB6]/10"
             >
-              <span className="text-parchment-300/40 group-hover:text-gold-400">
-                &rarr;&nbsp;
-              </span>
-              {c.label}
+              <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M12 20h9" />
+                <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
+              </svg>
+              Write your own custom response
             </button>
-          ))}
-        </fieldset>
-      )}
-
-      {/* ── Terminal CTA ──────────────────────────────────────── */}
-      {isFinished && (
-        <div className="flex flex-col items-center gap-3 rounded-xl border border-gold-500/30 bg-plum-900/30 p-5 text-center">
-          <p className="text-sm text-parchment-300/80">
-            The scene doesn&apos;t have to end here. Continue it \u2014 your choices,
-            your pace.
-          </p>
+          </div>
+        ) : (
           <button
             type="button"
-            className="btn-primary text-base"
             onClick={() => openGate(chatSlug, characterName, gate)}
+            className="btn-primary w-full justify-center"
           >
-            Continue with {characterName}&nbsp;&rarr;
+            {gate.button}
           </button>
-        </div>
-      )}
+        )}
+      </div>
     </section>
   );
 }
 
-/* ── Bubble subcomponents ─────────────────────────────────────────── */
+/* ── Bubbles ──────────────────────────────────────────────── */
 
-function CharacterBubble({
-  text,
-  name,
-  imageUrl,
-}: {
-  text: string;
-  name: string;
-  imageUrl: string;
-}) {
+function CharacterBubble({ text, imageUrl }: { text: string; imageUrl: string }) {
   return (
-    <li className="flex items-start gap-3">
-      <div className="h-8 w-8 shrink-0 overflow-hidden rounded-full border border-gold-500/30 bg-night-800">
-        <Image
-          src={imageUrl}
-          alt=""
-          width={32}
-          height={32}
-          sizes="32px"
-          className="h-full w-full object-cover"
-        />
-      </div>
-      <div className="max-w-[85%] flex-1">
-        <p className="mb-0.5 text-[10px] uppercase tracking-wider text-gold-400/70">
-          {name}
-        </p>
-        <p className="rounded-2xl rounded-tl-sm border border-gold-500/15 bg-plum-900/30 px-4 py-3 text-sm leading-relaxed text-parchment-100">
-          {renderInline(text)}
-        </p>
-      </div>
-    </li>
+    <div className="msg-in flex items-end gap-2">
+      <span className="relative block h-7 w-7 shrink-0 overflow-hidden rounded-full border border-white/10">
+        <Image src={imageUrl} alt="" fill sizes="28px" className="object-cover" />
+      </span>
+      <p className="max-w-[78%] whitespace-pre-line rounded-2xl rounded-bl-md bg-white/10 px-4 py-2.5 text-sm leading-relaxed text-white/95">
+        {renderInline(text)}
+      </p>
+    </div>
   );
 }
 
 function PlayerBubble({ text }: { text: string }) {
   return (
-    <li className="flex justify-end">
-      <p className="max-w-[85%] rounded-2xl rounded-tr-sm border border-white/10 bg-night-800 px-4 py-2.5 text-sm leading-relaxed text-parchment-200">
+    <div className="msg-in flex justify-end">
+      <p className="max-w-[78%] rounded-2xl rounded-br-md bg-gradient-to-br from-[#F17BB6] to-[#EC4899] px-4 py-2.5 text-sm leading-relaxed text-white shadow-sm">
         {text}
       </p>
-    </li>
+    </div>
   );
 }
 
-/* ── Helpers ──────────────────────────────────────────────────────── */
+function TypingBubble({ imageUrl }: { imageUrl: string }) {
+  return (
+    <div className="msg-in flex items-end gap-2">
+      <span className="relative block h-7 w-7 shrink-0 overflow-hidden rounded-full border border-white/10">
+        <Image src={imageUrl} alt="" fill sizes="28px" className="object-cover" />
+      </span>
+      <span
+        className="flex items-center gap-1.5 rounded-2xl rounded-bl-md bg-white/10 px-4 py-3.5"
+        aria-label="typing"
+      >
+        <span className="typing-dot h-1.5 w-1.5 rounded-full bg-white/70" style={{ animationDelay: "0ms" }} />
+        <span className="typing-dot h-1.5 w-1.5 rounded-full bg-white/70" style={{ animationDelay: "160ms" }} />
+        <span className="typing-dot h-1.5 w-1.5 rounded-full bg-white/70" style={{ animationDelay: "320ms" }} />
+      </span>
+    </div>
+  );
+}
+
+/* ── Helpers ──────────────────────────────────────────────── */
 
 type StreamEntry =
   | { kind: "character"; nodeId: NodeId; text: string }
   | { kind: "reply"; text: string };
 
-/**
- * Build the visible bubble sequence from `rootId` through the chosen
- * path. Each path entry is the id of a node that the player navigated
- * INTO; we walk from root, adding the character bubble for the
- * starting node, then \[reply, character\] pairs for each choice taken.
- */
-function buildStream(preview: ChatPreview, path: NodeId[]): StreamEntry[] {
+function buildStream(preview: ChatPreviewData, path: NodeId[]): StreamEntry[] {
   const out: StreamEntry[] = [];
   let cursor: ChatPreviewNode = preview.nodes[preview.rootId];
   let cursorId: NodeId = preview.rootId;
   out.push({ kind: "character", nodeId: cursorId, text: cursor.text });
 
   for (const nextId of path) {
-    /* Find the choice that produced this transition so we can render
-     * the player's selection bubble correctly. */
     const choice = cursor.choices?.find((c) => c.next === nextId);
     if (!choice) break; /* defensive: stale path after author edit */
     out.push({ kind: "reply", text: choice.label });
@@ -252,11 +257,8 @@ function buildStream(preview: ChatPreview, path: NodeId[]): StreamEntry[] {
 }
 
 /**
- * Tiny inline renderer: wraps `*italic*` spans in <em>, leaves
- * everything else as plain text. Single regex pass; safe against
- * un-paired asterisks (treated as literal).
- *
- * Not a full markdown parser \u2014 we don't want one here.
+ * Tiny inline renderer: wraps `*italic*` spans in <em>, leaves everything
+ * else as plain text. Single regex pass; safe against un-paired asterisks.
  */
 function renderInline(input: string): ReactNode {
   const parts: ReactNode[] = [];
@@ -265,18 +267,14 @@ function renderInline(input: string): ReactNode {
   let match: RegExpExecArray | null;
   let key = 0;
   while ((match = pattern.exec(input)) !== null) {
-    if (match.index > lastIndex) {
-      parts.push(input.slice(lastIndex, match.index));
-    }
+    if (match.index > lastIndex) parts.push(input.slice(lastIndex, match.index));
     parts.push(
-      <em key={`em-${key++}`} className="italic text-parchment-300/80">
+      <em key={`em-${key++}`} className="italic text-white/60">
         {match[1]}
       </em>,
     );
     lastIndex = pattern.lastIndex;
   }
-  if (lastIndex < input.length) {
-    parts.push(input.slice(lastIndex));
-  }
+  if (lastIndex < input.length) parts.push(input.slice(lastIndex));
   return parts;
 }

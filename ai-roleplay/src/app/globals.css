@@ -22,12 +22,12 @@
 /* ── Shared component classes ─────────────────────────────── */
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center gap-2 rounded-lg
+    @apply inline-flex items-center gap-2 rounded-full
            bg-gradient-to-r from-gold-600 to-gold-400
            px-6 py-3 font-semibold text-night-950
-           shadow-lg shadow-gold-500/20
+           shadow-sm shadow-gold-500/10
            transition-all duration-200
-           hover:shadow-gold-500/40 hover:brightness-110
+           hover:shadow-gold-500/25 hover:brightness-[1.06]
            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400;
   }
 
@@ -72,4 +72,58 @@
 
 .ember-glow {
   animation: ember-pulse 6s ease-in-out infinite;
+}
+
+/* ── Chat message entrance ────────────────────────────────── */
+@keyframes msg-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.msg-in {
+  animation: msg-in 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Typing indicator dots ────────────────────────────────── */
+@keyframes typing-dot {
+  0%,
+  60%,
+  100% {
+    opacity: 0.25;
+  }
+  30% {
+    opacity: 0.9;
+  }
+}
+.typing-dot {
+  animation: typing-dot 1.2s ease-in-out infinite;
+}
+
+/* ── Staggered reveal (landing grid) ──────────────────────── */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.rise-in {
+  animation: rise-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .msg-in,
+  .rise-in,
+  .typing-dot,
+  .ember-glow {
+    animation: none;
+  }
 }

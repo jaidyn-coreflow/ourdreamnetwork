@@ -5,7 +5,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        night: { 950: "#060606", 900: "#0a0a0a", 800: "#141414", 700: "#1a1a1a" },
+        // Near-black neutrals, tinted a hair toward the brand magenta so the
+        // page reads as intentional rather than flat black. 800 (card bg) left
+        // as-is to keep the character card unchanged.
+        night: { 950: "#080609", 900: "#0c090c", 800: "#141414", 700: "#1a1a1a" },
         // index pink accent maps onto the components' "gold" token
         gold: { 400: "#F17BB6", 500: "#e85aa0", 600: "#db2777" },
         rose: { 700: "#8b2252", 600: "#a62d65", 500: "#c2185b" },
@@ -15,8 +18,8 @@ const config: Config = {
         parchment: { 100: "#ffffff", 200: "#f5f5f5", 300: "#d4d4d4" },
       },
       fontFamily: {
-        display: ["system-ui", "-apple-system", "BlinkMacSystemFont", '"Segoe UI"', "Roboto", "sans-serif"],
-        body: ["system-ui", "-apple-system", "BlinkMacSystemFont", '"Segoe UI"', "Roboto", "sans-serif"],
+        display: ["var(--font-display)", "system-ui", "sans-serif"],
+        body: ["var(--font-body)", "system-ui", "sans-serif"],
       },
       backgroundImage: {
         "hero-gradient":
