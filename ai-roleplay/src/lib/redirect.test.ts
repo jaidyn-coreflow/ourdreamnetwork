@@ -2,48 +2,57 @@ import { describe, expect, it } from "vitest";
 import { buildRedirectUrl, REDTRACK_BASE } from "./redirect";
 
 describe("buildRedirectUrl", () => {
-  it("routes through the AI Roleplay campaign redirect link with sub17, sub11, clickid, _gl, and inbound params", () => {
+  it("routes through the campaign link with sub17=Female POV, clickid, _gl, inbound params, and the email fragment", () => {
     const url = buildRedirectUrl({
-      chatSlug: "the-storm-rider-crown-thorn-nG3Q3Sdgvj",
+      chatSlug: "silas-corvane-PLACEHOLDER",
+      email: "fan@example.com",
       clickid: "abc123",
       gl: "1*glpayload",
       inbound: new URLSearchParams("gclid=G1&utm_source=google"),
     });
     expect(REDTRACK_BASE).toBe("https://clk.ourdreamnetwork.com/6a20d8a94628b3bfe702b2c1");
     expect(url.startsWith(REDTRACK_BASE + "?")).toBe(true);
-    const qs = new URL(url).searchParams;
-    expect(qs.get("sub17")).toBe("the-storm-rider-crown-thorn-nG3Q3Sdgvj");
-    expect(qs.get("sub11")).toBe("ai-roleplay");
-    expect(qs.get("sub19")).toBe("1*glpayload");
-    expect(qs.get("clickid")).toBe("abc123");
-    expect(qs.get("gclid")).toBe("G1");
-    expect(qs.get("utm_source")).toBe("google");
+    const u = new URL(url);
+    expect(u.searchParams.get("sub17")).toBe("Female POV");
+    expect(u.searchParams.has("sub11")).toBe(false);
+    expect(u.searchParams.get("sub19")).toBe("1*glpayload");
+    expect(u.searchParams.get("clickid")).toBe("abc123");
+    expect(u.searchParams.get("gclid")).toBe("G1");
+    expect(u.searchParams.get("utm_source")).toBe("google");
+    expect(u.hash).toBe("#prefill_email=fan%40example.com");
   });
 
-  it("uses a unique sub17 per character", () => {
-    const draven = new URL(
-      buildRedirectUrl({ chatSlug: "draven-thorne-C6YywpVFVj", clickid: "", gl: "", inbound: new URLSearchParams() }),
-    ).searchParams.get("sub17");
-    const royal = new URL(
-      buildRedirectUrl({ chatSlug: "a-royal-pain-xFGMcJD4xS", clickid: "", gl: "", inbound: new URLSearchParams() }),
-    ).searchParams.get("sub17");
-    expect(draven).toBe("draven-thorne-C6YywpVFVj");
-    expect(royal).toBe("a-royal-pain-xFGMcJD4xS");
-    expect(draven).not.toBe(royal);
+  it("emits sub17=Female+POV (space encoded as +) in the raw query string", () => {
+    const url = buildRedirectUrl({ chatSlug: "x", email: "a@b.com", clickid: "", gl: "", inbound: new URLSearchParams() });
+    expect(url).toContain("sub17=Female+POV");
   });
 
-  it("organic (no clickid): still routes through the campaign link, omits clickid and sub19", () => {
-    const url = buildRedirectUrl({ chatSlug: "x", clickid: "", gl: "", inbound: new URLSearchParams() });
-    expect(url.startsWith(REDTRACK_BASE + "?")).toBe(true);
-    const qs = new URL(url).searchParams;
-    expect(qs.get("sub17")).toBe("x");
-    expect(qs.get("sub11")).toBe("ai-roleplay");
-    expect(qs.has("clickid")).toBe(false);
-    expect(qs.has("sub19")).toBe(false);
+  it("URL-encodes the email fragment (plus-addresses survive) and puts it after all query params", () => {
+    const url = buildRedirectUrl({
+      chatSlug: "x",
+      email: "jo+promo@gmail.com",
+      clickid: "",
+      gl: "",
+      inbound: new URLSearchParams("utm_source=google"),
+    });
+    // Fragment comes after the query string.
+    expect(url.indexOf("#")).toBeGreaterThan(url.indexOf("?"));
+    expect(url.endsWith("#prefill_email=jo%2Bpromo%40gmail.com")).toBe(true);
+    // The "+" is encoded as %2B, never a literal "+" (which would decode to a space).
+    expect(url).not.toContain("prefill_email=jo+promo");
+  });
+
+  it("organic (no clickid): omits clickid and sub19 but keeps sub17 and the email fragment", () => {
+    const url = buildRedirectUrl({ chatSlug: "x", email: "a@b.com", clickid: "", gl: "", inbound: new URLSearchParams() });
+    const u = new URL(url);
+    expect(u.searchParams.has("clickid")).toBe(false);
+    expect(u.searchParams.has("sub19")).toBe(false);
+    expect(u.searchParams.get("sub17")).toBe("Female POV");
+    expect(u.hash).toBe("#prefill_email=a%40b.com");
   });
 
   it("omits sub19 when no _gl is available", () => {
-    const url = buildRedirectUrl({ chatSlug: "x", clickid: "c", gl: "", inbound: new URLSearchParams() });
+    const url = buildRedirectUrl({ chatSlug: "x", email: "a@b.com", clickid: "c", gl: "", inbound: new URLSearchParams() });
     expect(new URL(url).searchParams.has("sub19")).toBe(false);
   });
 });

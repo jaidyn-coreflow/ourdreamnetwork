@@ -69,7 +69,7 @@ export async function captureAndRedirect(email: string, chatSlug: string): Promi
   const clickid = readClickid();
   const inbound = mergePersistedWithUrl(new URLSearchParams(window.location.search));
   const gl = await getGlValue();
-  const url = buildRedirectUrl({ chatSlug, clickid, gl, inbound });
+  const url = buildRedirectUrl({ chatSlug, email, clickid, gl, inbound });
 
   window.location.href = url;
 }
