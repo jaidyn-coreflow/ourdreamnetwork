@@ -57,12 +57,6 @@ export function CharacterCard({ character }: { character: Character }) {
         className="object-cover transition-transform duration-500 group-hover:scale-105"
       />
 
-      {/* Camera-frame overlay */}
-      <div aria-hidden className="pointer-events-none absolute inset-0">
-        <span className="absolute left-4 top-4 h-[3px] w-6 rounded-full bg-white/80" />
-        <span className="absolute right-4 top-4 h-[3px] w-6 rounded-full bg-white/80" />
-      </div>
-
       {/* Bottom scrim + meta */}
       <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/85 to-transparent px-4 pb-4 pt-20">
         <div className="flex flex-wrap items-baseline gap-x-2">
