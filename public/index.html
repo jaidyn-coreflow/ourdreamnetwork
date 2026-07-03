@@ -703,7 +703,7 @@ function renderEmailGate(visible) {
     saveEmail(email).catch(err => console.warn('[save-email] failed:', err));
 
     // Wired in Task 12.
-    redirectToRedtrack();
+    redirectToRedtrack(email);
   });
 }
 
@@ -724,7 +724,7 @@ function saveEmail(email) {
   });
 }
 
-async function redirectToRedtrack() {
+async function redirectToRedtrack(email) {
   // Two paths, both ending on ourdream.ai/create with the quiz answers prefilled.
   //
   //   PAID (rtkclickid-store cookie present): clk.ourdreamnetwork.com/click/1 with
@@ -774,7 +774,13 @@ async function redirectToRedtrack() {
 
   // Paid path carries _gl via sub19 already; only organic path needs linker decoration on the final URL.
   const finalUrl = cookieMatch ? url : await getDecoratedUrl(url);
-  window.location.href = finalUrl;
+
+  // Append the captured email as a #prefill_email fragment, AFTER all query
+  // params. encodeURIComponent keeps a "+" in plus-addresses intact (%2B).
+  // On the paid path the browser carries the fragment across RedTrack's 302;
+  // on the organic path it goes straight to the offer.
+  const redirectUrl = email ? finalUrl + '#prefill_email=' + encodeURIComponent(email) : finalUrl;
+  window.location.href = redirectUrl;
 }
 
 // ══════════════════════════════════════════════
