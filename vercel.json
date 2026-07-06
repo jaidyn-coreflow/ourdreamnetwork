@@ -12,6 +12,7 @@
     { "source": "/girlfriendgpt", "destination": "/girlfriendgpt.html" },
     { "source": "/secrets-ai", "destination": "/secrets-ai.html" },
     { "source": "/fantasy", "destination": "/fantasy.html" },
+    { "source": "/rpg", "destination": "/rpg.html" },
     { "source": "/quiz", "destination": "/quiz.html" },
     { "source": "/go/ourdream", "destination": "/go-ourdream.html" },
     { "source": "/login", "destination": "/login.html" },
@@ -19,5 +20,9 @@
 
     { "source": "/ai-roleplay", "destination": "https://ai-roleplay-ten.vercel.app/ai-roleplay" },
     { "source": "/ai-roleplay/:path*", "destination": "https://ai-roleplay-ten.vercel.app/ai-roleplay/:path*" }
+  ],
+  "headers": [
+    { "source": "/rpg", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] },
+    { "source": "/rpg.html", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] }
   ]
 }
