@@ -7,8 +7,14 @@
 <title>Create Your AI Boyfriend | Ourdreamnetwork</title>
 <meta name="description" content="Design your AI boyfriend, the way you want on ourdream. Start personalizing your boyfriend for free today">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="preconnect" href="https://static.ourdream.ai" crossorigin>
+<script src="constants.js"></script>
 <link rel="preconnect" href="https://ouraidream.com" crossorigin>
+
+<link rel="preconnect" href="https://clk.ourdreamnetwork.com">
+<!-- RedTrack universal tag — loaded directly so the clickid cookie is written ASAP.
+     Previously injected via GTM, which loads late and left a race where the CTA fired
+     before the cookie existed. Remove the RedTrack tag from GTM to avoid double-firing. -->
+<script async src="https://clk.ourdreamnetwork.com/uniclick.js?attribution=lastpaid&cookiedomain=ourdreamnetwork.com&cookieduration=30&defaultcampaignid=6a06af2165debd9009452848&regviewonce=false"></script>
 
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -232,7 +238,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 //  ASSETS / CONSTANTS  (Male variant — mirror of index.html)
 // ══════════════════════════════════════════════
 
-const MALE_CDN = 'https://static.ourdream.ai/male-create-images';
 const REDTRACK_BASE_B64 = 'aHR0cHM6Ly9jbGsub3VyZHJlYW1uZXR3b3JrLmNvbS9jbGljay8x'; // clk.ourdreamnetwork.com/click/1
 const STEP_LABELS = ['Style', 'Look', 'Personality'];
 
@@ -242,12 +247,12 @@ const STEP_LABELS = ['Style', 'Look', 'Personality'];
 
 const STYLE_VIDEOS = {
   Realistic: {
-    poster: `${MALE_CDN}/image-7a0ed255.webp`,
-    video:  `${MALE_CDN}/video-97072b5d.mp4`,
+    poster: 'assets/male/image-7a0ed255.webp',
+    video:  window.cdnAsset('male-create-images/video-97072b5d.mp4'),
   },
   Anime: {
-    poster: `${MALE_CDN}/image-3683aa03.webp`,
-    video:  `${MALE_CDN}/video-d127699e.mp4`,
+    poster: 'assets/male/image-3683aa03.webp',
+    video:  window.cdnAsset('male-create-images/video-d127699e.mp4'),
   },
 };
 
@@ -255,20 +260,20 @@ const STYLE_VIDEOS = {
 // Allowed for Male: Asian, African, White, Latina, Arab, Indian, Italian, Elf, Alien, Demon, Angel
 const ETHNICITY = {
   Realistic: [
-    { value: 'White',   label: 'White',  img: `${MALE_CDN}/image-7a0ed255.webp` },
-    { value: 'Asian',   label: 'Asian',  img: `${MALE_CDN}/image-bc429a8f.webp` },
-    { value: 'Latina',  label: 'Latino', img: `${MALE_CDN}/image-05a87733.webp` },
-    { value: 'African', label: 'Black',  img: `${MALE_CDN}/image-e359b59f.webp` },
-    { value: 'Elf',     label: 'Elf',    img: `${MALE_CDN}/image-d4b4edad.webp` },
-    { value: 'Demon',   label: 'Demon',  img: `${MALE_CDN}/image-c020fb9b.webp` },
+    { value: 'White',   label: 'White',  img: 'assets/male/image-7a0ed255.webp' },
+    { value: 'Asian',   label: 'Asian',  img: 'assets/male/image-bc429a8f.webp' },
+    { value: 'Latina',  label: 'Latino', img: 'assets/male/image-05a87733.webp' },
+    { value: 'African', label: 'Black',  img: 'assets/male/image-e359b59f.webp' },
+    { value: 'Elf',     label: 'Elf',    img: 'assets/male/image-d4b4edad.webp' },
+    { value: 'Demon',   label: 'Demon',  img: 'assets/male/image-c020fb9b.webp' },
   ],
   Anime: [
-    { value: 'White',   label: 'White',  img: `${MALE_CDN}/image-7ced69d1.webp` },
-    { value: 'Asian',   label: 'Asian',  img: `${MALE_CDN}/image-a1ea842b.webp` },
-    { value: 'Latina',  label: 'Latino', img: `${MALE_CDN}/image-bd93952f.webp` },
-    { value: 'African', label: 'Black',  img: `${MALE_CDN}/image-5a5fe712.webp` },
-    { value: 'Elf',     label: 'Elf',    img: `${MALE_CDN}/image-29115249.webp` },
-    { value: 'Demon',   label: 'Demon',  img: `${MALE_CDN}/image-ae6491be.webp` },
+    { value: 'White',   label: 'White',  img: 'assets/male/image-7ced69d1.webp' },
+    { value: 'Asian',   label: 'Asian',  img: 'assets/male/image-a1ea842b.webp' },
+    { value: 'Latina',  label: 'Latino', img: 'assets/male/image-bd93952f.webp' },
+    { value: 'African', label: 'Black',  img: 'assets/male/image-5a5fe712.webp' },
+    { value: 'Elf',     label: 'Elf',    img: 'assets/male/image-29115249.webp' },
+    { value: 'Demon',   label: 'Demon',  img: 'assets/male/image-ae6491be.webp' },
   ],
 };
 
@@ -281,7 +286,7 @@ const ETHNICITY_APPEARANCE = {
   Demon:   { skinTone: 'Darker', hairColor: 'Black',    eyeColor: 'Red' },
 };
 
-const _HAIR_IMG = (uuid) => `https://media.ourdream.ai/cdn-cgi/image/format=auto,q=90,width=400/character-creation/hairstyle/${uuid}`;
+const _HAIR_IMG = (uuid) => `assets/male/hair/${uuid}.webp`;
 
 // Hair — male-allowed Q8 values (Short, Long Straight, Slicked Back).
 const HAIR = {
@@ -301,29 +306,29 @@ const HAIR = {
 // Q4 (breastSize) and Q5 (buttSize) are N/A for Male and intentionally omitted.
 const PHYSIQUE = {
   Realistic: [
-    { value: 'slim',     label: 'Slim',     img: `${MALE_CDN}/image-c006686d.webp`, bodyType: 'Slim' },
-    { value: 'athletic', label: 'Athletic', img: `${MALE_CDN}/image-af1eaeee.webp`, bodyType: 'Athletic' },
-    { value: 'muscular', label: 'Muscular', img: `${MALE_CDN}/image-db58d0e2.webp`, bodyType: 'Muscular' },
+    { value: 'slim',     label: 'Slim',     img: 'assets/male/image-c006686d.webp', bodyType: 'Slim' },
+    { value: 'athletic', label: 'Athletic', img: 'assets/male/image-af1eaeee.webp', bodyType: 'Athletic' },
+    { value: 'muscular', label: 'Muscular', img: 'assets/male/image-db58d0e2.webp', bodyType: 'Muscular' },
   ],
   Anime: [
-    { value: 'slim',     label: 'Slim',     img: `${MALE_CDN}/image-fe855f1b.webp`, bodyType: 'Slim' },
-    { value: 'athletic', label: 'Athletic', img: `${MALE_CDN}/image-28918c10.webp`, bodyType: 'Athletic' },
-    { value: 'muscular', label: 'Muscular', img: `${MALE_CDN}/image-32484314.webp`, bodyType: 'Muscular' },
+    { value: 'slim',     label: 'Slim',     img: 'assets/male/image-fe855f1b.webp', bodyType: 'Slim' },
+    { value: 'athletic', label: 'Athletic', img: 'assets/male/image-28918c10.webp', bodyType: 'Athletic' },
+    { value: 'muscular', label: 'Muscular', img: 'assets/male/image-32484314.webp', bodyType: 'Muscular' },
   ],
 };
 
 const PERSONALITIES = {
   Realistic: [
-    { id: 'sweet',     img: `${MALE_CDN}/image-fb271758.webp`, personality: ['Sweet', 'Caring'],       relationship: ['Crush', 'Friend'],            occupation: ['Doctor', 'Teacher'],      hobby: ['Cooking', 'Gardening'],   fetish: ['Vanilla', 'Roleplay'] },
-    { id: 'flirty',    img: `${MALE_CDN}/image-8e0766be.webp`, personality: ['Flirty', 'Charming'],    relationship: ['Fling', 'Roommate'],          occupation: ['Bartender', 'Musician'],  hobby: ['Dancing', 'Surfing'],     fetish: ['Lingerie', 'High Heels'] },
-    { id: 'shy',       img: `${MALE_CDN}/image-4362875c.webp`, personality: ['Shy', 'Mysterious'],     relationship: ['Stranger', 'Secret Admirer'], occupation: ['Artist', 'Photographer'], hobby: ['Reading', 'Painting'],    fetish: ['Blindfolds', 'Stockings'] },
-    { id: 'confident', img: `${MALE_CDN}/image-49740bb9.webp`, personality: ['Confident', 'Sassy'],    relationship: ['Lover', 'Colleague'],         occupation: ['Entrepreneur', 'Lawyer'], hobby: ['Running', 'Cycling'],     fetish: ['Uniforms', 'Corsets'] },
+    { id: 'sweet',     img: 'assets/male/image-fb271758.webp', personality: ['Sweet', 'Caring'],       relationship: ['Crush', 'Friend'],            occupation: ['Doctor', 'Teacher'],      hobby: ['Cooking', 'Gardening'],   fetish: ['Vanilla', 'Roleplay'] },
+    { id: 'flirty',    img: 'assets/male/image-8e0766be.webp', personality: ['Flirty', 'Charming'],    relationship: ['Fling', 'Roommate'],          occupation: ['Bartender', 'Musician'],  hobby: ['Dancing', 'Surfing'],     fetish: ['Lingerie', 'High Heels'] },
+    { id: 'shy',       img: 'assets/male/image-4362875c.webp', personality: ['Shy', 'Mysterious'],     relationship: ['Stranger', 'Secret Admirer'], occupation: ['Artist', 'Photographer'], hobby: ['Reading', 'Painting'],    fetish: ['Blindfolds', 'Stockings'] },
+    { id: 'confident', img: 'assets/male/image-49740bb9.webp', personality: ['Confident', 'Sassy'],    relationship: ['Lover', 'Colleague'],         occupation: ['Entrepreneur', 'Lawyer'], hobby: ['Running', 'Cycling'],     fetish: ['Uniforms', 'Corsets'] },
   ],
   Anime: [
-    { id: 'sweet',     img: `${MALE_CDN}/image-3745f247.webp`, personality: ['Sweet', 'Caring'],    relationship: ['Crush', 'Friend'],            occupation: ['Doctor', 'Teacher'],      hobby: ['Cooking', 'Gardening'],   fetish: ['Vanilla', 'Roleplay'] },
-    { id: 'flirty',    img: `${MALE_CDN}/image-3c6da4ed.webp`, personality: ['Flirty', 'Charming'], relationship: ['Fling', 'Roommate'],          occupation: ['Bartender', 'Musician'],  hobby: ['Dancing', 'Surfing'],     fetish: ['Lingerie', 'High Heels'] },
-    { id: 'shy',       img: `${MALE_CDN}/image-05a85fce.webp`, personality: ['Shy', 'Mysterious'],  relationship: ['Stranger', 'Secret Admirer'], occupation: ['Artist', 'Photographer'], hobby: ['Reading', 'Painting'],    fetish: ['Blindfolds', 'Stockings'] },
-    { id: 'confident', img: `${MALE_CDN}/image-8c9ede21.webp`, personality: ['Confident', 'Sassy'], relationship: ['Lover', 'Colleague'],         occupation: ['Entrepreneur', 'Lawyer'], hobby: ['Running', 'Cycling'],     fetish: ['Uniforms', 'Corsets'] },
+    { id: 'sweet',     img: 'assets/male/image-3745f247.webp', personality: ['Sweet', 'Caring'],    relationship: ['Crush', 'Friend'],            occupation: ['Doctor', 'Teacher'],      hobby: ['Cooking', 'Gardening'],   fetish: ['Vanilla', 'Roleplay'] },
+    { id: 'flirty',    img: 'assets/male/image-3c6da4ed.webp', personality: ['Flirty', 'Charming'], relationship: ['Fling', 'Roommate'],          occupation: ['Bartender', 'Musician'],  hobby: ['Dancing', 'Surfing'],     fetish: ['Lingerie', 'High Heels'] },
+    { id: 'shy',       img: 'assets/male/image-05a85fce.webp', personality: ['Shy', 'Mysterious'],  relationship: ['Stranger', 'Secret Admirer'], occupation: ['Artist', 'Photographer'], hobby: ['Reading', 'Painting'],    fetish: ['Blindfolds', 'Stockings'] },
+    { id: 'confident', img: 'assets/male/image-8c9ede21.webp', personality: ['Confident', 'Sassy'], relationship: ['Lover', 'Colleague'],         occupation: ['Entrepreneur', 'Lawyer'], hobby: ['Running', 'Cycling'],     fetish: ['Uniforms', 'Corsets'] },
   ],
 };
 

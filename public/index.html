@@ -7,14 +7,19 @@
 <title>Create Your AI Character | Ourdreamnetwork</title>
 <meta name="description" content="Design your AI character, the way you want on ourdream. Start personalizing your character for free today">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="preconnect" href="https://static.ourdream.ai" crossorigin>
+<script src="constants.js"></script>
+<link rel="preconnect" href="https://cdn.ourdream.pics">
 <link rel="preconnect" href="https://ouraidream.com" crossorigin>
 <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
-<link rel="dns-prefetch" href="https://clk.ourdreamnetwork.com">
+<link rel="preconnect" href="https://clk.ourdreamnetwork.com">
+<!-- RedTrack universal tag — loaded directly so the clickid cookie is written ASAP.
+     Previously injected via GTM (deferred to window.load), which left an ~8s race where
+     the CTA fired before the cookie existed. Remove the RedTrack tag from GTM to avoid double-firing. -->
+<script async src="https://clk.ourdreamnetwork.com/uniclick.js?attribution=lastpaid&cookiedomain=ourdreamnetwork.com&cookieduration=30&defaultcampaignid=6a06af2165debd9009452848&regviewonce=false"></script>
 
 <!-- Preload Step 1 LCP posters -->
-<link rel="preload" as="image" type="image/webp" href="https://static.ourdream.ai/create-videos/sfw-realistic-female-poster.webp">
-<link rel="preload" as="image" type="image/webp" href="https://static.ourdream.ai/create-videos/sfw-anime-female-poster.webp">
+<link rel="preload" as="image" type="image/webp" href="assets/create-3step/sfw-realistic-female-poster.webp">
+<link rel="preload" as="image" type="image/webp" href="assets/create-3step/sfw-anime-female-poster.webp">
 
 <!-- Google Tag Manager (deferred to window load for faster LCP; events queued in dataLayer pre-load) -->
 <script>
@@ -278,31 +283,31 @@ const STEP_LABELS = ['Style', 'Look', 'Personality'];
 
 const STYLE_VIDEOS = {
   Realistic: {
-    poster: 'https://static.ourdream.ai/create-videos/sfw-realistic-female-poster.webp',
-    video:  'https://static.ourdream.ai/create-videos/w600/234b7ea4-be67-4b50-871e-8f65fe7a26f0.mp4',
+    poster: 'assets/create-3step/sfw-realistic-female-poster.webp',
+    video:  window.cdnCreateVid('w600/234b7ea4-be67-4b50-871e-8f65fe7a26f0.mp4'),
   },
   Anime: {
-    poster: 'https://static.ourdream.ai/create-videos/sfw-anime-female-poster.webp',
-    video:  'https://static.ourdream.ai/create-videos/w600/514c0c25-05ec-452e-b56f-7e8841175aca.mp4',
+    poster: 'assets/create-3step/sfw-anime-female-poster.webp',
+    video:  window.cdnCreateVid('w600/514c0c25-05ec-452e-b56f-7e8841175aca.mp4'),
   },
 };
 
 const ETHNICITY = {
   Realistic: [
-    { value: 'White',   label: 'White',  img: 'https://static.ourdream.ai/create-videos/sfw-realistic-white.webp' },
-    { value: 'Asian',   label: 'Asian',  img: 'https://static.ourdream.ai/create-videos/sfw-realistic-asian.webp' },
-    { value: 'Latina',  label: 'Latina', img: 'https://static.ourdream.ai/create-videos/sfw-realistic-latina.webp' },
-    { value: 'African', label: 'Black',  img: 'https://static.ourdream.ai/create-videos/sfw-realistic-african.webp' },
-    { value: 'Elf',     label: 'Elf',    img: 'https://static.ourdream.ai/create-videos/sfw-realistic-elf.webp' },
-    { value: 'Demon',   label: 'Demon',  img: 'https://static.ourdream.ai/create-videos/sfw-realistic-demon.webp' },
+    { value: 'White',   label: 'White',  img: 'assets/create-3step/sfw-realistic-white.webp' },
+    { value: 'Asian',   label: 'Asian',  img: 'assets/create-3step/sfw-realistic-asian.webp' },
+    { value: 'Latina',  label: 'Latina', img: 'assets/create-3step/sfw-realistic-latina.webp' },
+    { value: 'African', label: 'Black',  img: 'assets/create-3step/sfw-realistic-african.webp' },
+    { value: 'Elf',     label: 'Elf',    img: 'assets/create-3step/sfw-realistic-elf.webp' },
+    { value: 'Demon',   label: 'Demon',  img: 'assets/create-3step/sfw-realistic-demon.webp' },
   ],
   Anime: [
-    { value: 'White',   label: 'White',  img: 'https://static.ourdream.ai/create-videos/sfw-anime-white.webp' },
-    { value: 'Asian',   label: 'Asian',  img: 'https://static.ourdream.ai/create-videos/sfw-anime-asian.webp' },
-    { value: 'Latina',  label: 'Latina', img: 'https://static.ourdream.ai/create-videos/sfw-anime-latina.webp' },
-    { value: 'African', label: 'Black',  img: 'https://static.ourdream.ai/create-videos/sfw-anime-african.webp' },
-    { value: 'Elf',     label: 'Elf',    img: 'https://static.ourdream.ai/create-videos/sfw-anime-elf.webp' },
-    { value: 'Demon',   label: 'Demon',  img: 'https://static.ourdream.ai/create-videos/sfw-anime-demon.webp' },
+    { value: 'White',   label: 'White',  img: 'assets/create-3step/sfw-anime-white.webp' },
+    { value: 'Asian',   label: 'Asian',  img: 'assets/create-3step/sfw-anime-asian.webp' },
+    { value: 'Latina',  label: 'Latina', img: 'assets/create-3step/sfw-anime-latina.webp' },
+    { value: 'African', label: 'Black',  img: 'assets/create-3step/sfw-anime-african.webp' },
+    { value: 'Elf',     label: 'Elf',    img: 'assets/create-3step/sfw-anime-elf.webp' },
+    { value: 'Demon',   label: 'Demon',  img: 'assets/create-3step/sfw-anime-demon.webp' },
   ],
 };
 
@@ -318,7 +323,7 @@ const ETHNICITY_APPEARANCE = {
 // Hair + Physique use the CDN preview URLs (resolved from the TSX mediaUrl() helper).
 // These were originally constructed by analogy in Task 4 but those URLs 404; replaced
 // with the actual UUIDs captured from the original TSX data tables.
-const _PREVIEW = (uuid) => `https://static.ourdream.ai/cdn-cgi/image/width=400,format=auto/previews/${uuid}`;
+const _PREVIEW = (uuid) => `assets/create-3step/previews/${uuid}.webp`;
 
 const HAIR = {
   Realistic: [

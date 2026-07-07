@@ -7,10 +7,14 @@
 <title>Welcome To Our Dream AI</title>
 <meta name="description" content="Welcome to our dream ai. The ultimate AI roleplay platform. Sign up for 50 bonus dreamcoins for free.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<script src="constants.js"></script>
 <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
-<link rel="preconnect" href="https://vid.ourdream.ai">
-<link rel="preload" as="video" href="https://vid.ourdream.ai/heartcloudsmall7.webm" type="video/webm" fetchpriority="high">
-<link rel="dns-prefetch" href="https://clk.ourdreamnetwork.com">
+<link rel="preconnect" href="https://cdn.ourdream.pics">
+<link rel="preconnect" href="https://clk.ourdreamnetwork.com">
+<!-- RedTrack universal tag — loaded directly so the clickid cookie is written ASAP.
+     Previously injected via GTM (deferred to window.load), which left an ~8s race where
+     the CTA fired before the cookie existed. Remove the RedTrack tag from GTM to avoid double-firing. -->
+<script async src="https://clk.ourdreamnetwork.com/uniclick.js?attribution=lastpaid&cookiedomain=ourdreamnetwork.com&cookieduration=30&defaultcampaignid=6a06af2165debd9009452848&regviewonce=false"></script>
 
 <!-- Google Tag Manager (deferred to window load; events queued pre-load) -->
 <script>
@@ -151,7 +155,7 @@ body {
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5VRS8QPJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <video class="lp-bg-video" autoplay muted loop playsinline preload="auto" disablepictureinpicture fetchpriority="high" aria-hidden="true">
-  <source src="https://vid.ourdream.ai/heartcloudsmall7.webm" type="video/webm">
+  <source data-vid="heartcloudsmall7.webm" type="video/webm">
 </video>
 <div class="lp-bg-scrim" aria-hidden="true"></div>
 
@@ -196,6 +200,9 @@ body {
   // Base64 of "https://clk.ourdreamnetwork.com/click/1" — same pattern as top-sites.html.
   var REDTRACK_BASE_B64 = 'aHR0cHM6Ly9jbGsub3VyZHJlYW1uZXR3b3JrLmNvbS9jbGljay8x';
   var SAVE_EMAIL_TIMEOUT_MS = 600;
+  // A fast submit can beat the clickid cookie (uniclick.js mints it ~3s after load);
+  // wait up to this long for it to land before falling back to the organic path.
+  var CLICKID_WAIT_MS = 1500;
 
   var form = document.getElementById('login-form');
   var emailInput = document.getElementById('email');
@@ -246,10 +253,10 @@ body {
       return url.toString();
     }
 
-    // ORGANIC path — no rtkclickid-store cookie yet (RedTrack tag fires via GTM, which is
-    // deferred to window.load; fast submitters beat it). Sending these to /click anyway
-    // gets {"status":0,"message":"empty clickid value"}, so skip RedTrack — mirror index.html
-    // and go direct to ourdream.ai/signup, forwarding inbound attribution + GA4 linker _gl.
+    // ORGANIC path — still no rtkclickid-store cookie even after the brief wait (uniclick.js
+    // blocked, or an unusually fast submit). Sending these to /click anyway gets
+    // {"status":0,"message":"empty clickid value"}, so skip RedTrack — mirror index.html and
+    // go direct to ourdream.ai/signup, forwarding inbound attribution + GA4 linker _gl.
     var dest = new URL('https://ourdream.ai/signup');
     new URLSearchParams(window.location.search).forEach(function (v, k) {
       if (!dest.searchParams.has(k)) dest.searchParams.set(k, v);
@@ -287,6 +294,22 @@ body {
     });
   }
 
+  // Poll for the clickid cookie up to maxMs. Resolves as soon as it appears, or on
+  // timeout. uniclick.js (in <head>) writes it ~3s after load, so a fast submitter can
+  // arrive before it exists — wait briefly so they still get the paid (attributed) path.
+  function waitForClickId(maxMs) {
+    return new Promise(function (resolve) {
+      if (/rtkclickid-store=/.test(document.cookie)) { resolve(); return; }
+      var start = Date.now();
+      var iv = setInterval(function () {
+        if (/rtkclickid-store=/.test(document.cookie) || Date.now() - start >= maxMs) {
+          clearInterval(iv);
+          resolve();
+        }
+      }, 60);
+    });
+  }
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
 
@@ -298,10 +321,20 @@ body {
     }
     clearError();
     submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting…';
 
     track('quiz_email_captured', { email_provided: true, source: 'login' });
 
-    getGlValue().then(function (glValue) {
+    // Save the email right away, concurrent with the waits below (capped, never blocks).
+    var savePromise = withTimeout(
+      saveEmail(email).catch(function () { /* swallow — must not block redirect */ }),
+      SAVE_EMAIL_TIMEOUT_MS
+    );
+
+    // Give a late clickid cookie a brief moment to land before choosing paid-vs-organic;
+    // resolves instantly if it's already set. getGlValue runs in parallel, no extra wait.
+    Promise.all([waitForClickId(CLICKID_WAIT_MS), getGlValue()]).then(function (res) {
+      var glValue = res[1];
       var redirectUrl = buildRedirectUrl(glValue);
       var hasClickId = /(?:^|;\s*)rtkclickid-store=/.test(document.cookie);
 
@@ -311,10 +344,9 @@ body {
         source: 'login',
       });
 
-      withTimeout(saveEmail(email).catch(function () { /* swallow — must not block redirect */ }), SAVE_EMAIL_TIMEOUT_MS)
-        .then(function () {
-          window.location.href = redirectUrl;
-        });
+      savePromise.then(function () {
+        window.location.href = redirectUrl;
+      });
     });
   });
 })();
