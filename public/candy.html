@@ -4,6 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
+
+<!-- EXP-001: candy hero A/B ("Switch" control vs "Get" variant). Assigns before
+     paint so there is no flicker. Cookie is per-browser, 30d, same domain as the
+     RedTrack clickid cookie so the variant travels with the click. -->
+<script>
+(function () {
+  var m = document.cookie.match(/(?:^|;\s*)ab_exp001=([ab])/);
+  var v = m ? m[1] : (Math.random() < 0.5 ? 'a' : 'b');
+  if (!m) document.cookie = 'ab_exp001=' + v + ';max-age=2592000;path=/;samesite=lax';
+  document.documentElement.setAttribute('data-exp001', v);
+  window.__exp001 = v;
+})();
+</script>
 <title>Sweeter Than Candy | ourdream</title>
 <meta name="description" content="See why so many users think ourdream AI is sweeter than Candy AI. Compare features, ratings, and creative freedom side-by-side.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -156,6 +169,11 @@ body {
   max-width: 700px;
 }
 .cdy-hero .cdy-cta { margin-top: 20px; }
+
+/* EXP-001 variant toggle. Default (no JS / variant a): control shown, variant hidden. */
+.exp001-b { display: none; }
+[data-exp001="b"] .exp001-a { display: none; }
+[data-exp001="b"] .exp001-b { display: flex; }
 
 /* ── Pink CTA Button (used throughout) ───────────────────── */
 .cdy-cta {
@@ -617,11 +635,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span></span>
     </header>
 
-    <div class="cdy-hero-inner">
+    <!-- EXP-001 control -->
+    <div class="cdy-hero-inner exp001-a">
       <h1>Sweeter than Candy AI</h1>
       <p class="cdy-hero-sub">Switch over from Candy and get 50 bonus dreamcoins.</p>
       <p class="cdy-hero-desc">Stop leaving your creativity in the hands of the team at Candy AI. See why so many users are switching to ourdream.</p>
       <a href="/" class="cdy-cta cdy-cta-lg" data-quiz-cta="hero">Switch From Candy</a>
+    </div>
+    <!-- EXP-001 variant B ("Get" framing — headline / subhead / CTA only) -->
+    <div class="cdy-hero-inner exp001-b">
+      <h1>Everything Candy AI won't let you do</h1>
+      <p class="cdy-hero-sub">10 free images the moment you sign up. No credit card.</p>
+      <p class="cdy-hero-desc">Stop leaving your creativity in the hands of the team at Candy AI. See why so many users are switching to ourdream.</p>
+      <a href="/" class="cdy-cta cdy-cta-lg" data-quiz-cta="hero">Try It Free →</a>
     </div>
   </section>
 
@@ -825,6 +851,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 const PAGE_ID = 'candy';
 window.dataLayer = window.dataLayer || [];
 
+// EXP-001: variant assigned pre-paint in <head>. Fire an exposure event (the
+// per-variant denominator for CTA rate) and stamp the variant on every
+// quiz_cta_clicked. GTM reads `variant` off these dataLayer pushes and forwards
+// it to GA4 as an event parameter (custom dimension `variant`). Outbound CTA URL
+// is left untouched — no attribution impact.
+const EXP001 = window.__exp001 || 'a';
+window.dataLayer.push({ event: 'exp_exposure', experiment: 'exp001', variant: EXP001, page: PAGE_ID });
+
 (function initQuizCtas() {
   const href = '/' + (location.search || '');
   document.querySelectorAll('[data-quiz-cta]').forEach((el) => {
@@ -834,6 +868,8 @@ window.dataLayer = window.dataLayer || [];
         event: 'quiz_cta_clicked',
         page: PAGE_ID,
         source: el.dataset.quizCta,
+        experiment: 'exp001',
+        variant: EXP001,
       });
     });
   });
