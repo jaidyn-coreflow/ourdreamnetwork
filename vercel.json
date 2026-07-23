@@ -1,23 +1,29 @@
 {
   "framework": null,
   "rewrites": [
-    { "source": "/male-quiz", "destination": "/male.html" },
-    { "source": "/top-sites", "destination": "/top-sites.html" },
-    { "source": "/top-gay-ai-sites", "destination": "/top-gay-ai-sites.html" },
-    { "source": "/top-ai-bf-sites", "destination": "/top-ai-bf-sites.html" },
-    { "source": "/top-ai-companions", "destination": "/top-ai-companions.html" },
-    { "source": "/candy", "destination": "/candy.html" },
-    { "source": "/joi", "destination": "/joi.html" },
-    { "source": "/lovescape", "destination": "/lovescape.html" },
-    { "source": "/girlfriendgpt", "destination": "/girlfriendgpt.html" },
-    { "source": "/secrets-ai", "destination": "/secrets-ai.html" },
-    { "source": "/fantasy", "destination": "/fantasy.html" },
-    { "source": "/quiz", "destination": "/quiz.html" },
-    { "source": "/go/ourdream", "destination": "/go-ourdream.html" },
-    { "source": "/login", "destination": "/login.html" },
-    { "source": "/danbooru-tags", "destination": "/danbooru-tags/index.html" },
-
-    { "source": "/ai-roleplay", "destination": "https://ai-roleplay-ten.vercel.app/ai-roleplay" },
-    { "source": "/ai-roleplay/:path*", "destination": "https://ai-roleplay-ten.vercel.app/ai-roleplay/:path*" }
+    {
+      "source": "/candy",
+      "destination": "/candy.html"
+    },
+    {
+      "source": "/joi",
+      "destination": "/joi.html"
+    },
+    {
+      "source": "/girlfriendgpt",
+      "destination": "/girlfriendgpt.html"
+    },
+    {
+      "source": "/quiz",
+      "destination": "/quiz.html"
+    },
+    {
+      "source": "/go/ourdream",
+      "destination": "/go-ourdream.html"
+    },
+    {
+      "source": "/login",
+      "destination": "/login.html"
+    }
   ]
 }

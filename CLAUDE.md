@@ -4,7 +4,7 @@ Repo-level instructions for Claude Code. Read this before touching any landing p
 
 ## What this repo is
 
-Static-site marketing surface for `ourdreamnetwork.com`. A collection of paid-ad landing pages (quiz, listicles, competitor-comparison pages, login) that capture email + redirect users to the `ourdream.ai` product through RedTrack for attribution.
+Static-site marketing surface for `ourdreamnetwork.com`. A collection of paid-ad landing pages (quiz, competitor-comparison pages, login) that capture email + redirect users to the `ourdream.ai` product through RedTrack for attribution.
 
 Deployed on Vercel. No framework — plain HTML/CSS/JS in `/public`, one tiny Vercel Function in `/api`.
 
@@ -20,35 +20,23 @@ Deployed on Vercel. No framework — plain HTML/CSS/JS in `/public`, one tiny Ve
 | Pretty URL | File | Purpose | Receives paid ads? |
 |---|---|---|---|
 | `/` | `index.html` | Female-companion quiz funnel (primary) | Yes |
-| `/male-quiz` | `male.html` | Male-companion quiz funnel | Yes |
 | `/login` | `login.html` | Email-gate landing page | Yes |
-| `/top-sites` | `top-sites.html` | Listicle (top AI sites) | Yes |
-| `/top-gay-ai-sites` | `top-gay-ai-sites.html` | Listicle (gay AI sites) | Yes |
-| `/top-ai-bf-sites` | `top-ai-bf-sites.html` | Listicle (AI boyfriend sites) | Yes |
-| `/top-ai-companions` | `top-ai-companions.html` | Listicle (AI companion sites) | Yes |
 | `/candy` | `candy.html` | Competitor comparison (Candy AI) | Yes |
 | `/joi` | `joi.html` | Competitor comparison (Joi AI) | Yes |
-| `/lovescape` | `lovescape.html` | Competitor comparison (Lovescape) | Yes |
 | `/girlfriendgpt` | `girlfriendgpt.html` | Competitor comparison (GirlfriendGPT) | Yes |
-| `/secrets-ai` | `secrets-ai.html` | Competitor comparison (Secrets AI) | Yes |
-| `/fantasy` | `fantasy.html` | Persona picker — tap a fantasy → direct to `ourdream.ai/create` with prefilled quiz answers | Yes |
 | `/quiz` | `quiz.html` | 6-step Figma quiz funnel (Owners Narrow theme). **No email capture** — final "Create my fantasy" builds the offer URL then multi-hops `/quiz → /go/ourdream → clk → ourdream.ai/create` | Yes |
 | `/go/ourdream` | `go-ourdream.html` | Internal bounce — blank white screen ~2.5s, then `location.replace` to the `?to=` URL `/quiz` built (host-allowlisted to `clk.ourdreamnetwork.com` / `ourdream.ai`). Not a standalone LP | No |
-| `/danbooru-tags` | `danbooru-tags/` (folder app) | Visual AI artist-style library — **forked & reskinned from [ThetaCursed/Illustrious-NoobAI-Style-Explorer](https://github.com/ThetaCursed/Illustrious-NoobAI-Style-Explorer) (MIT, attribution kept in `LICENSE` + author credit).** Multi-file static app (`index.html` + `app/*.js`, `app/style.css`), NOT a `public/*.html` page. `<base href="/danbooru-tags/">` so relative asset paths resolve at the pretty URL. Gallery of 16k+ artist styles; click copies the artist name (backslash-escapes stripped for Midjourney). **Pure utility: no email capture, no funnel, no GTM/RedTrack.** ~900MB of preview images are NOT committed — `app.js` `imageBasePath` loads them from the upstream jsDelivr CDN (`cdn.jsdelivr.net/gh/ThetaCursed/...@latest/`); `app/data.js` (2.3MB artist metadata) IS committed. Reskin = ourdream dark-pink `:root` tokens + Bricolage/Instrument/Space Mono fonts in `app/style.css` | No |
-| `/ai-roleplay` | (separate Next.js zone — `ai-roleplay/`) | AI roleplay character catalogue + chat funnel | Yes |
 | `/privacy`, `/terms` | `privacy.html`, `terms.html` | Legal | No (no submit) |
 
 When the user adds a new LP, update both this table and `vercel.json`.
 
-**`/ai-roleplay` is NOT a `public/*.html` page.** It is a standalone Next.js app living in `ai-roleplay/` (App Router, `basePath: '/ai-roleplay'`), deployed as its **own Vercel project** and proxied in via two `vercel.json` rewrites (`/ai-roleplay` and `/ai-roleplay/:path*` → the zone's deployment URL). This is Vercel Multi-Zones — the existing static pages, the `/` quiz, and `/api/save-email.js` are untouched. The zone reuses romantasy's character components (reskinned to the `index.html` dark-pink theme). Its "Chat with {character}" CTAs open an email-capture modal ("Free Trial Offer — 5 messages free") that reuses the SAME RedTrack/`getGlValue` funnel as the static LPs. After capture, **every** click (paid and organic) routes through `clk.ourdreamnetwork.com/click?sub17=<chatSlug>&sub11=ai-roleplay&clickid=<…>&sub19=<_gl>` — `sub17` carries the per-character chat slug (the RedTrack slot forwards it to `ourdream.ai/chat/<sub17>`), and no-cookie visitors fall back to the uniclick `defaultcampaignid`. (The `/` quiz uses `/click/1`.) Funnel events fire with `source: 'ai-roleplay'`. Edit the zone in `ai-roleplay/src/...`; it has its own build (`cd ai-roleplay && npm run build`).
-
-**Competitor-comparison pages (`/candy`, `/joi`, `/lovescape`, `/girlfriendgpt`, `/secrets-ai`) do NOT capture email or use the redirect funnel below.** Their CTAs are plain `<a href="/fantasy?…">` links into the same-domain `/fantasy` persona picker, which owns the email capture + offer redirect. On load they only rewrite each `[data-quiz-cta]` anchor's href to forward inbound query params (`utm_*`, `gclid`, `cmpid`, …) and fire a `quiz_cta_clicked` dataLayer event. No email form, no modal, no `getGlValue`/RedTrack on these pages — the `rtkclickid-store` cookie (set on `cookiedomain=ourdreamnetwork.com`) persists same-domain to `/fantasy`, which handles the cross-domain `_gl`/RedTrack hop. See `public/candy.html` (all five share identical markup, differing only in copy). To repoint these CTAs, change the `const href = '/fantasy' + (location.search …)` line and the static `data-quiz-cta` anchor hrefs in each file.
+**Competitor-comparison pages (`/candy`, `/joi`, `/girlfriendgpt`) do NOT capture email or use the redirect funnel below.** Their CTAs are plain `<a href="/?…">` links into the same-domain `/` quiz funnel, which owns the email capture + offer redirect. On load they only rewrite each `[data-quiz-cta]` anchor's href to forward inbound query params (`utm_*`, `gclid`, `cmpid`, …) and fire a `quiz_cta_clicked` dataLayer event. No email form, no modal, no `getGlValue`/RedTrack on these pages — the `rtkclickid-store` cookie (set on `cookiedomain=ourdreamnetwork.com`) persists same-domain to `/`, which handles the cross-domain `_gl`/RedTrack hop. See `public/candy.html` (all three share identical markup, differing only in copy). To repoint these CTAs, change the `const href = '/' + (location.search …)` line and the static `data-quiz-cta` anchor hrefs in each file.
 
 **`/quiz` (`quiz.html`) is a no-email funnel built to a Figma design.** It is the only LP that (a) captures **no email** — there is no `generate_lead`/Google Ads lead conversion on this page, by design — and (b) does **not** submit straight to `clk`. Instead, on the final "Create my fantasy" step it builds the destination URL itself (PAID: `clk.ourdreamnetwork.com/click/1` with `sub11..sub19` mirroring `index.html` exactly; ORGANIC: direct `ourdream.ai/create` with `Q1`/`Q13`/`Q22` + `_gl`), then **multi-hops** `/quiz → /go/ourdream?to=<url> → clk → ourdream.ai/create`. The `/go/ourdream` bounce (`go-ourdream.html`) is a deliberate blank-white interstitial (~2.5s) that just `location.replace`s to the allow-listed `?to=` URL — all the attribution work (clickid cookie + `getGlValue` `_gl`) happens on `/quiz` before the hop. Quiz answers map: attracted-gender → `Q1` companion gender, chosen chat-style → `Q13` personality, scene free-text → `Q22`. It self-hosts the **Owners Narrow** brand font (`public/assets/fonts/owners-narrow-*.woff2`; `&`/`-` glyphs are absent from the trial font and per-glyph fall back to the system stack). GTM events are still only the wired ones — `quiz_start`, `quiz_step_2_complete`, `quiz_step_3_complete`, `visit_site_clicked` (no `generate_lead`). Assets live in `public/assets/quiz/`.
 
 ## The redirect funnel — how every email-capturing LP must work
 
-Every email-capturing LP (quiz, listicles, login) submits the user into the same pipeline:
+Every email-capturing LP (`/` quiz, login) submits the user into the same pipeline:
 
 ```
 LP submit  →  clk.ourdreamnetwork.com/click/N?sub11=<source>&sub19=<_gl>&clickid=<...>
@@ -104,30 +92,29 @@ Form submits POST to `/api/save-email` with `{ email, mode }`. The Vercel Functi
 
 ## Tracking
 
-GTM container: `GTM-5VRS8QPJ` (loaded deferred on `window.load` on every LP). **The GTM container is the source of truth for event names.** Only the `dataLayer` events that have a matching GTM trigger do anything — pushing any other event name (e.g. `quiz_email_captured`, `quiz_redirect`, `quiz_step`) fires **zero** tags and silently tracks nothing. Always push the names below.
+GTM container: `GTM-5VRS8QPJ` (loaded deferred on `window.load` on every LP). **The GTM container is the source of truth for event names** — verify against the live container (`curl https://www.googletagmanager.com/gtm.js?id=GTM-5VRS8QPJ`, the trigger predicates are readable in the config blob). Only `dataLayer` events with a matching GTM trigger do anything; any other name (e.g. `quiz_redirect`) fires **zero** tags and silently tracks nothing. Always push the names below.
 
 ### dataLayer events that have GTM triggers (push these, nothing else)
 
 | Event | When to fire | GTM tag(s) it fires | Canonical payload |
 |---|---|---|---|
 | `quiz_start` | User begins the funnel (first real pick, e.g. style selected) | GA4 – quiz_start | `{ quiz:'<slug>', style:'<style>' }` |
-| `quiz_step_2_complete` | Second funnel step done | GA4 – quiz_step_2_complete | `{ quiz:'<slug>', ... }` |
-| `quiz_step_3_complete` | Third funnel step done | GA4 – quiz_step_3_complete | `{ ... }` |
-| **`generate_lead`** | **Valid email submitted (the conversion)** | **GA4 – generate_lead + Google Ads – Generate Lead (Sign Up)** | `{ currency:'USD', value:1.0, user_data:{ email } }` |
+| `quiz_step_2_complete` … `quiz_step_6_complete` | Funnel steps 2–6 done (triggers exist for all five) | GA4 – same name | `{ quiz:'<slug>', ... }` |
+| **`quiz_email_captured`** | **Valid email submitted (the conversion)** | **Google Ads conversion (`__awct` id 18007387494 / label 4OSbCJXk-Z8cEObay4pD) + GA4 event renamed `generate_lead`** | `{ currency:'USD', value:1.0, user_data:{ email } }` |
 | `visit_site_clicked` | Outbound click / redirect to `ourdream.ai` | GA4 – visit_site_clicked | `{ cta:'<slug>-<variant>' }` |
-| `quiz_cta_clicked` / `competitor_quiz_cta_clicked` | Competitor-page CTA into `/` quiz | GA4 – competitor_quiz_cta_clicked | `{ ... }` |
+| `quiz_cta_clicked` | Competitor-page CTA into `/` quiz | GA4 – quiz_cta_clicked | `{ ... }` |
 
 `Conversion Linker`, `Google Ads Tag`, and `Google Ads – Remarketing` fire on All-Pages/Initialization, so they're covered automatically once GTM loads.
 
-### The lead conversion — `generate_lead` (most important)
+### The lead conversion — push `quiz_email_captured`, NOT `generate_lead`
 
-Every email-capturing LP MUST push this **on valid email submit, before the redirect**, or the Google Ads "Generate Lead (Sign Up)" conversion never registers:
+Counter-intuitive but verified against the live container (2026-07-23): **the trigger event is `quiz_email_captured`**; GTM maps it to a GA4 event *named* `generate_lead` plus the Google Ads conversion. There is **no trigger for a dataLayer event literally named `generate_lead`** — pushing `generate_lead` fires nothing. Every email-capturing LP MUST push this on valid email submit, before the redirect:
 
 ```js
-window.dataLayer.push({ event: 'generate_lead', currency: 'USD', value: 1.0, user_data: { email: email } });
+window.dataLayer.push({ event: 'quiz_email_captured', currency: 'USD', value: 1.0, user_data: { email: email } });
 ```
 
-`user_data.email` feeds Google Ads enhanced conversions — always include it. Fire it only after email validation passes (don't log junk leads). Reference: `public/fantasy.html` (gate submit), `quiz-old.html:986`.
+`user_data.email` feeds Google Ads enhanced conversions — always include it. Fire it only after email validation passes (don't log junk leads). Reference: `public/index.html:705`.
 
 ## Adding a new landing page — checklist
 
@@ -138,7 +125,7 @@ window.dataLayer.push({ event: 'generate_lead', currency: 'USD', value: 1.0, use
    - Reads `rtkclickid-store` cookie for the paid path
    - Calls `getGlValue()` and passes the result into `sub19` — **never** `pageParams.get('_gl')`
    - Branches to a direct-to-offer URL (decorated via `getDecoratedUrl`) when no cookie
-   - Fires the **GTM-wired** events (see Tracking) — at minimum `generate_lead` on valid email submit (the Google Ads conversion) and `quiz_start` on funnel entry. Never invent event names; only the ones with GTM triggers do anything.
+   - Fires the **GTM-wired** events (see Tracking) — at minimum `quiz_email_captured` on valid email submit (the Google Ads conversion) and `quiz_start` on funnel entry. Never invent event names; only the ones with GTM triggers do anything.
    - Wraps `saveEmail` in `withTimeout` so the redirect can't stall
 5. Test with a real ad click in incognito and verify the final URL has `_gl=1*<base64-ish-string>`, not `_gl=undefined`.
 
