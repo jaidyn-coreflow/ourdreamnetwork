@@ -840,6 +840,15 @@ function getGlValue() {
 // ══════════════════════════════════════════════
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Handoff from /ai-character-maker: ?style=realistic|anime pre-answers step 1,
+  // so fire quiz_start here (the picker's click won't happen) and start at step 2.
+  const pre = { realistic: 'Realistic', anime: 'Anime' }[(state.inboundParams.get('style') || '').toLowerCase()];
+  if (pre) {
+    state.inboundParams.delete('style'); // don't leak the handoff param into the offer URL
+    track('quiz_start', { quiz: 'female', style: pre.toLowerCase() });
+    state.style = pre;
+    state.currentStep = 2;
+  }
   render();
 });
 </script>

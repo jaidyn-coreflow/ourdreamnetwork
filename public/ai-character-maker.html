@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+
+<title>Free AI Character Maker | ourdream</title>
+<meta name="description" content="Build the character you've had in your head for years — face, history, personality. Free to start on ourdream. No card, no download.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<script src="constants.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.ourdream.pics">
+<link rel="preload" as="image" type="image/webp" href="assets/create-3step/sfw-realistic-female-poster.webp" fetchpriority="high">
+<link rel="preload" as="image" type="image/webp" href="assets/create-3step/sfw-anime-female-poster.webp" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,800;1,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="preconnect" href="https://clk.ourdreamnetwork.com">
+<!-- RedTrack universal tag — loaded directly so the clickid cookie is written ASAP.
+     Previously injected via GTM, which loads late and left a race where the CTA fired
+     before the cookie existed. Remove the RedTrack tag from GTM to avoid double-firing. -->
+<script async src="https://clk.ourdreamnetwork.com/uniclick.js?attribution=lastpaid&cookiedomain=ourdreamnetwork.com&cookieduration=30&defaultcampaignid=6a06af2165debd9009452848&regviewonce=false"></script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5VRS8QPJ');</script>
+<!-- End Google Tag Manager -->
+
+<style>
+:root {
+  --bg:          #0d0d0d;
+  --surface-2:   #1c1c1c;
+  --border-soft: rgba(255,255,255,0.10);
+  --text:        #ffffff;
+  --text-dim:    #aaaaaa;
+  --pink:        #f17bb6;
+  --pink-deep:   #fc33b3;
+  --pink-mid:    #fd5fc2;
+  --pink-light:  #fe98db;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Container ───────────────────────────────────────────── */
+.cdy {
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* ── Header / Nav ────────────────────────────────────────── */
+.cdy-header {
+  width: 100%;
+  max-width: 1280px;
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cdy-logo { display: inline-block; width: 220px; }
+.cdy-logo img { width: 100%; height: auto; display: block; }
+
+/* ── Hero ────────────────────────────────────────────────── */
+.cdy-hero {
+  width: 100%;
+  padding: 8px 24px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cdy-hero-inner {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  max-width: 900px;
+}
+.cdy-hero h1 {
+  font-family: 'Barlow Condensed', 'Bebas Neue', Impact, sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 88px;
+  line-height: 1;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.cdy-hero-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.3;
+  margin: 0;
+  max-width: 780px;
+}
+.cdy-hero .cdy-cta { margin-top: 14px; }
+.cdy-micro {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--text-dim);
+  margin: 0;
+}
+
+/* ── Pink CTA Button ─────────────────────────────────────── */
+.cdy-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 18px 26px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(0deg, var(--pink-deep) 0%, var(--pink-mid) 50%, var(--pink-light) 100%);
+  box-shadow: inset 0 -4px 0 rgba(0,0,0,0.25);
+  color: #fff;
+  font-family: 'Barlow Condensed', 'Bebas Neue', Impact, sans-serif;
+  font-weight: 800;
+  font-style: italic;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: transform 0.12s ease, filter 0.12s ease;
+  text-decoration: none;
+}
+.cdy-cta:hover { transform: translateY(-1px); filter: brightness(1.05); }
+.cdy-cta:active { transform: translateY(0); }
+.cdy-cta-lg { padding: 22px 32px; font-size: 20px; }
+
+/* ── Trust bar (pink stats banner) ───────────────────────── */
+.cdy-stats {
+  width: 100%;
+  background: var(--pink);
+  display: flex;
+  justify-content: center;
+  padding: 18px 16px;
+}
+.cdy-stats-inner {
+  display: flex;
+  gap: 60px;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 720px;
+  width: 100%;
+  color: #fff;
+}
+.cdy-stat { display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 180px; }
+.cdy-stat-num {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1.05;
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+.cdy-stat-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 13px;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+
+/* ── Value prop / step sections ──────────────────────────── */
+.cdy-why {
+  width: 100%;
+  max-width: 1280px;
+  padding: 16px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.cdy-section-title {
+  font-family: 'Barlow Condensed', 'Bebas Neue', Impact, sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 52px;
+  line-height: 1;
+  margin: 0;
+  text-align: center;
+  color: var(--text);
+  letter-spacing: -0.005em;
+}
+.cdy-section-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--text-dim);
+  margin: 0;
+  text-align: center;
+  max-width: 700px;
+}
+.cdy-step-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 34px;
+  line-height: 1.02;
+  margin: 0;
+  text-align: center;
+  letter-spacing: -0.005em;
+}
+.cdy-step-body {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--text-dim);
+  margin: 0;
+  text-align: center;
+  max-width: 700px;
+}
+.cdy-step-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-style: italic;
+  text-transform: uppercase;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  color: var(--pink);
+  margin: 0;
+}
+
+/* ── Value props (text + image split) ────────────────────── */
+.cdy-ready {
+  width: 100%;
+  max-width: 1280px;
+  padding: 0 40px;
+}
+.cdy-ready-inner {
+  background: var(--surface-2);
+  border-radius: 20px;
+  padding: 32px;
+  display: grid;
+  grid-template-columns: 1fr 712px;
+  gap: 60px;
+  align-items: center;
+}
+.cdy-ready-text { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+.cdy-ready-text h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 48px;
+  line-height: 1.02;
+  text-transform: uppercase;
+  margin: 0;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+.cdy-ready-text p {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-dim);
+  margin: 0;
+}
+.cdy-ready-img {
+  width: 100%;
+  height: 400px;
+  border-radius: 20px;
+  overflow: hidden;
+  object-fit: cover;
+  object-position: center top;
+  background-color: #3a2230;
+  display: block;
+}
+
+/* ── Style picker (step 1 of the / quiz, embedded) ───────── */
+.cdy-style-grid {
+  display: flex;
+  gap: 14px;
+  width: 100%;
+  max-width: 480px;
+  margin-top: 8px;
+}
+.cdy-style-card {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  aspect-ratio: 1/2;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid rgba(255,255,255,0.1);
+  transition: border-color 0.2s, transform 0.15s;
+  background: #1a1a1a;
+  display: block;
+  text-decoration: none;
+}
+@media (min-width: 768px) { .cdy-style-card { aspect-ratio: 2/3; } }
+.cdy-style-card:hover, .cdy-style-card:focus-visible { border-color: rgba(241,123,182,0.5); transform: translateY(-2px); }
+.cdy-style-card video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.cdy-style-card-label {
+  position: absolute;
+  bottom: 12px; left: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+/* ── Model cards (step 2) ────────────────────────────────── */
+.cdy-models {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  width: 100%;
+  max-width: 1000px;
+}
+.cdy-model {
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+.cdy-model-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-style: italic;
+  text-transform: uppercase;
+  font-size: 26px;
+  line-height: 1;
+  margin: 0;
+  color: var(--pink);
+}
+.cdy-model-tag {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text);
+  margin: 0;
+}
+.cdy-model p {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-dim);
+  margin: 0;
+}
+
+/* ── Chips ───────────────────────────────────────────────── */
+.cdy-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  max-width: 700px;
+}
+.cdy-chip {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  padding: 8px 14px;
+  white-space: nowrap;
+}
+
+/* ── Product screenshots ─────────────────────────────────── */
+.cdy-shot {
+  width: 100%;
+  max-width: 769px;
+  height: auto;
+  border-radius: 16px;
+  border: 1px solid var(--border-soft);
+  display: block;
+}
+
+/* ── FAQ ─────────────────────────────────────────────────── */
+.cdy-faq {
+  width: 800px;
+  max-width: 100%;
+  padding: 16px 0 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+.cdy-faq-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 48px;
+  text-transform: uppercase;
+  margin: 0;
+  text-align: center;
+  letter-spacing: -0.005em;
+}
+.cdy-faq-list { width: 100%; display: flex; flex-direction: column; gap: 2px; }
+.cdy-faq-item {
+  border-bottom: 1px solid var(--border-soft);
+  padding-top: 8px;
+}
+.cdy-faq-item > summary {
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px;
+  padding: 16px 0;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--text);
+}
+.cdy-faq-item > summary::-webkit-details-marker { display: none; }
+.cdy-faq-item > summary::after {
+  content: '';
+  width: 16px; height: 16px;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'><path d='M3.55 5.78 8 10.22l4.45-4.44.94.94L8 12.09 2.61 6.72z'/></svg>") no-repeat center / contain;
+  transition: transform 0.2s ease;
+  flex: 0 0 auto;
+}
+.cdy-faq-item[open] > summary::after { transform: rotate(180deg); }
+.cdy-faq-body {
+  padding: 0 0 18px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text-dim);
+}
+
+/* ── Footer ──────────────────────────────────────────────── */
+.cdy-footer {
+  width: 100%;
+  padding: 24px 40px 32px;
+  text-align: center;
+  border-top: 1px solid var(--border-soft);
+}
+.cdy-footer a {
+  color: var(--text-dim);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 0 14px;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+}
+.cdy-footer a:hover { color: var(--text); }
+
+/* ── Sticky mobile CTA (appears after first scroll) ──────── */
+.cdy-sticky-cta {
+  display: none;
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 20;
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+  background: rgba(13,13,13,0.92);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid var(--border-soft);
+  transform: translateY(110%);
+  transition: transform 0.25s ease;
+}
+.cdy-sticky-cta.is-shown { transform: translateY(0); }
+.cdy-sticky-cta .cdy-cta { width: 100%; }
+
+/* ── Responsive: mobile pass (≤ 767px) ───────────────────── */
+@media (max-width: 767px) {
+  .cdy { gap: 16px; }
+
+  .cdy-header { padding: 14px 16px; max-width: 100%; width: 100%; }
+  .cdy-logo { width: 160px; }
+
+  .cdy-hero { padding: 8px 16px; }
+  .cdy-hero-inner { gap: 10px; max-width: 100%; }
+  .cdy-hero h1 { font-size: 46px; line-height: 1; }
+  .cdy-hero-sub { font-size: 16px; max-width: 100%; line-height: 1.4; }
+
+  .cdy-section-title { font-size: 34px; line-height: 1; }
+  .cdy-section-sub { font-size: 14px; }
+  .cdy-step-title { font-size: 26px; }
+  .cdy-step-body { font-size: 14px; }
+
+  .cdy-why { padding: 0 16px; gap: 14px; }
+
+  .cdy-stats { padding: 14px 12px; }
+  .cdy-stats-inner {
+    gap: 10px;
+    max-width: 100%;
+    align-items: flex-start;
+  }
+  .cdy-stat { max-width: 32%; min-width: 0; flex: 1 1 0; }
+  .cdy-stat-num { font-size: 22px; margin-bottom: 4px; }
+  .cdy-stat-label { font-size: 10px; }
+
+  .cdy-cta-lg { padding: 16px 22px; font-size: 15px; }
+
+  .cdy-ready { padding: 0 16px; }
+  .cdy-ready-inner {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 20px;
+  }
+  .cdy-ready-text h2 { font-size: 28px; line-height: 1.05; }
+  .cdy-ready-text p { font-size: 14px; }
+  .cdy-ready-img { height: 240px; }
+
+  .cdy-style-grid { gap: 10px; }
+
+  .cdy-models { grid-template-columns: 1fr; gap: 10px; }
+
+  .cdy-sticky-cta { display: block; }
+
+  .cdy-faq { width: 100%; padding: 4px 16px 32px; gap: 24px; }
+  .cdy-faq-title { font-size: 34px; }
+  .cdy-faq-item > summary { font-size: 15px; padding: 14px 0; }
+
+  .cdy-footer { padding: 18px 16px 88px; }
+  .cdy-footer a { margin: 0 8px; font-size: 10px; }
+}
+</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5VRS8QPJ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<div class="cdy">
+
+  <header class="cdy-header">
+    <a href="/" class="cdy-logo" aria-label="ourdream network">
+      <img src="/ourdreamnetworklogo.svg" alt="ourdream network" />
+    </a>
+    <span></span>
+  </header>
+
+  <!-- ── 1. Hero ──────────────────────────────────────────── -->
+  <section class="cdy-hero">
+    <div class="cdy-hero-inner">
+      <h1>Free AI Character Maker</h1>
+      <p class="cdy-hero-sub">Choose Your Style</p>
+      <div class="cdy-style-grid">
+        <a class="cdy-style-card" data-style="realistic" href="/" aria-label="Create a realistic character">
+          <video muted loop playsinline preload="none" data-video="w600/234b7ea4-be67-4b50-871e-8f65fe7a26f0.mp4"
+                 poster="assets/create-3step/sfw-realistic-female-poster.webp"></video>
+          <div class="cdy-style-card-label">Realistic</div>
+        </a>
+        <a class="cdy-style-card" data-style="anime" href="/" aria-label="Create an anime character">
+          <video muted loop playsinline preload="none" data-video="w600/514c0c25-05ec-452e-b56f-7e8841175aca.mp4"
+                 poster="assets/create-3step/sfw-anime-female-poster.webp"></video>
+          <div class="cdy-style-card-label">Anime</div>
+        </a>
+      </div>
+      <p class="cdy-micro">No card. No download. First character's on us.</p>
+    </div>
+  </section>
+
+  <!-- ── Trust bar ────────────────────────────────────────── -->
+  <section class="cdy-stats">
+    <div class="cdy-stats-inner">
+      <div class="cdy-stat">
+        <div class="cdy-stat-num">3M+</div>
+        <div class="cdy-stat-label">characters created</div>
+      </div>
+      <div class="cdy-stat">
+        <div class="cdy-stat-num">Private</div>
+        <div class="cdy-stat-label">by default — never on a public feed unless you put them there</div>
+      </div>
+      <div class="cdy-stat">
+        <div class="cdy-stat-num">30 sec</div>
+        <div class="cdy-stat-label">from first pick to your first conversation</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 2. Value props ───────────────────────────────────── -->
+  <section class="cdy-ready">
+    <div class="cdy-ready-inner">
+      <div class="cdy-ready-text">
+        <h2>Create any character of your dreams</h2>
+        <p>You're not scrolling someone else's gallery hoping to find a close-enough match. You decide the face, the body, the style, the vibe — down to the details you've never seen offered anywhere. If you can picture them, you can make them.</p>
+      </div>
+      <img class="cdy-ready-img" src="assets/blog/rectangle-2.webp" alt="" width="712" height="400" loading="lazy" decoding="async">
+    </div>
+  </section>
+
+  <section class="cdy-ready">
+    <div class="cdy-ready-inner">
+      <div class="cdy-ready-text">
+        <h2>Deep character memory and backstory</h2>
+        <p>They remember. Not just your name — the thing you mentioned on a bad Tuesday, the joke that's been running for three weeks, what you said you were nervous about. Every character carries their own history and yours, so nothing resets and you never start over.</p>
+      </div>
+      <img class="cdy-ready-img" src="assets/blog/rectangle-4.webp" alt="" width="712" height="400" loading="lazy" decoding="async">
+    </div>
+  </section>
+
+  <!-- ── 3. Build flow header ─────────────────────────────── -->
+  <section class="cdy-why" style="padding-top: 32px;">
+    <h2 class="cdy-section-title">Four choices. About 30 seconds.</h2>
+    <p class="cdy-section-sub">No prompt engineering, no settings you need to Google. Tap through it and they exist.</p>
+  </section>
+
+  <!-- ── 4. Step 1 — Realistic or Anime (live picker) ─────── -->
+  <section class="cdy-why">
+    <p class="cdy-step-num">Step 1</p>
+    <h3 class="cdy-step-title">Choose realistic or anime</h3>
+    <p class="cdy-step-body">Two worlds, same depth. Realistic gives you real skin, real light, expressions that land like a photo. Anime gives you clean linework, big feeling, and every style you grew up on — soft shoujo, sharp seinen, whatever you're into. Pick one at the top of the page — you can always build another later.</p>
+    <p class="cdy-micro">Realistic · Anime — your pick here sets which image models you get next</p>
+  </section>
+
+  <!-- ── 5. Step 2 — Image generation model ───────────────── -->
+  <section class="cdy-why">
+    <p class="cdy-step-num">Step 2</p>
+    <h3 class="cdy-step-title">Choose how they look — and keep looking</h3>
+    <p class="cdy-step-body">Three models. Dreamy keeps them consistent; Vivid and Fluidity are our most powerful — Vivid for realistic, Fluidity for anime. Either way it's one tap.</p>
+    <div class="cdy-models">
+      <div class="cdy-model">
+        <h4 class="cdy-model-name">Dreamy</h4>
+        <p class="cdy-model-tag">For consistency</p>
+        <p>The face stays the face. Dreamy locks in your character's look so they're recognisably <em>them</em> in every image, every outfit, every scene. Start here if you're building someone you'll come back to.</p>
+      </div>
+      <div class="cdy-model">
+        <h4 class="cdy-model-name">Vivid</h4>
+        <p class="cdy-model-tag">Our most powerful realistic model</p>
+        <p>Real skin, real light, detail that holds up full screen. Vivid is what you use when you want an image of them that stops you for a second.</p>
+      </div>
+      <div class="cdy-model">
+        <h4 class="cdy-model-name">Fluidity</h4>
+        <p class="cdy-model-tag">Our most powerful anime model</p>
+        <p>Clean linework, expression that actually carries feeling, styles that hold up next to the art you already love. Fluidity is anime done properly.</p>
+      </div>
+    </div>
+    <p class="cdy-micro">Not sure? Start with Dreamy — you can regenerate them with any model, anytime.</p>
+  </section>
+
+  <!-- ── 6. Step 3 — Backstory ────────────────────────────── -->
+  <section class="cdy-why">
+    <p class="cdy-step-num">Step 3</p>
+    <h3 class="cdy-step-title">Give them a past</h3>
+    <p class="cdy-step-body">Where they grew up. What they do when they can't sleep. The thing they don't talk about. Write a few lines — or let ourdream write it for you — and every conversation gets an undercurrent. They'll reference it, defend it, and let a piece of it slip once they trust you.</p>
+    <img class="cdy-shot" src="assets/ai-character-maker/create-backstory.webp"
+         alt="Greeting and scenario fields in the ourdream character creator" width="769" height="154" loading="lazy" decoding="async">
+    <div class="cdy-chips">
+      <span class="cdy-chip">Childhood friend who moved back</span>
+      <span class="cdy-chip">Bartender with a philosophy degree</span>
+      <span class="cdy-chip">Rival who won't admit it</span>
+      <span class="cdy-chip">Someone you met once and never forgot</span>
+    </div>
+  </section>
+
+  <!-- ── 7. Step 4 — Personality ──────────────────────────── -->
+  <section class="cdy-why">
+    <p class="cdy-step-num">Step 4</p>
+    <h3 class="cdy-step-title">Decide who they actually are</h3>
+    <p class="cdy-step-body">Shy and bookish, or bold and sharp-tongued. Warm, jealous, calm, chaotic, loyal to a fault. Set the traits and they behave like it — they'll tease you, push back, go quiet when something lands wrong. Not a template with a name on it. A person with a temperament.</p>
+    <img class="cdy-shot" src="assets/ai-character-maker/create-personality.webp"
+         alt="Personality, occupation, relationship and hobby options in the ourdream character creator" width="769" height="380" loading="lazy" decoding="async">
+    <div class="cdy-chips">
+      <span class="cdy-chip">Sweet</span>
+      <span class="cdy-chip">Playful</span>
+      <span class="cdy-chip">Dominant</span>
+      <span class="cdy-chip">Shy</span>
+      <span class="cdy-chip">Sarcastic</span>
+      <span class="cdy-chip">Devoted</span>
+      <span class="cdy-chip">Cold</span>
+      <span class="cdy-chip">Curious</span>
+    </div>
+  </section>
+
+  <!-- ── 8. Privacy strip ─────────────────────────────────── -->
+  <section class="cdy-why" style="padding-top: 24px;">
+    <h3 class="cdy-step-title">Your characters are yours</h3>
+    <p class="cdy-step-body">Private by default. Not shared, not shown to anyone else, not on a public feed unless you put them there.</p>
+  </section>
+
+  <!-- ── 9. Final CTA ─────────────────────────────────────── -->
+  <section class="cdy-why" style="padding-bottom: 24px;">
+    <h2 class="cdy-section-title">Start making your AI character today</h2>
+    <p class="cdy-section-sub">It takes 30 seconds to find out what they'd say to you. Free to create, free to start talking.</p>
+    <a href="/" class="cdy-cta cdy-cta-lg" data-quiz-cta="final">Create your character — free</a>
+    <p class="cdy-micro">No credit card · No download · 18+</p>
+  </section>
+
+  <!-- ── 10. FAQ ──────────────────────────────────────────── -->
+  <section class="cdy-faq">
+    <h2 class="cdy-faq-title">Frequently Asked Questions</h2>
+    <div class="cdy-faq-list">
+      <details class="cdy-faq-item">
+        <summary>Is it really free?</summary>
+        <div class="cdy-faq-body">Yes. Creating a character costs nothing and you can start talking straight away. dreamcoins only come in if you want to go further — generating more images or longer conversations.</div>
+      </details>
+      <details class="cdy-faq-item">
+        <summary>Do I need to download an app?</summary>
+        <div class="cdy-faq-body">No. It runs in your browser on phone or desktop. Nothing to install.</div>
+      </details>
+      <details class="cdy-faq-item">
+        <summary>How many characters can I make?</summary>
+        <div class="cdy-faq-body">As many as you want. Different worlds, different styles, different versions of the same idea — most people don't stop at one.</div>
+      </details>
+      <details class="cdy-faq-item">
+        <summary>Will they remember what we talked about?</summary>
+        <div class="cdy-faq-body">Yes. Memory carries across conversations, so you pick up where you left off instead of reintroducing yourself every time.</div>
+      </details>
+      <details class="cdy-faq-item">
+        <summary>Can I change them later?</summary>
+        <div class="cdy-faq-body">Anytime. Look, personality, backstory — nothing is locked in once you've made it.</div>
+      </details>
+      <details class="cdy-faq-item">
+        <summary>Is it private?</summary>
+        <div class="cdy-faq-body">Your characters and conversations are private by default and aren't shared with other users.</div>
+      </details>
+    </div>
+  </section>
+
+  <footer class="cdy-footer">
+    <a href="/terms.html">Terms</a>
+    <a href="/privacy.html">Privacy</a>
+  </footer>
+</div>
+
+<!-- Sticky mobile CTA — slides in after the first scroll -->
+<div class="cdy-sticky-cta" id="sticky-cta" aria-hidden="true">
+  <a href="/" class="cdy-cta" data-quiz-cta="sticky">Create your character — free</a>
+</div>
+
+<script>
+'use strict';
+
+// Same-domain hop into the "/" quiz, like the competitor pages — but Step 1's
+// picker is the quiz's own step-1 style cards. Picking a card lands on "/" with
+// ?style=realistic|anime so index.html skips step 1 and starts at step 2.
+// Inbound attribution params (utm_*, gclid, cmpid, ...) ride along on every
+// link; the rtkclickid-store cookie persists same-domain, and index.html owns
+// email capture + the cross-domain offer redirect (RedTrack + _gl). None of
+// that happens here.
+const PAGE_ID = 'ai-character-maker';
+window.dataLayer = window.dataLayer || [];
+
+(function initStyleCards() {
+  document.querySelectorAll('[data-style]').forEach((el) => {
+    const p = new URLSearchParams(location.search);
+    p.set('style', el.dataset.style);
+    el.setAttribute('href', '/?' + p.toString());
+    el.addEventListener('click', () => {
+      window.dataLayer.push({
+        event: 'quiz_cta_clicked',
+        page: PAGE_ID,
+        source: 'style-' + el.dataset.style,
+      });
+    });
+  });
+})();
+
+(function initQuizCtas() {
+  const href = '/' + (location.search || '');
+  document.querySelectorAll('[data-quiz-cta]').forEach((el) => {
+    el.setAttribute('href', href);
+    el.addEventListener('click', () => {
+      window.dataLayer.push({
+        event: 'quiz_cta_clicked',
+        page: PAGE_ID,
+        source: el.dataset.quizCta,
+      });
+    });
+  });
+})();
+
+// Sticky mobile CTA: show once the user has scrolled past the hero.
+(function initStickyCta() {
+  const bar = document.getElementById('sticky-cta');
+  let shown = false;
+  addEventListener('scroll', () => {
+    const show = scrollY > 600;
+    if (show !== shown) {
+      shown = show;
+      bar.classList.toggle('is-shown', show);
+      bar.setAttribute('aria-hidden', String(!show));
+    }
+  }, { passive: true });
+})();
+
+// Defer card videos until after window.load so the posters win the LCP race
+// (mirrors index.html step 1). data-video is NOT data-cvid on purpose —
+// constants.js auto-wires data-cvid at DOMContentLoaded, too early.
+addEventListener('load', () => {
+  document.querySelectorAll('.cdy-style-card video[data-video]').forEach((v) => {
+    v.src = window.cdnCreateVid(v.dataset.video);
+    v.load();
+    v.play().catch(() => {});
+  });
+}, { once: true });
+</script>
+</body>
+</html>

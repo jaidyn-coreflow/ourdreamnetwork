@@ -2,6 +2,10 @@
   "framework": null,
   "rewrites": [
     {
+      "source": "/ai-character-maker",
+      "destination": "/ai-character-maker.html"
+    },
+    {
       "source": "/candy",
       "destination": "/candy.html"
     },
